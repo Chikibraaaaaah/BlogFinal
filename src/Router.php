@@ -61,6 +61,10 @@ class Router
         $access             = explode("!", $access);
         $this->controller   = $access[0];
         $this->method       = count($access) == 1 ? "default" : $access[1];
+
+        // var_dump($this->controller);
+
+        // var_dump($this->method);
     }
 
     /**

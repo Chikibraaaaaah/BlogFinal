@@ -1,1 +1,19 @@
-{% include "layout/navbar.twig" %}
+<!DOCTYPE html>
+{% block head %}
+    {% include "layout/head.twig" %}
+{% endblock %}
+
+{% block header %}
+    {% include "layout/header.twig" %}
+{% endblock %}
+
+<body>
+{% block content %}DefautContrnt Check{% endblock %}
+    
+</body>
+
+{% block footer %}
+    {% include "layout/footer.twig" %}
+{% endblock %}
+
+</html>

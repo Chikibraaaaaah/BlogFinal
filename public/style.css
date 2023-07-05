@@ -1,4 +1,14 @@
-nav ul {
+ul {
    list-style-type: none ;
-    display: flex;
 }
+
+nav > ul {
+    display: flex;
+} 
+
+/* body{
+    display: none ;
+} */
+/* main{
+    background-color: red;
+} */

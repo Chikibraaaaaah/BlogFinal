@@ -10,7 +10,7 @@ use Twig\Loader\FilesystemLoader;
  * Manages the Main Features
  * @package App\Controller
  */
-abstract class MainController
+abstract class MainController extends GlobalsController
 {
     /**
      * @var Environment|null
@@ -23,6 +23,7 @@ abstract class MainController
      */
     public function __construct()
     {
+        parent::__construct();
         $this->twig = new Environment(new FilesystemLoader("../src/View"), array("cache" => false));
     }
 
