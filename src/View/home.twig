@@ -1,0 +1,19 @@
+{% extends "layout/layout.twig" %}
+
+{% block main %}
+
+    <h1>Welcome Biatch</h1>
+
+
+<ul>
+    {% for publication in allPublications %}
+            <li> {{publication.titre}} </li>
+    {% endfor %}
+
+</ul>
+
+
+
+{% endblock %}
+
+
