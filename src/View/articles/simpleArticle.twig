@@ -1,0 +1,21 @@
+{% extends "layout/layout.twig" %}
+
+{% block content %}
+
+   {% for articleDetail in article %}
+      <figure>
+         <img src="{{ articleDetail.imgUrl }}" alt="{{ articleDetail.imgAlt }}">
+         <figcaption>{{ articleDetail.titre }}</figcaption>
+      </figure>
+      <p>{{ articleDetail.contenu }}</p>
+   {% endfor %}
+
+   {% for comment in comments %}
+      <p>{{ comment.contenu }}</p>
+   {% endfor %}
+
+   {% block createComment %}
+      {% include "comments/createComment.twig" %}
+   {% endblock %}
+
+{% endblock %}

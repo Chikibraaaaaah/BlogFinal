@@ -12,12 +12,6 @@ abstract class GlobalsController
      * @var array
      */
     private $alert = [];
-
-    /**
-     * @var array
-     */
-    private $cookie = [];
-
     /**
      * @var array
      */
@@ -70,7 +64,6 @@ abstract class GlobalsController
      */
     public function __construct()
     {
-        $this->cookie   = filter_input_array(INPUT_COOKIE) ?? [];
         $this->env      = filter_input_array(INPUT_ENV) ?? [];
         $this->get      = filter_input_array(INPUT_GET) ?? [];
         $this->post     = filter_input_array(INPUT_POST) ?? [];
@@ -96,21 +89,6 @@ abstract class GlobalsController
     }
 
     // ******************** SETTERS ******************** \\
-
-    /**
-     * Set Cookie
-     * @param string $name
-     * @param string $value
-     * @param int $expire
-     */
-    protected function setCookie(string $name, string $value = "", int $expire = 0) {
-
-        if ($expire === 0) {
-            $expire = time() + 3600;
-        }
-
-        setcookie($name, $value, $expire, "/");
-    }
 
     /**
      * Set User Session or User Alert
@@ -181,21 +159,6 @@ abstract class GlobalsController
 
             unset($_SESSION["alert"]);
         }
-    }
-
-    /**
-     * Get Cookie Array or Cookie Var
-     * @param null|string $var
-     * @return array|string
-     */
-    protected function getCookie(string $var = null)
-    {
-        if ($var === null) {
-
-            return $this->cookie;
-        }
-        
-        return $this->cookie[$var] ?? "";
     }
 
     /**
@@ -325,14 +288,7 @@ abstract class GlobalsController
      */
     protected function destroyGlobal(string $name = null)
     {
-        if ($name === null) {
-
-            $_SESSION["user"] = [];
-            session_destroy();
-
-        } elseif ($this->cookie[$name] !== null) {
-
-            $this->setCookie($name, "", time() - 3600);
-        }
+        $_SESSION["user"] = [];
+        session_destroy();
     }
 }

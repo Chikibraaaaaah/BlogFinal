@@ -32,7 +32,7 @@ class HomeController extends MainController
         switch ($page) 
         {
             case "home":
-                echo $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Publication")->listData()]);
+                echo $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Article")->listData()]);
                 return;
                 break;
 
@@ -48,7 +48,7 @@ class HomeController extends MainController
 
             default : 
 
-                echo $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Publication")->listData()]);
+                echo $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Article")->listData()]);
                 return;
             }
 
@@ -56,7 +56,7 @@ class HomeController extends MainController
             
 
 
-        $allPublications = ModelFactory::getModel("Publication")->listData();
+        $allPublications = ModelFactory::getModel("Articles")->listData();
 
         return $this->twig->render("home.twig", ["allPublications" => $allPublications]);
     }

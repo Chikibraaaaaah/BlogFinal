@@ -1,0 +1,19 @@
+{% block gallerie %}
+    <h2>Publications</h2>
+       <ul>
+            {% for publication in allPublications %}
+                <li> 
+                    <figure>
+                        <img src="{{publication.imgUrl}}" alt=" {{publication.imgAlt}} ">
+                        <figcaption>{{publication.titre}} --  {{publication.datePublication}}</figcaption>
+                    </figure>
+                   
+                </li>
+                 <p>{{publication.contenu}}</p>
+                 <a href="index.php?access=article!getArticle&id={{publication.id}}">Commenter</a>
+                 <p>{{publication.id}}</p>
+                
+            {% endfor %}
+        </ul>
+
+{% endblock %}

@@ -4,11 +4,13 @@ ul {
 
 nav > ul {
     display: flex;
+    justify-content: space-around;
+
 } 
 
-/* body{
-    display: none ;
-} */
-/* main{
-    background-color: red;
-} */
+
+
+body, main{
+    width: 95%;
+    margin: auto;
+}

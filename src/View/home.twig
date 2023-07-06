@@ -8,20 +8,16 @@
         <img src="../public/img/633217-les-simpson-une-enorme-incoherence-rep-diapo-2.webp" alt="iiiiiieieeing">
 
         {% block gallerie %}
-
-        <ul>
-            {% for publication in allPublications %}
-                <li> {{publication.titre}} </li>
-                <li> {{publication.datePublication}} </li>
-            {% endfor %}
-
-        </ul>
+            {% include "articles/gallerie.twig" %}
+        {% endblock %}
 
     </main>
 
-    {% endblock %}
+{% endblock %}
 
-    <form action="index.php?access=publication!createPublication" method="post">
+{% block form %}
+
+<form action="index.php?access=article!createArticle" method="post">
 
 <div>
     <label for="userName">Nom d'utilisateur</label>
@@ -47,4 +43,8 @@
 
 </form>
 
+
+
 {% endblock %}
+
+    
