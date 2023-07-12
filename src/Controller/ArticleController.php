@@ -27,20 +27,25 @@ class ArticleController extends MainController
 
     // public function createPublicationMethod(){
 
-       
-
     // }
 
     public function getArticleMethod(){
-        $id = $this->getGet("id");
-      //   var_dump(intval($id));
+
+      $id = $this->getGet("id");
+
       $article =   ModelFactory::getModel("Article")->listData(intval($id), "id");
       $comments = ModelFactory::getModel("Commentaire")->listData(intval($id), "publicationId");
       $nbComments = count($comments);
-      var_dump($nbComments);
-      // var_dump($article);
+
+      $_SESSION["publiToComment"] = $id;
+      $this->setSession(["publiToComment" => $id]);
+      var_dump($_SESSION);
+
+
       return $this->twig->render("articles/simpleArticle.twig", ["article" => $article, "comments" => $comments]);
     }
+
+
 
     
 }

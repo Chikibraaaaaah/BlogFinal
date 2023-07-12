@@ -7,64 +7,46 @@ use App\Model\Factory\PdoFactory;
 
 class AuthController extends MainController
 {
-    // public function __construct(){
-    //     var_dump($this->getPost);
-    // }
+
 
     public function defaultMethod(){
-        echo $this->twig->render("auth/login.twig");
-        return;
+        var_dump($_SESSION);
+        return $this->twig->render("auth/login.twig");
+        
     }
 
-    public function loginMethod(){
+    public function loginMethod()
+    {
+
+        $_SESSION["publiToComment"] = $_SESSION["publiToComment"] ?? null;
 
 
-        // echo "<pre>"; 
-        // var_dump($this->getRequest("email"));
+        $exist = ModelFactory::getModel("Utilisateur")->listData($this->getRequest("email"), "email");
+    
+        if (!count($exist) == 1) {
+            $this->setSession(["alert" => "danger", "message" => "Utilisateur introuvable"]);
+            $session = $_SESSION;
 
-        
-
-        // echo "</pre>";
-        // var_dump($this->getPost);
-
-        $exist = ModelFactory::getModel("Utilisateur")->listData($this->getRequest("email"),"email");
-        // var_dump($exist);
-
-        if(!count($exist) == 1){
-        
-            // $this->$_SESSION["alert"] = [
-            //     "type" => "danger",
-            //     "message" => "Utilisateur introuvable"
-            // ];
-
-            // echo $this->twig->render("auth/login.twig");
-            echo "Utilisateur introuvable";
-            return;
+            var_dump($_SESSION);
+            $alert = $session["alert"];
+            $message = isset($alert["message"]) ? $alert["message"] : '';
+            return $this->twig->render("auth/login.twig", ["alert" => $alert, "message" => $message]);
         }
+    
         $password = $this->getPost("password");
-
-        // echo "<pre>"; 
-        // var_dump($this->getPost("password"));
-
-        // echo "</pre>";
-
-        $password = ModelFactory::getModel("Utilisateur")->listData($this->getRequest("password"),"password");
-
-        if(!count($password) == 1){
-
-            echo "Mot de passe incorrect";
-            echo $this->twig->render("auth/login.twig");
-            return;
-        
-            // $this->$_SESSION["alert"] = [
-            //     "type" => "danger",
-            //     "message" => "Mot de passe incorrect"
-            // ];
+    
+        $password = ModelFactory::getModel("Utilisateur")->listData($this->getRequest("password"), "password");
+    
+        if (!count($password) == 1) {
+            // $this->setSession(["type" => "danger", "message" => "Mot de passe incorrect"]);
+            // $session = $this->getSession();
+            $alert = $session["alert"];
+            $message = isset($alert["message"]) ? $alert["message"] : '';
+            return $this->twig->render("auth/login.twig", ["alert" => $alert, "message" => $message]);
         }
-
+    
         $_SESSION["user"] = $exist[0];
-
-    return $this->twig->render("home.twig");
-
+        // var_dump($_SESSION["publiToComment"]);
+        // return $this->twig->render("home.twig", ["user" => $_SESSION["user"]]);
     }
 }
