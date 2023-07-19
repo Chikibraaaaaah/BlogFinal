@@ -8,14 +8,19 @@
   {% block content %}
 
 
-{% if alert %}
-    <div class="alert alert-danger">
-        {{ alert.message }}
-    </div>
-{% endif %}
 
 
     <h2>Se connecter</h2>
+
+    {% if alert %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+
+{% endif %}
+
+<br>
+
     <form action="index.php?access=auth!login" method="post">
         <div>
             <label for="email">Adresse email</label>
@@ -33,6 +38,8 @@
 </form>
 
 {% endblock %}
+
+<a href="index.php?access=auth!createAccount">Pas encore inscrit</a>
 
 {% endblock %}
 

@@ -7,22 +7,7 @@ class ArticleController extends MainController
 {
 
    public function defaultMethod(){
-      // if(($_SESSION["role"] === 0)){
-      //   return  false;
-      // }
 
-      // return true;
-      //   echo "<pre>";
-      // var_dump($_SESSION);
-      // echo "</pre>";
-
-      // return $this->twig->render("articles/gallerie.twig", ["articles" => ModelFactory::getModel("Publication")->listData()]);
-
-      // $id = $this->getGet("id");
-      // $publi = $this->twig->render("articles/simpleArticle.twig", ["articles" => ModelFactory::getModel("Article")->listData($id)]);
-      // var_dump($publi);
-
-      var_dump($this->method);
    }
 
     // public function createPublicationMethod(){
@@ -31,16 +16,16 @@ class ArticleController extends MainController
 
     public function getArticleMethod(){
 
-      $id = $this->getGet("id");
-
-      $article =   ModelFactory::getModel("Article")->listData(intval($id), "id");
-      $comments = ModelFactory::getModel("Commentaire")->listData(intval($id), "publicationId");
+      $article =   ModelFactory::getModel("Article")->listData(intval($this->getGet("id")), "id");
+      $comments = ModelFactory::getModel("Commentaire")->listData(intval($this->getGet("id")), "publicationId");
       $nbComments = count($comments);
+      $_SESSION["lastArticle"] = $this->getGet("id");
 
-      $_SESSION["publiToComment"] = $id;
-      $this->setSession(["publiToComment" => $id]);
-      var_dump($_SESSION);
-
+      if($this->getSession("user")){
+        // var_dump($this->getSession("user"));
+        // die();
+        return $this->twig->render("articles/simpleArticle.twig", ["article" => $article, "comments" => $comments, "logged" => $this->getSession("user"), "nbComments" => $nbComments]);
+      }
 
       return $this->twig->render("articles/simpleArticle.twig", ["article" => $article, "comments" => $comments]);
     }

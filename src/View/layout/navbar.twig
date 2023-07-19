@@ -1,5 +1,5 @@
-
-<nav>
+{% block nav %}
+    <nav>
     <ul>
    
         <li>
@@ -10,14 +10,28 @@
         <li>
             <a href="index.php?access=presentation" accesskey="p">Qui suis-je ?</a>
             </li>
-        <li>
-            <a href="index.php?access=account" accesskey="a">Mon compte</a>
-        </li>
-        <li>
-            <a href="index.php?access=auth!login" accesskey="l" title="login">
+    
+
+        {% if logged %}
+                <li>
+                    <a href="index.php?access=account" accesskey="a"> {{ logged.userName }} </a>
+                </li>
+                <li>
+                <a href="index.php?access=auth!logout" accesskey="x" title="logout">
+                    <i class="fa-duotone fa-right-to-bracket"></i>Se Déconnecter</i>
+                </a>
+            </li>
+
+            {% else %}
+                    <li>
+            <a href="index.php?access=auth" accesskey="l" title="login">
                 <i class="fa-duotone fa-right-to-bracket"></i>Se Connecter</i>
             </a>
         </li>
+             
+        {% endif %}
+        
+    
            <li>
             <a href="mailto:alexisbateaux@gmail.com" accesskey="c" title="Contact">
                 <i class="fas fa-at" aria-hidden="true">Contact</i>
@@ -25,3 +39,4 @@
         </li>
     </ul>
 </nav>
+{% endblock %}

@@ -23,41 +23,10 @@ class HomeController extends MainController
      */
     public function defaultMethod()
     {
-        
 
-        if(!isset($_GET["access"])){
-            $page = "home";
-        }
-
-        switch ($page) 
-        {
-            case "home":
-                echo $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Article")->listData()]);
-                return;
-                break;
-
-            case "auth":
-                echo $this->twig->render("auth/login.twig");
-                return;
-                break;
-
-            case "account":
-                echo $this->twig->render("account.twig", ["user" => ModelFactory::getModel("Utilisateur")->readData()]);
-                return;
-                break;
-
-            default : 
-
-                echo $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Article")->listData()]);
-                return;
-            }
-
-            
-            
-
-
-        $allPublications = ModelFactory::getModel("Articles")->listData();
-
-        return $this->twig->render("home.twig", ["allPublications" => $allPublications]);
+            // var_dump($this->getSession());
+            var_dump($_SESSION);
+  
+        return  $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Article")->listData()]);
     }
 }

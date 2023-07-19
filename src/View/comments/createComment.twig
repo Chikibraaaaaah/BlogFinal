@@ -1,3 +1,5 @@
+{% if logged %}
+
 <form action="index.php?access=comment!createComment" method="post">
 
     <textarea name="comment" id="comment" cols="30" rows="10">
@@ -7,3 +9,11 @@
 
 </form>
     
+
+    {% else %}
+
+    <p>Connectez-vous pour laisser votre commentaire</p>
+    <a href="index.php?access=auth!login">Se Connecter</a>
+    {% endif %}
+
+
