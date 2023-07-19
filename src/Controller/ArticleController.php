@@ -6,8 +6,13 @@ use App\Model\Factory\ModelFactory;
 class ArticleController extends MainController
 {
 
-   public function defaultMethod(){
+  private $titre;
+  private $contenu;
+  private $img;
+  private $datePublication;
 
+   public function defaultMethod(){
+    
    }
 
     // public function createPublicationMethod(){
@@ -28,6 +33,24 @@ class ArticleController extends MainController
       }
 
       return $this->twig->render("articles/simpleArticle.twig", ["article" => $article, "comments" => $comments]);
+    }
+
+    public function createArticleMethod(){
+
+      $this->titre = $this->getPost("titre");
+      $this->contenu = $this->getPost("contenu");
+      $this->img = $this->getFiles();
+      $this->datePublication = date("Y-m-d");
+      // var_dump($this->titre);
+      // var_dump($_POST);
+      // echo "<pre>"; 
+      // var_dump($_REQUEST);
+      // echo "</pre>"; 
+
+      echo "<pre>"; 
+      var_dump($_FILES);
+      echo "</pre>"; 
+      die();
     }
 
 

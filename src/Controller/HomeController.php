@@ -21,12 +21,14 @@ class HomeController extends MainController
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function defaultMethod()
-    {
 
-            // var_dump($this->getSession());
-            // var_dump($_SESSION);
-  
-        return  $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Article")->listData()]);
+    
+    public function defaultMethod()
+    {  
+        return  $this->twig->render("home.twig", [
+                    "allPublications" => ModelFactory::getModel("Article")->listData(),
+                    "errors" => $this->getAlert("message"),
+                    "logged" => $this->getSession("user")
+                ]);
     }
 }

@@ -10,6 +10,12 @@
         <li>
             <a href="index.php?access=presentation" accesskey="p">Qui suis-je ?</a>
             </li>
+
+            <li>
+            <a href="mailto:alexisbateaux@gmail.com" accesskey="c" title="Contact">
+                Contact <i class="fas fa-at" aria-hidden="true"></i>
+            </a>
+        </li>
     
 
         {% if logged %}
@@ -25,18 +31,14 @@
             {% else %}
                     <li>
             <a href="index.php?access=auth" accesskey="l" title="login">
-                <i class="fa-duotone fa-right-to-bracket"></i>Se Connecter</i>
+                Se Connecter / S'inscrire <i class="fa-duotone fa-right-from-bracket"></i>
             </a>
         </li>
              
         {% endif %}
         
     
-           <li>
-            <a href="mailto:alexisbateaux@gmail.com" accesskey="c" title="Contact">
-                <i class="fas fa-at" aria-hidden="true">Contact</i>
-            </a>
-        </li>
+           
     </ul>
 </nav>
 {% endblock %}

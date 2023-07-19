@@ -11,40 +11,15 @@
             {% include "articles/gallerie.twig" %}
         {% endblock %}
 
+        {% if logged.role == 1 %}
+                {% block createArticle %}
+                    {% include "articles/createArticle.twig" %}
+                {% endblock %}
+        {% endif %}
+
     </main>
 
 {% endblock %}
 
-{% block form %}
-
-<form action="index.php?access=article!createArticle" method="post">
-
-<div>
-    <label for="userName">Nom d'utilisateur</label>
-    <input type="text" name="userName" id="userName">
-</div>
-
-<div>
-    <label for="email">Adresse email</label>
-    <input type="email" name="email" id="email">
-</div>
-
-<div>
-    <label for="password">Mot de passe</label>
-    <input type="password" name="password" id="password">
-</div>
-
-<div>
-    <label for="passwordCheck">MP Check</label>
-    <input type="password" name="passwordCheck" id="passwordCheck">
-</div>
-
-<button type="submit">S'inscrire</button>
-
-</form>
-
-
-
-{% endblock %}
 
     

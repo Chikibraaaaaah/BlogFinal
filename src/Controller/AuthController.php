@@ -16,9 +16,7 @@ class AuthController extends MainController
     private $password;
 
     public function defaultMethod(){
-
         return $this->twig->render("auth/login.twig");
-        
     }
 
     function loginMethod()
@@ -59,6 +57,10 @@ class AuthController extends MainController
 
     }
 
+    public function createAccountMethod(){
+        return $this->twig->render("auth/signup.twig", ["alert" => $this->getAlert("message")]);
+    }
+
     public function signupMethod(){
         $this->userName = $this->getPost("userName");
         $this->email = $this->getPost("email");
@@ -68,12 +70,12 @@ class AuthController extends MainController
 
         if($existingUser){
             $this->setSession(["alert" => "danger", "message" => "Cette adresse email est déjà utilisée"]);
-            return $this->twig->render("auth/signup.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]); 
+            return  $this->redirect("auth!createAccount"); 
         }
 
         if($this->getPost("password") != $this->getPost("passwordCheck")){
             $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas"]);
-            return $this->twig->render("auth/signup.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]); 
+            return $this->redirect("auth!createAccount"); 
         }
 
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
@@ -86,26 +88,15 @@ class AuthController extends MainController
         ];
 
         ModelFactory::getModel("Utilisateur")->createData($newUser);
-       $userCreated = ModelFactory::getModel("Utilisateur")->readData($newUser["email"], "email");
 
-    //    var_dump($userCreated);
-    //    die();
+        $userCreated = ModelFactory::getModel("Utilisateur")->readData($newUser["email"], "email");
+
         $this->setSession($userCreated, true);
-
-        var_dump($this->getSession());
-        die();
-
-
-        // var_dump($this->getSession("user"));
-        // die();
-        // $this->redirect("home");
-
-        // return $this->twig->render("home.twig", ["logged"=>$this->getSession["user"]]);
+        
+        return $this->redirect("home");
     }
 
-    public function createAccountMethod(){
-        return $this->twig->render("auth/signup.twig");
-    }
+
             
     
     public function logoutMethod(){

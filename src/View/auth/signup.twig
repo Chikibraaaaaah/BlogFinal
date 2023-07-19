@@ -12,14 +12,11 @@
 
     <h2>Créer votre compte</h2>
 
-    {% if alert %}
-    <div class="alert alert-danger">
-        {{ message }}
-    </div>
-
-{% endif %}
+   
 
 <br>
+
+
 
     <form action="index.php?access=auth!signup" method="post">
         <div>
@@ -46,6 +43,12 @@
 
 </form>
 
+ {# {% if alert %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+
+{% endif %} #}
 {% endblock %}
 
 <a href="index.php?access=auth">J'ai déjà un compte</a>
