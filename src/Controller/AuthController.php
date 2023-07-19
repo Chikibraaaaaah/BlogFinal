@@ -86,10 +86,21 @@ class AuthController extends MainController
         ];
 
         ModelFactory::getModel("Utilisateur")->createData($newUser);
-        unset($newUser["password"]);
-        $this->setSession(["user" => $newUser], true);
-        $this->redirect("home");
-        return $this->twig->render("home.twig", ["logged"=>$_SESSION["user"]]);
+       $userCreated = ModelFactory::getModel("Utilisateur")->readData($newUser["email"], "email");
+
+    //    var_dump($userCreated);
+    //    die();
+        $this->setSession($userCreated, true);
+
+        var_dump($this->getSession());
+        die();
+
+
+        // var_dump($this->getSession("user"));
+        // die();
+        // $this->redirect("home");
+
+        // return $this->twig->render("home.twig", ["logged"=>$this->getSession["user"]]);
     }
 
     public function createAccountMethod(){

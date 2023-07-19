@@ -11,7 +11,11 @@ $router = new \App\Router();
 
 if(!isset($_SESSION)){
     session_start();
+    
 }
 
+// var_dump($_SESSION);
+// die();
+// session_destroy();
 $router->run();
 

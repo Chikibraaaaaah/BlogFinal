@@ -25,7 +25,7 @@ class HomeController extends MainController
     {
 
             // var_dump($this->getSession());
-            var_dump($_SESSION);
+            // var_dump($_SESSION);
   
         return  $this->twig->render("home.twig", ["allPublications" => ModelFactory::getModel("Article")->listData()]);
     }
