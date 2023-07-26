@@ -58,7 +58,7 @@ class Router
             $access = "home";
         }
 
-        $access             = explode("!", $access);
+        $access             = explode("_", $access);
         $this->controller   = $access[0];
         $this->method       = count($access) == 1 ? "default" : $access[1];
 

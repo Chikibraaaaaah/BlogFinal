@@ -26,63 +26,46 @@ class AuthController extends MainController
             return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
         }
 
-        // Vérifier si l'utilisateur existe dans la base de données
-        $this->email = $this->getPost("email");
-        $this->password = $this->getPost("password");
-
-        $user = ModelFactory::getModel("Utilisateur")->listData($this->email, "email")[0];
-
-        // var_dump($user);
-        // die();
+        $user = ModelFactory::getModel("Utilisateur")->listData($this->getPost("email"), "email")[0];
 
         if(!$user){
             $this->setSession(["alert" => "danger", "message" => "Email non reconnu"]);
             return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
         }
 
-        if ($user) {
-
-            // var_dump($user);
-            // die();
-            // Vérifier si le mot de passe correspond
-            if (password_verify($this->password, $user['password'])) {
-                // Connecter l'utilisateur en créant une session
-                $this->setSession($user, true);
-                return $this->redirect("home");
-            }
+        if (password_verify($this->getPost("password"), $user['password'])) {
+            $this->setSession($user, true);
+            return $this->redirect("home");
         }
-       
+
         $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide"]);
         return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
 
     }
 
     public function createAccountMethod(){
-        return $this->twig->render("auth/signup.twig", ["alert" => $this->getAlert("message")]);
+        return $this->twig->render("auth/signup.twig");
     }
 
     public function signupMethod(){
-        $this->userName = $this->getPost("userName");
-        $this->email = $this->getPost("email");
-        $this->password = $this->getPost("password");
 
         $existingUser = ModelFactory::getModel("Utilisateur")->listData($this->email, "email");
 
         if($existingUser){
             $this->setSession(["alert" => "danger", "message" => "Cette adresse email est déjà utilisée"]);
-            return  $this->redirect("auth!createAccount"); 
+            return  $this->redirect("auth_createAccount"); 
         }
 
         if($this->getPost("password") != $this->getPost("passwordCheck")){
             $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas"]);
-            return $this->redirect("auth!createAccount"); 
+            return $this->redirect("auth_createAccount"); 
         }
 
-        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
 
         $newUser = [
-            "userName"=> $this->userName,
-            "email" => $this->email,
+            "userName"=> $this->getPost("userName"),
+            "email" => $this->getPost("email"),
             "password" => $hashedPassword,
             "creationDate" =>  date("Y-m-d H:i:s")
         ];
