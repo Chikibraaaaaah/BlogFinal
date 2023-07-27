@@ -19,33 +19,10 @@ class AuthController extends MainController
         return $this->twig->render("auth/login.twig");
     }
 
-    function loginMethod()
-    {
-        if(empty($this->getPost("email")) || empty($this->getPost("password"))){
-            $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs"]);
-            return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
-        }
-
-        $user = ModelFactory::getModel("Utilisateur")->listData($this->getPost("email"), "email")[0];
-
-        if(!$user){
-            $this->setSession(["alert" => "danger", "message" => "Email non reconnu"]);
-            return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
-        }
-
-        if (password_verify($this->getPost("password"), $user['password'])) {
-            $this->setSession($user, true);
-            return $this->redirect("home");
-        }
-
-        $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide"]);
-        return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
-
-    }
-
     public function createAccountMethod(){
         return $this->twig->render("auth/signup.twig");
     }
+
 
     public function signupMethod(){
 
@@ -78,6 +55,33 @@ class AuthController extends MainController
         
         return $this->redirect("home");
     }
+
+    function loginMethod()
+    {
+        if(empty($this->getPost("email")) || empty($this->getPost("password"))){
+            $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs"]);
+            return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
+        }
+
+        $user = ModelFactory::getModel("Utilisateur")->listData($this->getPost("email"), "email")[0];
+
+        if(!$user){
+            $this->setSession(["alert" => "danger", "message" => "Email non reconnu"]);
+            return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
+        }
+
+        if (password_verify($this->getPost("password"), $user['password'])) {
+            $this->setSession($user, true);
+            return $this->redirect("home");
+        }
+
+        $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide"]);
+        return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
+
+    }
+
+
+
 
 
             

@@ -27,8 +27,10 @@ class HomeController extends MainController
     {  
         return  $this->twig->render("home.twig", [
                     "allPublications" => ModelFactory::getModel("Article")->listData(),
-                    "errors" => $this->getAlert("message"),
+                    "errors" => $this->getAlert("alert"),
                     "logged" => $this->getSession("user")
                 ]);
+
+
     }
 }
