@@ -3,9 +3,10 @@
 
 {% block content %}
 
+
 {% if method == 'GET' %}
 
- <article>
+  <article>
 
       <h1> {{ article.titre }} </h1>
 
@@ -18,29 +19,38 @@
 
    </article>
 
-   {% else %}
-
-   <input type="text" name="titre" id="titre" placeholder="Titre de l'article">
-   <input type="file" name="img" id="img">
-   <textarea name="contenu" id="" cols="30" rows="10">  {{ article.contenu }} </textarea>
-
-{% endif %}
-
       <time datetime=" {{ article.datePublication }} "></time>
 
       <aside>
 
          {% for comment in comments %}
-            <p> {{ comment.contenu }} - {{ comment.auteurId }} </p>
+         <div>
+            <p> {{ comment.contenu }} - {{ comment.auteurId }} 
+                 {% if comment.auteurId == user.id %}
+               <a href="index.php?access=comment_update&commentId={{ comment.id }}" class="btn btn-primary">Modifier <i class="fa-solid fa-pencil"></i></a>
+             {% endif %}
+            </p>
+        
+             
+         </div>
+
          {% endfor %}
       
       </aside>
 
+      {% elseif method == "update" %}
+
+      <form action="">
+         <textarea name="comment" id="comment" cols="30" rows="10"> {{ comment.contenu }} </textarea>
+         <input type="file" name="img" id="img">
+         <button type="submit" >Enregister les modifications</button>
+      </form>
+
+{% endif %}
+
+ 
 
 
-  
-
-   
    {% block createComment %}
       {% include "comments/createComment.twig" %}
    {% endblock %} 
