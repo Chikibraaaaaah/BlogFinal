@@ -1,14 +1,34 @@
+
 {% extends "layout/layout.twig" %}
 
 {% block content %}
 
-   {% for articleDetail in article %}
+   <article>
+
+      <h1> {{ article.titre }} </h1>
+
       <figure>
-         <img src="{{ articleDetail.imgUrl }}" alt="{{ articleDetail.imgAlt }}">
-         <figcaption>{{ articleDetail.titre }}</figcaption>
+
+         <img src=" {{ article.imgUrl }} " alt="{{ article.altImg }}">
+         <figcaption> {{ article.contenu }} </figcaption>
+         
       </figure>
-      <p>{{ articleDetail.contenu }}</p>
-   {% endfor %}
+
+      <time datetime=" {{ article.datePublication }} "></time>
+
+      <aside>
+
+         {% for comment in comments %}
+            <p> {{ comment.contenu }} - {{ comment.auteurId }} </p>
+         {% endfor %}
+      
+      </aside>
+
+   </article>
+
+   
+   
+     {# 
 
    {% for comment in comments %}
       <p>{{ comment.contenu }}</p>
@@ -16,6 +36,7 @@
 
    {% block createComment %}
       {% include "comments/createComment.twig" %}
-   {% endblock %}
+   {% endblock %} #}
+
 
 {% endblock %}

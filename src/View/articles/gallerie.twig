@@ -11,7 +11,11 @@
                 </li>
                  <p>{{publication.contenu}}</p>
                  <a href="index.php?access=article_getArticle&id={{publication.id}}">Commenter</a>
-                 <p>{{publication.id}}</p>
+
+                 {% if logged.role == 1 %}
+                 <a href="index.php?access=article_updateArticle&id={{publication.id}}">Modifier <i class="fa-solid fa-pencil"></i></a>
+                    
+                 {% endif %}
                 
             {% endfor %}
         </ul>
