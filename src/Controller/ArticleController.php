@@ -17,13 +17,16 @@ class ArticleController extends MainController
         $article = $this->getArticleById();
         $relatedComments = $this->getRelatedComments();
         $alerts = $this->getSession()["alert"];
-        $userInfo = $this->getSession()["user"];
+        $user = $this->getSession()["user"];
+
+        $this->setSession(["article" => $article["id"]]);
 
         return $this->twig->render("articles/simpleArticle.twig", [
             "article" => $article,
             "comments" => $relatedComments,
             "alerts" => $alerts,
-            "user" => $userInfo
+            "user" => $user,
+            "method" => "GET"
         ]);
    }
 
@@ -38,7 +41,7 @@ class ArticleController extends MainController
    public function getRelatedComments(){
 
         $article = $this->getArticleById();
-        $comments = ModelFactory::getModel("Commentaire")->listData(intval( $article["id"]), "publicationId");
+        $comments = ModelFactory::getModel("Commentaire")->listData(intval( $article["id"]), "articleId");
        
         return $comments;
    }

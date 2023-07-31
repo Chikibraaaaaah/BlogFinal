@@ -3,7 +3,9 @@
 
 {% block content %}
 
-   <article>
+{% if method == 'GET' %}
+
+ <article>
 
       <h1> {{ article.titre }} </h1>
 
@@ -13,6 +15,16 @@
          <figcaption maxlength="10"> {{ article.contenu }} </figcaption>
          
       </figure>
+
+   </article>
+
+   {% else %}
+
+   <input type="text" name="titre" id="titre" placeholder="Titre de l'article">
+   <input type="file" name="img" id="img">
+   <textarea name="contenu" id="" cols="30" rows="10">  {{ article.contenu }} </textarea>
+
+{% endif %}
 
       <time datetime=" {{ article.datePublication }} "></time>
 
@@ -24,7 +36,9 @@
       
       </aside>
 
-   </article>
+
+
+  
 
    
    {% block createComment %}

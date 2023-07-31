@@ -32,7 +32,7 @@ class HomeController extends MainController
         return  $this->twig->render("home.twig", [
                     "allPublications" => $articles,
                     "errors" => $alerts,
-                    "logged" => $user
+                    "user" => $user
                 ]);
     }
 

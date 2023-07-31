@@ -11,7 +11,7 @@
             {% include "articles/gallerie.twig" %}
         {% endblock %}
 
-        {% if logged.role == 1 %}
+        {% if user.role == 1 %}
                 {% block createArticle %}
                     {% include "articles/createArticle.twig" %}
                 {% endblock %}
