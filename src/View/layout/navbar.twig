@@ -18,9 +18,9 @@
         </li>
     
 
-        {% if logged %}
+        {% if user %}
                 <li>
-                    <a href="index.php?access=account" accesskey="a"> {{ logged.userName }} </a>
+                    <a href="index.php?access=account" accesskey="a"> {{ user.userName }} </a>
                 </li>
                 <li>
                 <a href="index.php?access=auth_logout" accesskey="x" title="logout">

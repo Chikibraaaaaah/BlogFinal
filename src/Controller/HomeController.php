@@ -25,12 +25,23 @@ class HomeController extends MainController
     
     public function defaultMethod()
     {  
+        $articles = $this->getArticles();
+        $user = $this->getSession("user");
+        $alerts = $this->getAlert("alert");
+
         return  $this->twig->render("home.twig", [
-                    "allPublications" => ModelFactory::getModel("Article")->listData(),
-                    "errors" => $this->getAlert("alert"),
-                    "logged" => $this->getSession("user")
+                    "allPublications" => $articles,
+                    "errors" => $alerts,
+                    "logged" => $user
                 ]);
-
-
     }
+
+    public function getArticles(){
+    
+        $articles = ModelFactory::getModel("Article")->listData();
+
+        return $articles;
+   }
+
+
 }

@@ -15,10 +15,16 @@ class ArticleController extends MainController
    public function defaultMethod(){
 
         $article = $this->getArticleById();
-        $Relatedcomments = $this->getRelatedComments();
-        
-        return $this->twig->render("articles/simpleArticle.twig", ["article" => $article, "comments" => $Relatedcomments]);
+        $relatedComments = $this->getRelatedComments();
+        $alerts = $this->getSession()["alert"];
+        $userInfo = $this->getSession()["user"];
 
+        return $this->twig->render("articles/simpleArticle.twig", [
+            "article" => $article,
+            "comments" => $relatedComments,
+            "alerts" => $alerts,
+            "user" => $userInfo
+        ]);
    }
 
    public function getArticleById(){
@@ -27,10 +33,10 @@ class ArticleController extends MainController
         $article = ModelFactory::getModel("Article")->listData(intval($id), "id")[0];
 
         return $article;
-
    }
 
    public function getRelatedComments(){
+
         $article = $this->getArticleById();
         $comments = ModelFactory::getModel("Commentaire")->listData(intval( $article["id"]), "publicationId");
        
@@ -58,14 +64,8 @@ class ArticleController extends MainController
     }
 
     public function updateArticleMethod(){
-        $this->defaultMethod();
-        // $oldContent = $this->getSession()["alert"]["article"]["contenu"];
-        // $oldImg = $this->getSession()["alert"]["article"]["imgUrl"];
+        // $this->defaultMethod();
 
-        // $newContent = 
-        // echo "<pre>"; 
-        // var_dump($oldImg);
-        // echo "</pre>";
     }
    
 

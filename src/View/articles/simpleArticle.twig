@@ -10,7 +10,7 @@
       <figure>
 
          <img src=" {{ article.imgUrl }} " alt="{{ article.altImg }}">
-         <figcaption> {{ article.contenu }} </figcaption>
+         <figcaption maxlength="10"> {{ article.contenu }} </figcaption>
          
       </figure>
 
@@ -27,16 +27,9 @@
    </article>
 
    
-   
-     {# 
-
-   {% for comment in comments %}
-      <p>{{ comment.contenu }}</p>
-   {% endfor %}
-
    {% block createComment %}
       {% include "comments/createComment.twig" %}
-   {% endblock %} #}
+   {% endblock %} 
 
 
 {% endblock %}
