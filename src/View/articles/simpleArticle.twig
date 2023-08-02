@@ -55,5 +55,11 @@
       {% include "comments/createComment.twig" %}
    {% endblock %} 
 
+   {% block delete %}
+      {% if article.auteurId == user.id %}
+             <button>Supprimer</button>
+      {% endif %}
+   {% endblock %}
+
 
 {% endblock %}

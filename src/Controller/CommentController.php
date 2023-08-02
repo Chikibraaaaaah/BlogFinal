@@ -7,11 +7,7 @@ class CommentController extends MainController
 {
 
     public function defaultMethod(){
-        $articleId = $this->getComment()["articleId"];
-        $article = ModelFactory::getModel("Article")->readData($articleId, "id");
-        $comments = ModelFactory::getModel("Commentaire")->readData(intval($articleId), "articleId");
 
-        return $this->twig->render("articles/simpleArticle.twig", ["article" => $article, "comments" => $comments]);
     }
 
     public function createCommentMethod(){
@@ -40,9 +36,9 @@ class CommentController extends MainController
         $comments = ModelFactory::getModel("Commentaire")->readData(intval($articleId), "articleId");
         $article = ModelFactory::getModel("Article")->readData($articleId, "id");
 
-        var_dump($this->checkUser());
+        var_dump($comments);
 
-        return $this->twig->render("articles/simpleArticle.twig", ["article" => $article, "comment" => $comments, "method" => "update"]);
+        return $this->twig->render("articles/simpleArticle.twig");
     } 
 
     public function getComment(){

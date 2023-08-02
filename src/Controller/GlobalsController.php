@@ -114,6 +114,8 @@ abstract class GlobalsController
         }
     }
 
+  
+
     // ******************** CHECKERS ******************** \\
 
     /**
@@ -138,6 +140,21 @@ abstract class GlobalsController
 
         return false;
     }
+
+    protected function checkInputs(){
+
+        $inputs = $this->getPost();
+        
+        foreach ($inputs as $input => $value) {
+            if(empty($value)){
+                $this->setSession(["alert" => "danger", "message" => "Veuillez remplir le champ " . $input]);
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
 
     // ******************** GETTERS ******************** \\
 

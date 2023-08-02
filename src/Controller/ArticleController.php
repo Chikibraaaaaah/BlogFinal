@@ -17,15 +17,12 @@ class ArticleController extends MainController
         $article = $this->getArticleById();
         $relatedComments = $this->getRelatedComments();
         $alerts = $this->getSession()["alert"];
-        $user = $this->getSession()["user"];
-
-        $this->setSession(["article" => $article["id"]]);
 
         return $this->twig->render("articles/simpleArticle.twig", [
             "article" => $article,
             "comments" => $relatedComments,
             "alerts" => $alerts,
-            "user" => $user,
+            "user" => $this->getSession()["user"],
             "method" => "GET"
         ]);
    }
@@ -69,6 +66,12 @@ class ArticleController extends MainController
     public function updateArticleMethod(){
         // $this->defaultMethod();
 
+    }
+
+    public function deleteArticleMethod(){
+        // $id = $this->getGet("id");
+        // var_dump($id);
+        
     }
    
 
