@@ -1,0 +1,21 @@
+{% extends "layout/layout.twig" %}
+
+{% block alert %}
+
+   <div class="danger alert">
+
+      <p> {{message}} </p>
+
+      <button>
+         <a href="index.php?access=home">Non</a>
+      </button>
+
+      <button>
+         <a href="index.php?access=article_deleteArticle&id={{article.id}}">  Oui </a>
+      </button>
+
+   </div>
+
+{% endblock %}
+
+

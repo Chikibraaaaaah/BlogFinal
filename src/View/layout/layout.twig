@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-{% block head %}
-    {% include "layout/head.twig" %}
-{% endblock %}
 
 {% block header %}
     {% include "layout/header.twig" %}
@@ -16,7 +13,9 @@
         {% block auth %}{% endblock %}
     {% endblock %}
 
-    {% block alert %}{% endblock %}
+    {% block alert %}
+
+    {% endblock %}
 
     {% block article %}{% endblock %}
 

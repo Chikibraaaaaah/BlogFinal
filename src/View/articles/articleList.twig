@@ -20,8 +20,26 @@
         </article>
 
        <a href="index.php?access=article_getArticle&id={{article.id}}">Ajout un commentaire</a>
+
+       {% if user.role == 1 %}
+       
+            <button>
+                <a href="index.php?access=article_editArticle&id={{article.id}}">Modifier</a>
+            </button>
+
+            <button>
+                <a href="index.php?access=article_alertDeleteArticle&id={{article.id}}">Supprimer</a>
+            </button>
+
+       {% endif %}
+
+       {% for commentaire in commentaires %}
+            {% if commentaire.articleId == article.id %}
+                 <p>{{ commentaire.contenu|length }}</p>
+            {% endif %}
+            
+       {% endfor %}
         
     {% endfor %}
-
 
 {% endblock %}

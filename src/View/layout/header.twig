@@ -1,5 +1,11 @@
 <header>
-{% include "layout/head.twig" %}
-{% include "layout/navbar.twig" %}
+
+    {% block head %}
+        {% include "layout/head.twig" %}
+    {% endblock %}
+
+    {% block nav %}
+        {% include "layout/navbar.twig" %}
+    {% endblock %}
 
 </header>

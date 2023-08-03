@@ -88,9 +88,19 @@ class ArticleController extends MainController
 
     }
 
+    public function alertDeleteArticleMethod(){
+
+        $this->setSession(["alert" => "danger", "message" => "Êtes-vous certain de vouloir supprimer cet article ?"]);
+
+        return $this->twig->render("alert.twig", ["alert" => "danger", "message" => $this->getSession()["alert"]["message"], "article" => ModelFactory::getModel("Article")->readData($this->getGet("id"), "id")]);
+    }
+
     public function deleteArticleMethod(){
-        // $id = $this->getGet("id");
-        // var_dump($id);
+       
+        $id = $this->getGet()["id"];
+        ModelFactory::getModel("Article")->deleteData($id);
+
+        return $this->redirect("home");
         
     }
    

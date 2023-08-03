@@ -38,12 +38,11 @@ class HomeController extends MainController
             $comments[] = $relatedComments;
         }
 
-
         return  $this->twig->render("home.twig", [
                     "articles" => $articles,
                     "alert" => $alerts,
                     "user" => $user,
-                    "commentaires" => $comments
+                    "commentaires" => $comments[0]
                 ]);
     }
 
