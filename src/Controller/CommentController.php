@@ -13,7 +13,7 @@ class CommentController extends MainController
     public function createCommentMethod(){
 
         $auteur = $this->getSession()["user"]["id"];
-        $commentaire = $this->getPost("comment");
+        $commentaire = $this->getPost("commentaire_contenu");
         $articleId = $this->getSession()["alert"]["article"];
 
         $newComment = [
@@ -25,9 +25,12 @@ class CommentController extends MainController
 
         ModelFactory::getModel("Commentaire")->createData($newComment);
 
-        $this->setSession(["alert" => "success", "message" => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"]);
+        $this->setSession([
+            "alert" => "success",
+            "message" => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
+         ]);
 
-        $this->redirect("article_getArticleById", ["id" => $articleId]);
+        return $this->redirect("article_getArticle", ["id" => intval($articleId)]);
     }
 
     public function updateMethod(){

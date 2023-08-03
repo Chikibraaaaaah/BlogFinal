@@ -1,65 +1,32 @@
-
 {% extends "layout/layout.twig" %}
 
-{% block content %}
+{% block article %}
 
+    <article>
 
-{% if method == 'GET' %}
+        <h2> {{ article.titre }} - {{ article.datePublication }}</h2>
 
-  <article>
+        <figure>
+            <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
+            <figcaption>{{ article.contenu }}</figcaption>
+        </figure>
 
-      <h1> {{ article.titre }} </h1>
+    </article>
 
-      <figure>
+    <aside>
 
-         <img src=" {{ article.imgUrl }} " alt="{{ article.altImg }}">
-         <figcaption maxlength="10"> {{ article.contenu }} </figcaption>
-         
-      </figure>
+        {% block commentaires %}
 
-   </article>
+            {% include "commentaires/commentairesList.twig" %}
 
-      <time datetime=" {{ article.datePublication }} "></time>
+            {% if user %}
+                {% block createCommentaire %}
+                    {% include "commentaires/createCommentaire.twig" %}
+                {% endblock %}
+            {% endif %}
 
-      <aside>
+        {% endblock %}
 
-         {% for comment in comments %}
-         <div>
-            <p> {{ comment.contenu }} - {{ comment.auteurId }} 
-                 {% if comment.auteurId == user.id %}
-               <a href="index.php?access=comment_update&commentId={{ comment.id }}" class="btn btn-primary">Modifier <i class="fa-solid fa-pencil"></i></a>
-             {% endif %}
-            </p>
-        
-             
-         </div>
-
-         {% endfor %}
-      
-      </aside>
-
-      {% elseif method == "update" %}
-
-      <form action="">
-         <textarea name="comment" id="comment" cols="30" rows="10"> {{ comment.contenu }} </textarea>
-         <input type="file" name="img" id="img">
-         <button type="submit" >Enregister les modifications</button>
-      </form>
-
-{% endif %}
-
- 
-
-
-   {% block createComment %}
-      {% include "comments/createComment.twig" %}
-   {% endblock %} 
-
-   {% block delete %}
-      {% if article.auteurId == user.id %}
-             <button>Supprimer</button>
-      {% endif %}
-   {% endblock %}
-
+    </aside>
 
 {% endblock %}

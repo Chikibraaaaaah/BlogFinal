@@ -8,14 +8,8 @@
         <img src="../public/img/633217-les-simpson-une-enorme-incoherence-rep-diapo-2.webp" alt="iiiiiieieeing">
 
         {% block gallerie %}
-            {% include "articles/gallerie.twig" %}
+            {% include "articles/articleList.twig" %}
         {% endblock %}
-
-        {% if user.role == 1 %}
-                {% block createArticle %}
-                    {% include "articles/createArticle.twig" %}
-                {% endblock %}
-        {% endif %}
 
     </main>
 

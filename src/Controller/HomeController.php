@@ -29,10 +29,21 @@ class HomeController extends MainController
         $user = $this->getSession("user");
         $alerts = $this->getAlert("alert");
 
+        $comments = [];
+
+        foreach ($articles as $article => $value) {
+            $id = $value["id"];
+            $relatedComments = ModelFactory::getModel("Commentaire")->listData($id, "articleId");
+
+            $comments[] = $relatedComments;
+        }
+
+
         return  $this->twig->render("home.twig", [
-                    "allPublications" => $articles,
-                    "errors" => $alerts,
-                    "user" => $user
+                    "articles" => $articles,
+                    "alert" => $alerts,
+                    "user" => $user,
+                    "commentaires" => $comments
                 ]);
     }
 
@@ -42,6 +53,5 @@ class HomeController extends MainController
 
         return $articles;
    }
-
 
 }

@@ -14,3 +14,17 @@ body, main{
     width: 95%;
     margin: auto;
 }
+
+article {
+    background-color: red;
+    width: 60%;
+}
+
+article > figure > img {
+    margin: auto;
+}
+
+form label{
+    display: block;
+    background-color: red;
+}

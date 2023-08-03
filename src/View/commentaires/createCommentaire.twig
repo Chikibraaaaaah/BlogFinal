@@ -1,0 +1,15 @@
+{% block createArticle %}
+
+    <h2>Ajoutez un commentaire à {{ article.titre }} </h2>
+
+    <form action="index.php?access=comment_createComment" enctype="multipart/form-data" method="POST" class="commentaire_form">
+
+        <div class="mb-3">
+            <label for="commentaire_contenu" class="form-label">Votre commentaire: </label>
+            <textarea class="form-control" name="commentaire_contenu" id="commentaire_contenu" rows="10" required placeholder="Il était deux fois"></textarea>
+        </div>
+
+        <button class="btn btn-primary">Commenter</button>
+    </form>
+
+{% endblock %}

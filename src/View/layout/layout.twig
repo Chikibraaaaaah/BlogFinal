@@ -10,12 +10,15 @@
 <body>
 
 
-
 {% block main %}
 
-    {% block content %}DefautContrnt Check{% endblock %}
+    {% block content %}
+        {% block auth %}{% endblock %}
+    {% endblock %}
 
     {% block alert %}{% endblock %}
+
+    {% block article %}{% endblock %}
 
 {% endblock %}
 

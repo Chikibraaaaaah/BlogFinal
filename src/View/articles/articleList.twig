@@ -1,0 +1,27 @@
+{% block gallerie %}
+
+    {% if user.role == 1 %}
+            {% block createArticle %}
+                {% include "articles/createArticle.twig" %}
+            {% endblock %}
+    {% endif %}
+
+    {% for article in articles %}
+
+        <article>
+        
+            <h2> {{ article.titre }} - {{ article.datePublication }}</h2>
+
+            <figure>
+                <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
+                <figcaption>{{ article.contenu }}</figcaption>
+            </figure>
+
+        </article>
+
+       <a href="index.php?access=article_getArticle&id={{article.id}}">Ajout un commentaire</a>
+        
+    {% endfor %}
+
+
+{% endblock %}

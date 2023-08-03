@@ -1,45 +1,27 @@
-
 {% extends "layout/layout.twig" %}
 
-
-{% block main %}
-
-
-  {% block content %}
-
-
-
-
-    <h2>Se connecter</h2>
-
-    {% if alert %}
-    <div class="alert alert-danger">
-        {{ message }}
-    </div>
-
-{% endif %}
-
-<br>
+{% block auth %}
 
     <form action="index.php?access=auth_login" method="post">
-        <div>
-            <label for="email">Adresse email</label>
-            <input type="email" name="email" id="email">
+    
+        <div class="mb-3">
+            <label for="email" class="form-label">Adresse email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
         </div>
 
-        <div>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password">
+        {% block signup %}
+            {% if method == "signup" %}
+                {% include "auth/signup.twig" %}
+            {% endif %}
+        {% endblock %}
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="password" name="password">
         </div>
 
+        <button class="btn btn-primary">Se connecter</button>
 
-        <button type="submit">Se connecter</button>
-
-</form>
-
-{% endblock %}
-
-<a href="index.php?access=auth_createAccount">Pas encore inscrit</a>
+    </form>
 
 {% endblock %}
-

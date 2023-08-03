@@ -1,57 +1,13 @@
+{% block signup %}
 
-{% extends "layout/layout.twig" %}
-
-
-{% block main %}
-
-
-  {% block content %}
-
-
-
-
-    <h2>Créer votre compte</h2>
-
-   
-
-<br>
-
-
-
-    <form action="index.php?access=auth_signup" method="post">
-        <div>
+        <div class="mb-3">
             <label for="userName">Nom d'utilisateur</label>
-            <input type="text" name="userName" id="userName">
-        </div>
-        <div>
-            <label for="email">Adresse email</label>
-            <input type="email" name="email" id="email">
+            <input type="text" class="form-control" id="userName" required>
         </div>
 
-        <div>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password">
+        <div class="mb-3">
+            <label for="password_check" class="form-label">Vérifiez votre mot de passe</label>
+            <input type="password" class="form-control" id="password_check" required>
         </div>
-
-            <div>
-            <label for="passwordCheck">Confirmez votre mot de passe</label>
-            <input type="password" name="passwordCheck" id="passwordCheck">
-        </div>
-
-
-        <button type="submit">S'inscrire</button>
-
-</form>
-
- {# {% if alert %}
-    <div class="alert alert-danger">
-        {{ message }}
-    </div>
-
-{% endif %} #}
-{% endblock %}
-
-<a href="index.php?access=auth">J'ai déjà un compte</a>
 
 {% endblock %}
-

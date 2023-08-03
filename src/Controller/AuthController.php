@@ -55,6 +55,7 @@ class AuthController extends MainController
         $userCreated = ModelFactory::getModel("Utilisateur")->readData($newUser["email"], "email");
 
         $this->setSession($userCreated, true);
+        $user["isLogged"] = true;
         
         return $this->redirect("home");
     }
@@ -66,19 +67,23 @@ class AuthController extends MainController
             $user = ModelFactory::getModel("Utilisateur")->listData($this->getPost("email"), "email")[0];
 
             if(!$user){
-                $this->setSession(["alert" => "danger", "message" => "Email non reconnu"]);
-                return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $_SESSION["alert"]["message"]]);
+                $this->setSession(["alert" => "danger", "message" => "Email non reconnu."]);
+                return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $this->getSession()["alert"]["message"]]);
             }
 
             if (password_verify($this->getPost("password"), $user['password'])) {
+                $user["isLogged"] = true;
                 $this->setSession($user, true);
+                $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);
                 return $this->redirect("home");
             }
 
-            $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide"]);
+            $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide."]);
             
             return $this->redirect("auth_login");
         }
+
+        $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
         return $this->redirect("auth");
         
@@ -88,6 +93,7 @@ class AuthController extends MainController
     
     public function logoutMethod(){
         $this->destroyGlobal();
+        $user["isLogged"] = false;
         return $this->redirect("home");
     }
 }

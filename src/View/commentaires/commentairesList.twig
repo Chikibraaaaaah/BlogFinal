@@ -1,0 +1,25 @@
+{% if user.isLogged == true %}
+
+    {% for commentaire in commentaires %}
+
+        {# {% if commentaire.valide == 1 %} #}
+            <div>
+                <p>
+                        {{ commentaire.contenu }} - <strong>{{ commentaire.auteurId }}</strong> 
+                    <time datetime="{{ commentaire.datePublication }}">{{ commentaire.datePublication }}</time>
+                </p>  
+            </div>
+        {# {% endif %} #}
+
+    {% endfor %}
+    
+{% else %}
+            
+    <p>Vous devez être authentifié pour poster un commentaire</p>
+    <a href="index.php?access=auth_login">Se Connecter</a>
+
+{% endif %}
+
+
+        
+   

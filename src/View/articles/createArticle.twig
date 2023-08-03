@@ -1,17 +1,25 @@
+{% block createArticle %}
 
-    {% block createArticle %}
-        <div>
-        <form action="index.php?access=article_createArticle" method="post" enctype="multipart/form-data">
-        
-        <label for="titre">Titre de votre article</label>
-        <input type="text" name="titre" id="titre" required>
-        <textarea name="article" id="article" cols="30" rows="10" required></textarea>
-        <input type="file" name="img" id="img" accept="image/*"  required> 
+    <h2>Créer une nouvelle publication</h2>
 
-        <button>Publier</button>
+    <form action="index.php?access=article_createArticle" enctype="multipart/form-data" method="POST">
 
-        </form>
-    </div>
+        <div class="mb-3">
+            <label for="titre_article" class="form-label">Titre de votre publication</label>
+            <input type="text" name="titre_article" class="form-control form-control-lg" id="titre_article" required>
+        </div>
 
-    {% endblock %}
+        <div class="mb-3">
+            <label for="article_contenu" class="form-label">Ecrivez votre article</label>
+            <textarea class="form-control" name="article_contenu" id="article_contenu" rows="10" required placeholder="Il était une fois"></textarea>
+        </div>
 
+        <div class="mb-3">
+            <label for="article_img" class="form-label"></label>
+            <input type="file" name="article_img" class="form-control" id="article_img" required>
+        </div>
+
+        <button class="btn btn-primary">Publier</button>
+    </form>
+
+{% endblock %}

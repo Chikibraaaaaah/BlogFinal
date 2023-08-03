@@ -13,34 +13,24 @@ class ArticleController extends MainController
   private $datePublication;
 
    public function defaultMethod(){
-
-        $article = $this->getArticleById();
-        $relatedComments = $this->getRelatedComments();
-        $alerts = $this->getSession()["alert"];
-
-        return $this->twig->render("articles/simpleArticle.twig", [
-            "article" => $article,
-            "comments" => $relatedComments,
-            "alerts" => $alerts,
-            "user" => $this->getSession()["user"],
-            "method" => "GET"
-        ]);
+   
    }
 
-   public function getArticleById(){
 
-        $id = $this->getGet("id");
-        $article = ModelFactory::getModel("Article")->listData(intval($id), "id")[0];
+   public function getArticleMethod(){
 
-        return $article;
-   }
+    $articleId = $this->getGet("id");
+    $article = ModelFactory::getModel("Article")->readData($articleId,"id");
+    $relatedComments = ModelFactory::getModel("Commentaire")->listData($articleId,"articleId");
 
-   public function getRelatedComments(){
+    $this->setSession(["article" => intval($articleId)]);
 
-        $article = $this->getArticleById();
-        $comments = ModelFactory::getModel("Commentaire")->listData(intval( $article["id"]), "articleId");
-       
-        return $comments;
+    return $this->twig->render("articles/simpleArticle.twig",[
+        "user" => $this->getSession()["user"],
+        "article" => $article,
+        "commentaires" => $relatedComments
+    ]);
+
    }
 
     public function createArticleMethod(){ 
@@ -48,10 +38,10 @@ class ArticleController extends MainController
         $destination = $this->uploadFile();
 
         $article = [
-            "titre"=> $this->getPost("titre"),
-            "contenu"=> $this->getPost("article"),
+            "titre"=> $this->getPost("titre_article"),
+            "contenu"=> $this->getPost("article_contenu"),
             "imgUrl"=> $destination,
-            "altImg" => $this->getPost("article"),
+            "altImg" => $this->getPost("article_contenu"),
             "datePublication"=> date("Y-m-d H:i:s")
         ];
 
@@ -63,8 +53,38 @@ class ArticleController extends MainController
 
     }
 
+    public function editArticleMethod(){
+
+        // $article = $this->getArticleById();
+        // $relatedComments = $this->getRelatedComments();
+        // $alerts = $this->getSession()["alert"];
+    
+        // return $this->twig->render("articles/simpleArticle.twig", [
+        //     "article" => $article,
+        //     "comments" => $relatedComments,
+        //     "alerts" => $alerts,
+        //     "user" => $this->getSession()["user"],
+        //     "method" => "PUT"
+        // ]);
+    }
+
     public function updateArticleMethod(){
-        // $this->defaultMethod();
+
+        // $article = $this->getArticleById();
+        // $newTitre = $this->getPost()["titre"] ?? $article["titre"];
+        // $newContent = $this->getPost()["article"] ?? $article["contenu"];
+        // $newImg = $this->getFiles()["img"] ?? $article["imgUrl"];
+
+        // $newArticle = [
+        //     "titre" => $newTitre,
+        //     "contenu" => $newContent,
+        //     "imgUrl" => $newImg
+        // ];
+
+        // var_dump($article);
+
+        // $tes = ModelFactory::getModel("Article")->updateData($article["id"], $newArticle, "id");
+        // var_dump($tes);
 
     }
 
@@ -81,14 +101,14 @@ class ArticleController extends MainController
         // Undefined | Multiple Files | $this->getFiles() Corruption Attack
         // If this request falls under any of them, treat it invalid.
         if (
-            !isset($this->getFiles()['img']['error']) ||
-            is_array($this->getFiles()['img']['error'])
+            !isset($this->getFiles()['article_img']['error']) ||
+            is_array($this->getFiles()['article_img']['error'])
         ) {
             throw new RuntimeException('Invalid parameters.');
         }
     
         // Check $this->getFiles()['img']['error'] value.
-        switch ($this->getFiles()['img']['error']) {
+        switch ($this->getFiles()['article_img']['error']) {
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
@@ -101,13 +121,13 @@ class ArticleController extends MainController
         }
     
         // You should also check filesize here.
-        if ($this->getFiles()['img']['size'] > 1000000) {
+        if ($this->getFiles()['article_img']['size'] > 1000000) {
             throw new RuntimeException('Taille maiximale 1MB.');
         }
     
         // Check MIME Type by yourself.
 
-        $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
+        $fileMimeType = mime_content_type($this->getFiles()['article_img']['tmp_name']);
         $validMimeTypes = array(
             'jpg' => 'image/jpg',
             'jpeg' => 'image/jpeg',
@@ -124,14 +144,14 @@ class ArticleController extends MainController
 
         $fileDestination = sprintf(
             './img/%s.%s',
-            sha1_file($this->getFiles()['img']['tmp_name']), 
+            sha1_file($this->getFiles()['article_img']['tmp_name']), 
             $ext
         );
 
         // You should name it uniquely.
         // On this example, obtain safe unique name from its binary data.
         if (!move_uploaded_file(
-            $this->getFiles()['img']['tmp_name'],
+            $this->getFiles()['article_img']['tmp_name'],
             $fileDestination
         )) {
     
