@@ -10,9 +10,21 @@
          <a href="index.php?access=home">Non</a>
       </button>
 
-      <button>
-         <a href="index.php?access=article_deleteArticle&id={{article.id}}">  Oui </a>
-      </button>
+      {% if commentaire %}
+      
+         <button>
+            <a href="index.php?access=comment_deleteComment&id={{commentaire.id}}">Supprimer</a>
+         </button>
+
+      {% else %}
+            
+         <button>
+            <a href="index.php?access=article_deleteArticle&id={{article.id}}">  Oui </a>
+         </button>
+      
+      {% endif %}
+      
+
 
    </div>
 

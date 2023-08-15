@@ -11,7 +11,7 @@
                     {% if commentaire.auteurId == user.id %}
 
                         <button class="btn btn-danger">
-                        <a href="index.php?access=comment_getComment&id={{ commentaire.id }}">Supprimer</a></button>
+                        <a href="index.php?access=comment_confirmDeleteComment&id={{ commentaire.id }}">Supprimer</a></button>
                     
                     {% endif %}
                 </p>  

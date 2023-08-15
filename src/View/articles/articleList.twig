@@ -6,7 +6,7 @@
             {% endblock %}
     {% endif %}
 
-    {% for article in articles %}
+    {% for article in articles | sort((a, b) => a.datePublication <=> b.datePublication) | reverse %}
 
         <article>
         
@@ -35,7 +35,7 @@
 
        {% for commentaire in commentaires %}
             {% if commentaire.articleId == article.id %}
-                 <p>{{ commentaire.contenu|length }}</p>
+                 <p>{{ commentaire |length }}</p>
             {% endif %}
             
        {% endfor %}
