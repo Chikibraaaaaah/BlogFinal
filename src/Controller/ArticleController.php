@@ -16,14 +16,19 @@ class ArticleController extends MainController
    
    }
 
+   public function getArticleById(){
+       
+        $articleId = $this->getGet("id");
+        $article = ModelFactory::getModel("Article")->readData($articleId,"id");
 
-   public function getArticleMethod(){
+            return $article;
+   }
 
-    $articleId = $this->getGet("id");
-    $article = ModelFactory::getModel("Article")->readData($articleId,"id");
-    $relatedComments = ModelFactory::getModel("Commentaire")->listData($articleId,"articleId");
 
-    $this->setSession(["article" => intval($articleId)]);
+   public function renderArticleMethod(){
+
+    $article = $this->getArticleById();
+    $relatedComments = ModelFactory::getModel("Commentaire")->listData($article["id"],"articleId");
 
     return $this->twig->render("articles/simpleArticle.twig",[
         "user" => $this->getSession()["user"],
@@ -54,39 +59,35 @@ class ArticleController extends MainController
     }
 
     public function editArticleMethod(){
-
-        // $article = $this->getArticleById();
-        // $relatedComments = $this->getRelatedComments();
-        // $alerts = $this->getSession()["alert"];
-    
-        // return $this->twig->render("articles/simpleArticle.twig", [
-        //     "article" => $article,
-        //     "comments" => $relatedComments,
-        //     "alerts" => $alerts,
-        //     "user" => $this->getSession()["user"],
-        //     "method" => "PUT"
-        // ]);
+        
+       $article = $this->getArticleById();
+       
+       return $this->twig->render("articles/editArticle.twig", [
+           "article" => $article,
+           "user" => $this->getSession()["user"]
+       ]);
     }
 
-    public function updateArticleMethod(){
+    public function updateArticleMethod() {
 
-        // $article = $this->getArticleById();
-        // $newTitre = $this->getPost()["titre"] ?? $article["titre"];
-        // $newContent = $this->getPost()["article"] ?? $article["contenu"];
-        // $newImg = $this->getFiles()["img"] ?? $article["imgUrl"];
+        if($this->checkInputs()){
+            $existingArticle = $this->getArticleById();      
+            $updatedArticle = array_merge($existingArticle, $this->getPost());
+            $updatedArticle["altImg"] = $this->getPost("contenu");
 
-        // $newArticle = [
-        //     "titre" => $newTitre,
-        //     "contenu" => $newContent,
-        //     "imgUrl" => $newImg
-        // ];
+            ModelFactory::getModel("Article")->updateData($updatedArticle["id"], $updatedArticle);
+        }
 
-        // var_dump($article);
+        var_dump($this->checkInputs());
 
-        // $tes = ModelFactory::getModel("Article")->updateData($article["id"], $newArticle, "id");
-        // var_dump($tes);
+        die();
 
-    }
+        
+
+        echo 'good';
+        
+        }
+
 
     public function alertDeleteArticleMethod(){
 
@@ -175,5 +176,15 @@ class ArticleController extends MainController
             echo $e->getMessage();
         }
   
+    }
+
+    public function deleteFileMethod(){
+
+        $img = $this->getArticleById()["imgUrl"];
+
+        // if(array_key_exists($img, ))
+
+        var_dump(realpath(__DIR__ . '/public'));
+        die();
     }
 }

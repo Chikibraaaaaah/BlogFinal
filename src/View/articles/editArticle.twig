@@ -1,0 +1,30 @@
+{% extends "layout/layout.twig" %}
+
+    {% block edit %}
+
+    <form action="index.php?access=article_updateArticle&id={{article.id}}" enctype="multipart/form-data" method="post">
+      <label for="titre">Titre de votrep ublication</label>
+      <input type="text" name="titre" id="titre"  value="{{article.titre}}">
+
+       <figure>
+         <img src="{{article.imgUrl}}" alt=" {{article.altImg}}">
+         <figcaption>
+            <textarea name="contenu" id="contenu" cols="30" rows="10">
+               {{article.contenu}}
+            </textarea>
+         </figcaption>
+       </figure>
+
+       <input type="file" name="img" id="img">
+
+       <button>Enregistrer</button>
+
+       
+    </form>
+    
+    <button>
+    <a href="index.php?access=article_deleteFile&id={{article.id}}">Supprimer</a>
+    </button>
+
+
+    {% endblock %}
