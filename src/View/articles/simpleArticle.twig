@@ -9,6 +9,12 @@
         <figure>
             <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
             <figcaption>{{ article.contenu }}</figcaption>
+            {% if user.role == 1 %}
+                <button>
+                    <a href="index.php?access=article_deleteArticle&id={{article.id}}">Supprimer</a>
+                </button>
+            {% endif %}
+            
         </figure>
 
     </article>

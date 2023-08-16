@@ -43,10 +43,10 @@ class ArticleController extends MainController
         $destination = $this->uploadFile();
 
         $article = [
-            "titre"=> $this->getPost("titre_article"),
-            "contenu"=> $this->getPost("article_contenu"),
+            "titre"=> addslashes($this->getPost("titre_article")),
+            "contenu"=>  addslashes($this->getPost("article_contenu")),
             "imgUrl"=> $destination,
-            "altImg" => $this->getPost("article_contenu"),
+            "altImg" => addslashes($this->getPost("article_contenu")),
             "datePublication"=> date("Y-m-d H:i:s")
         ];
 
@@ -54,7 +54,7 @@ class ArticleController extends MainController
 
         $this->setSession(["alert" => "success", "message" => "Votre article a été créé"]);
 
-        $this->redirect("home");
+       return $this->redirect("home");
 
     }
 
@@ -69,24 +69,30 @@ class ArticleController extends MainController
     }
 
     public function updateArticleMethod() {
-
-        if($this->checkInputs()){
-            $existingArticle = $this->getArticleById();      
+        $existingArticle = $this->getArticleById();     
+    
+        if ($this->checkInputs()) {
             $updatedArticle = array_merge($existingArticle, $this->getPost());
+    
+            if (count($this->getFiles()) > 0) {
+                if ($this->getFiles()["article_img"]["size"] > 0 && $this->getFiles()["article_img"]["size"] < 1000000) {
+                    $this->deleteFile();
+                    $destination = $this->uploadFile();
+                    $updatedArticle["imgUrl"] = $destination;
+                } else {
+                    $updatedArticle["imgUrl"] = $existingArticle["imgUrl"];
+                }
+            }
+    
             $updatedArticle["altImg"] = $this->getPost("contenu");
-
+            $updatedArticle["dateModification"] = date("Y-m-d H:i:s");
+    
             ModelFactory::getModel("Article")->updateData($updatedArticle["id"], $updatedArticle);
+    
+            return $this->redirect("article_renderArticle", ["id" => $updatedArticle["id"]]);
         }
-
-        var_dump($this->checkInputs());
-
-        die();
-
-        
-
-        echo 'good';
-        
-        }
+    }
+    
 
 
     public function alertDeleteArticleMethod(){
@@ -169,7 +175,7 @@ class ArticleController extends MainController
             throw new RuntimeException('Il y a eu un problème lors du déplacement du fichier.');
         }
 
-        echo 'Votre photo a été importée avec succès.';
+        // echo 'Votre photo a été importée avec succès.';
         return $fileDestination;
 
         }catch (RuntimeException $e) {
@@ -178,13 +184,15 @@ class ArticleController extends MainController
   
     }
 
-    public function deleteFileMethod(){
+    public function deleteFile(){
 
-        $img = $this->getArticleById()["imgUrl"];
+        $imgPath = $this->getArticleById()["imgUrl"];
 
-        // if(array_key_exists($img, ))
+        if(file_exists($imgPath)){
+            unlink($imgPath);
+           return ;
+        }
 
-        var_dump(realpath(__DIR__ . '/public'));
-        die();
+        return $this->setSession(["alert" => "danger", "message" => "Le fichier n'existe pas"]);
     }
 }

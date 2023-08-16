@@ -21,7 +21,7 @@ class CommentController extends MainController
 
         $this->auteurId = $this->getSession()["user"]["id"];
         $this->contenu = $this->getPost("commentaire_contenu");
-        $this->articleId = $this->getSession()["alert"]["article"];
+        $this->articleId = $this->getGet("id");
 
         $newComment = [
             "auteurId" => intval($this->auteurId),
@@ -37,7 +37,7 @@ class CommentController extends MainController
             "message" => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
          ]);
 
-        return $this->redirect("article_getArticle", ["id" => intval($this->articleId)]);
+        return $this->redirect("article_renderArticle", ["id" => intval($this->articleId)]);
     }
 
     // public function updateMethod(){

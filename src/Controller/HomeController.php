@@ -32,7 +32,9 @@ class HomeController extends MainController
         $comments = [];
 
         foreach ($articles as $article => $value) {
+            
             $id = $value["id"];
+
             $relatedComments = ModelFactory::getModel("Commentaire")->listData($id, "articleId");
 
             $comments[] = $relatedComments;
