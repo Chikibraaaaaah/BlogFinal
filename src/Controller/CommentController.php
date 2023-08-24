@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Model\Factory\ModelFactory;
 
 class CommentController extends MainController
@@ -20,7 +21,7 @@ class CommentController extends MainController
     public function createCommentMethod(){
 
         $this->auteurId = $this->getSession()["user"]["id"];
-        $this->contenu = $this->getPost("commentaire_contenu");
+        $this->contenu = $this->getPost("contenu");
         $this->articleId = $this->getGet("id");
 
         $newComment = [
@@ -40,23 +41,42 @@ class CommentController extends MainController
         return $this->redirect("article_renderArticle", ["id" => intval($this->articleId)]);
     }
 
-    // public function updateMethod(){
+    public function updateCommentMethod(){
        
-    //     $articleId = $this->getComment("articleId")["articleId"];
-    //     $comments = ModelFactory::getModel("Commentaire")->readData(intval($articleId), "articleId");
-    //     $article = ModelFactory::getModel("Article")->readData($articleId, "id");
+        $existingComment = ModelFactory::getModel("Commentaire")->listData($this->getCommentById(), "id")[0];     
+    var_dump($this->checkInputs());
+    die();
+        if ($this->checkInputs()) {
 
-    //     var_dump($comments);
+            $updatedComment = array_merge($existingComment, $this->getPost()["contenu"]);
+            $updatedComment["contenu"] = addslashes($updatedComment["contenu"]);
+            $updatedComment["dateModification"] = date("Y-m-d H:i:s");
+    
+            ModelFactory::getModel("Commentaire")->updateData($existingComment["id"], $updatedComment);
 
-    //     return $this->twig->render("articles/simpleArticle.twig");
-    // } 
+            var_dump(ModelFactory::getModel("Commentaire")->listData($this->getCommentById(), "id")[0]);
+            die();
 
-    public function getComment(){
+            // $this->redirect("article_renderArticle", ["id" => $updatedComment["articleId"]]);
+
+        } 
+}
+
+    public function getCommentById(){
        
-        $id = $this->getGet("commentId");
-        $comment = ModelFactory::getModel("Commentaire")->readData($id, "id");
+        $commentId = $this->getGet()["id"];
 
-        return $comment;
+        return $commentId;
+
+    }
+
+    public function editCommentMethod(){
+
+        $commentaire = ModelFactory::getModel("Commentaire")->listData($this->getGet("id"), "id")[0];
+        $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"], "id");
+        $relatedComments = ModelFactory::getModel("Commentaire")->listData($article["id"], "articleId");
+
+        return $this->twig->render("articles/simpleArticle.twig", [ "article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT" ]);
 
     }
 

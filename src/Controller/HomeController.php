@@ -27,7 +27,8 @@ class HomeController extends MainController
     {  
         $articles = $this->getArticles();
         $user = $this->getSession("user");
-        $alerts = $this->getAlert("alert");
+        $alert = $this->getSession()["alert"];
+
 
         $comments = [];
 
@@ -42,7 +43,7 @@ class HomeController extends MainController
 
         return  $this->twig->render("home.twig", [
                     "articles" => $articles,
-                    "alert" => $alerts,
+                    "alert" => $alert,
                     "user" => $user,
                     "commentaires" => $comments[0]
                 ]);

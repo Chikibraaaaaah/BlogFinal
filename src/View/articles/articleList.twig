@@ -1,5 +1,9 @@
 {% block gallerie %}
 
+{% block alert %}
+    {{ alert.message }} 
+{% endblock %}
+
     {% if user.role == 1 %}
             {% block createArticle %}
                 {% include "articles/createArticle.twig" %}

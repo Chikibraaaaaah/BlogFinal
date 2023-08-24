@@ -1,66 +1,69 @@
 <?php
 
 namespace App\Controller;
+
 use App\Model\Factory\ModelFactory;
 use Twig\Error\LoaderError;
+
 use RuntimeException;
+
 class ArticleController extends MainController
 {
+    private $titre;
+    private $contenu;
+    private $img;
+    private $datePublication;
 
-  private $titre;
-  private $contenu;
-  private $img;
-  private $datePublication;
+    public function defaultMethod(){
+    
+    }
 
-   public function defaultMethod(){
-   
-   }
+    public function getArticleById(){
+        
+            $articleId = $this->getGet("id");
+            $article = ModelFactory::getModel("Article")->readData($articleId,"id");
 
-   public function getArticleById(){
-       
-        $articleId = $this->getGet("id");
-        $article = ModelFactory::getModel("Article")->readData($articleId,"id");
-
-            return $article;
-   }
+                return $article;
+    }
 
 
-   public function renderArticleMethod(){
+    public function renderArticleMethod(){
 
-    $article = $this->getArticleById();
-    $relatedComments = ModelFactory::getModel("Commentaire")->listData($article["id"],"articleId");
+        $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
+        $relatedComments = ModelFactory::getModel("Commentaire")->listData($article["id"],"articleId");
 
-    return $this->twig->render("articles/simpleArticle.twig",[
-        "user" => $this->getSession()["user"],
-        "article" => $article,
-        "commentaires" => $relatedComments
-    ]);
+        return $this->twig->render("articles/simpleArticle.twig",[
+            "user" => $this->getSession()["user"],
+            "article" => $article,
+            "commentaires" => $relatedComments
+        ]);
 
-   }
+    }
 
-    public function createArticleMethod(){ 
+        public function createArticleMethod(){ 
 
-        $destination = $this->uploadFile();
+            $destination = $this->uploadFile();
 
-        $article = [
-            "titre"=> addslashes($this->getPost("titre_article")),
-            "contenu"=>  addslashes($this->getPost("article_contenu")),
-            "imgUrl"=> $destination,
-            "altImg" => addslashes($this->getPost("article_contenu")),
-            "datePublication"=> date("Y-m-d H:i:s")
-        ];
+            $article = [
+                "titre"=> addslashes($this->getPost("titre_article")),
+                "contenu"=>  addslashes($this->getPost("article_contenu")),
+                "imgUrl"=> $destination,
+                "altImg" => addslashes($this->getPost("article_contenu")),
+                "datePublication"=> date("Y-m-d H:i:s")
+            ];
 
-        ModelFactory::getModel("Article")->createData($article);
+            ModelFactory::getModel("Article")->createData($article);
 
-        $this->setSession(["alert" => "success", "message" => "Votre article a été créé"]);
+            $this->setSession(["alert" => "success", "message" => "Votre article a été créé"]);
 
-       return $this->redirect("home");
+            $this->redirect("home");
 
     }
 
     public function editArticleMethod(){
         
        $article = $this->getArticleById();
+       trim($article["contenu"]);
        
        return $this->twig->render("articles/editArticle.twig", [
            "article" => $article,
@@ -69,11 +72,13 @@ class ArticleController extends MainController
     }
 
     public function updateArticleMethod() {
+
         $existingArticle = $this->getArticleById();     
     
         if ($this->checkInputs()) {
+
             $updatedArticle = array_merge($existingArticle, $this->getPost());
-    
+       
             if (count($this->getFiles()) > 0) {
                 if ($this->getFiles()["article_img"]["size"] > 0 && $this->getFiles()["article_img"]["size"] < 1000000) {
                     $this->deleteFile();
@@ -84,16 +89,16 @@ class ArticleController extends MainController
                 }
             }
     
-            $updatedArticle["altImg"] = $this->getPost("contenu");
+            $updatedArticle["altImg"] = addslashes($this->getPost("contenu"));
+            $updatedArticle["titre"] = addslashes($updatedArticle["titre"]);
+            $updatedArticle["contenu"] = addslashes($updatedArticle["contenu"]);
             $updatedArticle["dateModification"] = date("Y-m-d H:i:s");
     
             ModelFactory::getModel("Article")->updateData($updatedArticle["id"], $updatedArticle);
     
-            return $this->redirect("article_renderArticle", ["id" => $updatedArticle["id"]]);
+            $this->redirect("article_renderArticle", ["id" => $updatedArticle["id"]]);
         }
     }
-    
-
 
     public function alertDeleteArticleMethod(){
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Model\Factory\ModelFactory;
 use App\Model\Utilisateur;
 use App\Model\Factory\PdoFactory;

@@ -26,9 +26,20 @@
             {% include "commentaires/commentairesList.twig" %}
 
             {% if user %}
-                {% block createCommentaire %}
-                    {% include "commentaires/createCommentaire.twig" %}
-                {% endblock %}
+
+            {% if myCommentaire %}
+
+                {% include "commentaires/editCommentaire.twig" %}
+
+            {% else %}
+
+                {% include "commentaires/createCommentaire.twig" %}
+                         
+            {% endif %}
+            
+
+                
+                
             {% endif %}
 
         {% endblock %}
