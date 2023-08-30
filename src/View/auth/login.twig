@@ -1,6 +1,4 @@
-{% extends "layout/layout.twig" %}
-
-{% block auth %}
+{% block login %}
 
     <form action="index.php?access=auth_login" method="post">
     
@@ -9,11 +7,6 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
         </div>
 
-        {% block signup %}
-            {% if method == "signup" %}
-                {% include "auth/signup.twig" %}
-            {% endif %}
-        {% endblock %}
 
         <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
@@ -23,5 +16,9 @@
         <button class="btn btn-primary">Se connecter</button>
 
     </form>
+
+    <a href="index.php?access=auth_createAccount">
+        <button class="btn btn-primary">S'inscrire</button>
+    </a>
 
 {% endblock %}

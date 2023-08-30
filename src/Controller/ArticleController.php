@@ -4,15 +4,14 @@ namespace App\Controller;
 
 use App\Model\Factory\ModelFactory;
 use Twig\Error\LoaderError;
-
 use RuntimeException;
 
 class ArticleController extends MainController
 {
-    private $titre;
-    private $contenu;
+    private $title;
+    private $content;
     private $img;
-    private $datePublication;
+    private $createdAt;
 
     public function defaultMethod(){
     
@@ -30,12 +29,12 @@ class ArticleController extends MainController
     public function renderArticleMethod(){
 
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
-        $relatedComments = ModelFactory::getModel("Commentaire")->listData($article["id"],"articleId");
+        $relatedComments = ModelFactory::getModel("Comments")->listData($article["id"],"articleId");
 
         return $this->twig->render("articles/simpleArticle.twig",[
             "user" => $this->getSession()["user"],
             "article" => $article,
-            "commentaires" => $relatedComments
+            "comments" => $relatedComments
         ]);
 
     }
@@ -45,11 +44,11 @@ class ArticleController extends MainController
             $destination = $this->uploadFile();
 
             $article = [
-                "titre"=> addslashes($this->getPost("titre_article")),
-                "contenu"=>  addslashes($this->getPost("article_contenu")),
+                "title"=> addslashes($this->getPost("title_article")),
+                "content"=>  addslashes($this->getPost("article_content")),
                 "imgUrl"=> $destination,
-                "altImg" => addslashes($this->getPost("article_contenu")),
-                "datePublication"=> date("Y-m-d H:i:s")
+                "altImg" => addslashes($this->getPost("article_content")),
+                "createdAt"=> date("Y-m-d H:i:s")
             ];
 
             ModelFactory::getModel("Article")->createData($article);
@@ -63,7 +62,7 @@ class ArticleController extends MainController
     public function editArticleMethod(){
         
        $article = $this->getArticleById();
-       trim($article["contenu"]);
+       trim($article["content"]);
        
        return $this->twig->render("articles/editArticle.twig", [
            "article" => $article,
@@ -89,10 +88,10 @@ class ArticleController extends MainController
                 }
             }
     
-            $updatedArticle["altImg"] = addslashes($this->getPost("contenu"));
-            $updatedArticle["titre"] = addslashes($updatedArticle["titre"]);
-            $updatedArticle["contenu"] = addslashes($updatedArticle["contenu"]);
-            $updatedArticle["dateModification"] = date("Y-m-d H:i:s");
+            $updatedArticle["altImg"] = addslashes($this->getPost("content"));
+            $updatedArticle["title"] = addslashes($updatedArticle["title"]);
+            $updatedArticle["content"] = addslashes($updatedArticle["content"]);
+            $updatedArticle["updatedAt"] = date("Y-m-d H:i:s");
     
             ModelFactory::getModel("Article")->updateData($updatedArticle["id"], $updatedArticle);
     

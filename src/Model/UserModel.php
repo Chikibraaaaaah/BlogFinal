@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class UtilisateurModel extends MainModel
+class UserModel extends MainModel
 {
     
     private $userName;

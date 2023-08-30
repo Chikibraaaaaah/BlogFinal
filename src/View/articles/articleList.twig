@@ -10,15 +10,15 @@
             {% endblock %}
     {% endif %}
 
-    {% for article in articles | sort((a, b) => a.datePublication <=> b.datePublication) | reverse %}
+    {% for article in articles | sort((a, b) => a.createdAt <=> b.createdAt) | reverse %}
 
         <article>
         
-            <h2> {{ article.titre }} - {{ article.datePublication }}</h2>
+            <h2> {{ article.title }} - {{ article.createdAt }}</h2>
 
             <figure>
                 <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
-                <figcaption>{{ article.contenu }}</figcaption>
+                <figcaption>{{ article.content }}</figcaption>
             </figure>
 
         </article>

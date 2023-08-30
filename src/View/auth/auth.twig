@@ -1,0 +1,16 @@
+{% extends "layout/layout.twig" %}
+
+{% block auth %}
+
+        {% if method == "login" %}
+
+            {% include "auth/login.twig" %}
+
+        {% else %}
+                
+              {% include "auth/signup.twig" %}
+
+        {% endif %}
+
+{% endblock %}
+

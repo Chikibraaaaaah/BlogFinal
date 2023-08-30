@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 
-{% block header %}
-    {% include "layout/header.twig" %}
-{% endblock %}
+    {% block header %}
 
-<body>
-
-
-{% block main %}
-
-    {% block content %}
-        {% block auth %}{% endblock %}
-        {% block edit %}{% endblock %}
-    {% endblock %}
-
-    {% block alert %}
+        {% include "layout/header.twig" %}
 
     {% endblock %}
 
-    {% block article %}{% endblock %}
+    <body>
 
-{% endblock %}
+        {% block main %}
 
+                {% block content %}
 
-    
-</body>
+                    {% block auth %}{% endblock %}
 
-{% block footer %}
-    {% include "layout/footer.twig" %}
-{% endblock %}
+                    {% block edit %}{% endblock %}
+
+                    {% block alert %}{% endblock %}
+
+                {% endblock %}
+
+            {% block article %}{% endblock %}
+
+        {% endblock %}
+
+    </body>
+
+    {% block footer %}
+
+        {% include "layout/footer.twig" %}
+
+    {% endblock %}
 
 </html>

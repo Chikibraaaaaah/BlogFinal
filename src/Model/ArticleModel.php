@@ -5,9 +5,9 @@ namespace App\Model;
 class ArticleModel extends MainModel
 {
 
-    private $titre;
+    private $title;
 
-    private $contenu;
+    private $content;
 
     private $img;
 

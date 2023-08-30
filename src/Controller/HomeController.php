@@ -36,16 +36,21 @@ class HomeController extends MainController
             
             $id = $value["id"];
 
-            $relatedComments = ModelFactory::getModel("Commentaire")->listData($id, "articleId");
+            $relatedComments = ModelFactory::getModel("Comment")->listData($id, "articleId");
 
             $comments[] = $relatedComments;
         }
+
+        // echo "<pre>";
+        // var_dump($this->getSession());
+        // echo "</pre>";
+        // die();
 
         return  $this->twig->render("home.twig", [
                     "articles" => $articles,
                     "alert" => $alert,
                     "user" => $user,
-                    "commentaires" => $comments[0]
+                    "comments" => $comments[0]
                 ]);
     }
 

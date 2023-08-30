@@ -5,8 +5,8 @@
         {# {% if commentaire.valide == 1 %} #}
             <div>
                 <p>
-                    {{ commentaire.contenu }} - <strong>{{ commentaire.auteurId }}</strong> 
-                    <time datetime="{{ commentaire.datePublication }}">{{ commentaire.datePublication }}</time>
+                    {{ commentaire.content }} - <strong>{{ commentaire.auteurId }}</strong> 
+                    <time datetime="{{ commentaire.createdAt }}">{{ commentaire.createdAt }}</time>
 
                     {% if commentaire.auteurId == user.id or user.role == 1 %}
 

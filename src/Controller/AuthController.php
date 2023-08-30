@@ -20,52 +20,62 @@ class AuthController extends MainController
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
         
-        return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $message]);
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
     }
 
     public function createAccountMethod(){
-        return $this->twig->render("auth/signup.twig");
+
+        $message = $this->getSession()["alert"]["message"] ?? "" ;
+
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "signup"]);
+        
     }
 
 
     public function signupMethod(){
 
-        $existingUser = ModelFactory::getModel("Utilisateur")->listData($this->email, "email");
+        if( $this->checkInputs()){
+            $existingUser = ModelFactory::getModel("User")->listData($this->email, "email");
 
-        if($existingUser){
-            $this->setSession(["alert" => "danger", "message" => "Cette adresse email est déjà utilisée"]);
-            return  $this->redirect("auth_createAccount"); 
+            if($existingUser){
+                $this->setSession(["alert" => "danger", "message" => "Cette adresse email est déjà utilisée"]);
+                return  $this->redirect("auth_createAccount"); 
+            }
+
+            if($this->getPost("password") != $this->getPost("passwordCheck")){
+                $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas"]);
+                return $this->redirect("auth_createAccount"); 
+            }
+
+            $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
+
+            $newUser = [
+                "userName"=> $this->getPost("userName"),
+                "email" => $this->getPost("email"),
+                "password" => $hashedPassword,
+                "createdAt" =>  date("Y-m-d H:i:s")
+            ];
+
+            ModelFactory::getModel("User")->createData($newUser);
+
+            $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
+
+            $this->setSession($userCreated, true);
+            $user["isLogged"] = true;
+            
+            return $this->redirect("home");
         }
 
-        if($this->getPost("password") != $this->getPost("passwordCheck")){
-            $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas"]);
-            return $this->redirect("auth_createAccount"); 
-        }
+        $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
-        $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
 
-        $newUser = [
-            "userName"=> $this->getPost("userName"),
-            "email" => $this->getPost("email"),
-            "password" => $hashedPassword,
-            "creationDate" =>  date("Y-m-d H:i:s")
-        ];
-
-        ModelFactory::getModel("Utilisateur")->createData($newUser);
-
-        $userCreated = ModelFactory::getModel("Utilisateur")->readData($newUser["email"], "email");
-
-        $this->setSession($userCreated, true);
-        $user["isLogged"] = true;
-        
-        return $this->redirect("home");
     }
 
     public function loginMethod()
     {
         if($this->checkInputs()){
 
-            $user = ModelFactory::getModel("Utilisateur")->listData($this->getPost("email"), "email")[0];
+            $user = ModelFactory::getModel("User")->listData($this->getPost("email"), "email")[0];
 
             if(!$user){
                 $this->setSession(["alert" => "danger", "message" => "Email non reconnu."]);
@@ -88,6 +98,19 @@ class AuthController extends MainController
 
         return $this->redirect("auth");
         
+    }
+
+    private function checkByEmail(){
+
+        $email = $this->getPost("email");
+
+        $userFound = ModelFactory::getModel("User")->listData($email, "email");
+
+        if($userFound){
+
+            return $userFound[0];
+
+        }
     }
 
      
