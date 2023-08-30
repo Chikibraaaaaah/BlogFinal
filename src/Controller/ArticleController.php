@@ -34,20 +34,39 @@ class ArticleController extends MainController
         return $this->twig->render("articles/articleSingle.twig",[
             "user" => $this->getSession()["user"],
             "article" => $article,
-            "comments" => $relatedComments
+            "comments" => $relatedComments,
+            "method" => "GET"
         ]);
 
+    }
+
+    public function modifyArticleMethod(){
+
+        $id = $this->getGet("id");
+        $article = ModelFactory::getModel("Article")->readData($id, "id");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
+  
+       return $this->twig->render("articles/articleSingle.twig", 
+        [
+            "user" => $this->getSession()["user"],
+            "article" => $article,
+            "method" => "PUT",
+            "comments" => $relatedComments
+        ]);
     }
 
         public function createArticleMethod(){ 
 
             $destination = $this->uploadFile();
 
+            // var_dump($this->getPost());
+            // die();
+
             $article = [
-                "title"=> addslashes($this->getPost("title_article")),
-                "content"=>  addslashes($this->getPost("article_content")),
+                "title"=> addslashes($this->getPost("title")),
+                "content"=>  addslashes($this->getPost("content")),
                 "imgUrl"=> $destination,
-                "imgAlt" => addslashes($this->getPost("article_content")),
+                "imgAlt" => addslashes($this->getPost("content")),
                 "createdAt"=> date("Y-m-d H:i:s")
             ];
 
@@ -59,20 +78,13 @@ class ArticleController extends MainController
 
     }
 
-    public function editArticleMethod(){
-        
-       $article = $this->getArticleById();
-       trim($article["content"]);
-       
-       return $this->twig->render("articles/editArticle.twig", [
-           "article" => $article,
-           "user" => $this->getSession()["user"]
-       ]);
-    }
 
     public function updateArticleMethod() {
 
         $existingArticle = $this->getArticleById();     
+
+        var_dump($existingArticle);
+        die();
     
         if ($this->checkInputs()) {
 
@@ -88,12 +100,18 @@ class ArticleController extends MainController
                 }
             }
     
-            $updatedArticle["altImg"] = addslashes($this->getPost("content"));
+            $updatedArticle["imgAlt"] = addslashes($this->getPost("content"));
             $updatedArticle["title"] = addslashes($updatedArticle["title"]);
+
+            // var_dump($updatedArticle["id"]);
+            // die();
             $updatedArticle["content"] = addslashes($updatedArticle["content"]);
             $updatedArticle["updatedAt"] = date("Y-m-d H:i:s");
+
+                        var_dump($updatedArticle);
+            die();
     
-            ModelFactory::getModel("Article")->updateData($updatedArticle["id"], $updatedArticle);
+            ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
     
             $this->redirect("article_renderArticle", ["id" => $updatedArticle["id"]]);
         }
@@ -122,14 +140,14 @@ class ArticleController extends MainController
         // Undefined | Multiple Files | $this->getFiles() Corruption Attack
         // If this request falls under any of them, treat it invalid.
         if (
-            !isset($this->getFiles()['article_img']['error']) ||
-            is_array($this->getFiles()['article_img']['error'])
+            !isset($this->getFiles()['img']['error']) ||
+            is_array($this->getFiles()['img']['error'])
         ) {
             throw new RuntimeException('Invalid parameters.');
         }
     
         // Check $this->getFiles()['img']['error'] value.
-        switch ($this->getFiles()['article_img']['error']) {
+        switch ($this->getFiles()['img']['error']) {
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
@@ -142,13 +160,13 @@ class ArticleController extends MainController
         }
     
         // You should also check filesize here.
-        if ($this->getFiles()['article_img']['size'] > 1000000) {
+        if ($this->getFiles()['img']['size'] > 1000000) {
             throw new RuntimeException('Taille maiximale 1MB.');
         }
     
         // Check MIME Type by yourself.
 
-        $fileMimeType = mime_content_type($this->getFiles()['article_img']['tmp_name']);
+        $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
         $validMimeTypes = array(
             'jpg' => 'image/jpg',
             'jpeg' => 'image/jpeg',
@@ -165,14 +183,14 @@ class ArticleController extends MainController
 
         $fileDestination = sprintf(
             './img/%s.%s',
-            sha1_file($this->getFiles()['article_img']['tmp_name']), 
+            sha1_file($this->getFiles()['img']['tmp_name']), 
             $ext
         );
 
         // You should name it uniquely.
         // On this example, obtain safe unique name from its binary data.
         if (!move_uploaded_file(
-            $this->getFiles()['article_img']['tmp_name'],
+            $this->getFiles()['img']['tmp_name'],
             $fileDestination
         )) {
     

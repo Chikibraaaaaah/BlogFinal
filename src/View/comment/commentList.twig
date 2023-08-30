@@ -1,20 +1,20 @@
 {% if user.isLogged == true %}
 
-    {% for commentaire in commentaires %}
+    {% for comment in comments %}
     
         {# {% if commentaire.valide == 1 %} #}
             <div>
                 <p>
-                    {{ commentaire.content }} - <strong>{{ commentaire.auteurId }}</strong> 
+                    {{ comment.content }} - <strong>{{ comment.authorId }}</strong> 
                     <time datetime="{{ commentaire.createdAt }}">{{ commentaire.createdAt }}</time>
 
-                    {% if commentaire.auteurId == user.id or user.role == 1 %}
+                    {% if comment.authorId == user.id or user.role == 1 %}
 
                         <button class="btn btn-danger">
-                        <a href="index.php?access=comment_confirmDeleteComment&id={{ commentaire.id }}">Supprimer</a></button>
+                        <a href="index.php?access=comment_confirmDeleteComment&id={{ comment.id }}">Supprimer</a></button>
                     
                         <button class="btn btn-primary">
-                            <a href="index.php?access=comment_editComment&id={{ commentaire.id }}">Modifier</a>
+                            <a href="index.php?access=comment_editComment&id={{ comment.id }}">Modifier</a>
                         </button>
 
                     {% endif %}

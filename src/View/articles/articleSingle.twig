@@ -2,44 +2,64 @@
 
 {% block article %}
 
-    <article>
+    {% if method == "GET" %}
 
-        <h2> {{ article.title }} - {{ article.createdAt }}</h2>
+        <article>
 
-        <figure>
-            <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
-            <figcaption>{{ article.content }}</figcaption>
-            {% if user.role == 1 %}
-                <button>
-                    <a href="index.php?access=article_deleteArticle&id={{article.id}}">Supprimer</a>
-                </button>
-            {% endif %}
-            
-        </figure>
+            <h2> {{ article.title }} - {{ article.createdAt }}</h2>
 
-    </article>
+            <figure>
+
+                <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
+                <figcaption>{{ article.content }}</figcaption>
+
+                {% if user.role == 1 %}
+                    <button>
+                        <a href="index.php?access=article_deleteArticle&id={{article.id}}">Supprimer</a>
+                    </button>
+                {% endif %}
+                
+            </figure>
+
+        </article>
+
+    {% else %}
+
+        <form action="index.php?access=article_updateArticle&id={{article.id}}" enctype="multipart/form-data" method="POST">
+
+            <div class="mb-3">
+                <label for="title_article" class="form-label">Nouveau titre de votre publication</label>
+                <input type="text" name="title" class="form-control form-control-lg" id="title_article" value="{{ article.title }}" required>
+            </div>
+
+            <img src="{{ article.imgUrl }}" alt=" {{ article.altImg }}" class="mb-3 w-50 h-50">
+
+            <div class="mb-3">
+                <label for="article_content" class="form-label">Modifiez votre contenu</label>
+                <textarea class="form-control" name="content" id="article_content" rows="10" required >  {{ article.content }}  </textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="article_img" class="form-label">Voulez-vous modifier l'image ?</label>
+                <input type="file" name="img" class="form-control" id="article_img">
+            </div>
+
+            <button class="btn btn-primary">Publier</button>
+        </form>
+
+
+    {% endif %}
 
     <aside>
 
-        {% block commentaires %}
+        {% block comments %}
 
             {% include "comment/commentList.twig" %}
 
-            {% if user %}
-
-            {% if myCommentaire %}
-
-                {% include "comment/editCommentaire.twig" %}
-
-            {% else %}
+            {% if user and method == "GET" %}
 
                 {% include "comment/commentCreate.twig" %}
                          
-            {% endif %}
-            
-
-                
-                
             {% endif %}
 
         {% endblock %}
