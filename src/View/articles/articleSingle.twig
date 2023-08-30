@@ -23,17 +23,17 @@
 
         {% block commentaires %}
 
-            {% include "commentaires/commentairesList.twig" %}
+            {% include "comment/commentList.twig" %}
 
             {% if user %}
 
             {% if myCommentaire %}
 
-                {% include "commentaires/editCommentaire.twig" %}
+                {% include "comment/editCommentaire.twig" %}
 
             {% else %}
 
-                {% include "commentaires/createCommentaire.twig" %}
+                {% include "comment/commentCreate.twig" %}
                          
             {% endif %}
             

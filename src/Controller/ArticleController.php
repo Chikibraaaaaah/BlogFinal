@@ -22,16 +22,16 @@ class ArticleController extends MainController
             $articleId = $this->getGet("id");
             $article = ModelFactory::getModel("Article")->readData($articleId,"id");
 
-                return $article;
+            return $article;
     }
 
 
     public function renderArticleMethod(){
 
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
-        $relatedComments = ModelFactory::getModel("Comments")->listData($article["id"],"articleId");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
 
-        return $this->twig->render("articles/simpleArticle.twig",[
+        return $this->twig->render("articles/articleSingle.twig",[
             "user" => $this->getSession()["user"],
             "article" => $article,
             "comments" => $relatedComments
@@ -47,7 +47,7 @@ class ArticleController extends MainController
                 "title"=> addslashes($this->getPost("title_article")),
                 "content"=>  addslashes($this->getPost("article_content")),
                 "imgUrl"=> $destination,
-                "altImg" => addslashes($this->getPost("article_content")),
+                "imgAlt" => addslashes($this->getPost("article_content")),
                 "createdAt"=> date("Y-m-d H:i:s")
             ];
 

@@ -2,15 +2,23 @@
 
 {% block auth %}
 
-        {% if method == "login" %}
+    {% if alert and message|length > 0 %}
 
-            {% include "auth/login.twig" %}
+        <div class="{{ alert }}" role="alert" id="alert">
+            {{ message }}
+        </div>
 
-        {% else %}
-                
-              {% include "auth/signup.twig" %}
+    {% endif %}
 
-        {% endif %}
+    {% if method == "login" %}
+
+        {% include "auth/login.twig" %}
+
+    {% else %}
+            
+            {% include "auth/signup.twig" %}
+
+    {% endif %}
 
 {% endblock %}
 

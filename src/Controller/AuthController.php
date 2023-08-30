@@ -31,39 +31,52 @@ class AuthController extends MainController
         
     }
 
+    public function registerMethod(){
+
+        $message = $this->getSession()["alert"]["message"] ?? "" ;
+        var_dump($this->getSession());
+
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
+
+    }
 
     public function signupMethod(){
 
         if( $this->checkInputs()){
-            $existingUser = ModelFactory::getModel("User")->listData($this->email, "email");
 
-            if($existingUser){
-                $this->setSession(["alert" => "danger", "message" => "Cette adresse email est déjà utilisée"]);
-                return  $this->redirect("auth_createAccount"); 
+            $existingUser = $this->checkByEmail();  
+
+            if ( $existingUser == NULL ){
+
+                $mpChek = $this->checkPasswordsCorrespond();
+
+                if( $mpChek == true ) {
+                    
+                    $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
+
+                    $newUser = [
+                        "userName"=> $this->getPost("userName"),
+                        "email" => $this->getPost("email"),
+                        "password" => $hashedPassword,
+                        "createdAt" =>  date("Y-m-d H:i:s")
+                    ];
+
+                    ModelFactory::getModel("User")->createData($newUser);
+
+                    $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
+
+                    $this->setSession($userCreated, true);
+                    $user["isLogged"] = true;
+                    
+                    return $this->redirect("home");
+
+                }
+
+                $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas."]);
+                
+                return $this->createAccountMethod();
+
             }
-
-            if($this->getPost("password") != $this->getPost("passwordCheck")){
-                $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas"]);
-                return $this->redirect("auth_createAccount"); 
-            }
-
-            $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
-
-            $newUser = [
-                "userName"=> $this->getPost("userName"),
-                "email" => $this->getPost("email"),
-                "password" => $hashedPassword,
-                "createdAt" =>  date("Y-m-d H:i:s")
-            ];
-
-            ModelFactory::getModel("User")->createData($newUser);
-
-            $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
-
-            $this->setSession($userCreated, true);
-            $user["isLogged"] = true;
-            
-            return $this->redirect("home");
         }
 
         $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
@@ -79,19 +92,19 @@ class AuthController extends MainController
 
             if(!$user){
                 $this->setSession(["alert" => "danger", "message" => "Email non reconnu."]);
-                return $this->twig->render("auth/login.twig", ["alert" => "danger", "message" => $this->getSession()["alert"]["message"]]);
+                $this->redirect("auth_register");
             }
 
             if (password_verify($this->getPost("password"), $user['password'])) {
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
                 $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);
-                return $this->redirect("home");
+                $this->redirect("home");
             }
 
             $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide."]);
             
-            return $this->redirect("auth_login");
+            $this->redirect("auth_register");
         }
 
         $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
@@ -103,7 +116,6 @@ class AuthController extends MainController
     private function checkByEmail(){
 
         $email = $this->getPost("email");
-
         $userFound = ModelFactory::getModel("User")->listData($email, "email");
 
         if($userFound){
@@ -113,6 +125,25 @@ class AuthController extends MainController
         }
     }
 
+    private function checkByUserName(){
+        
+    }
+
+    private function checkPasswordsCorrespond(){
+        
+        $password = $this->getPost("password");
+        $secondPassword = $this->getPost("password_check");
+
+        if($password != $secondPassword){
+
+            return false;
+
+        }
+
+        return true;
+
+    }
+
      
     
     public function logoutMethod(){
@@ -120,4 +151,7 @@ class AuthController extends MainController
         $user["isLogged"] = false;
         return $this->redirect("home");
     }
+
+   
+    
 }

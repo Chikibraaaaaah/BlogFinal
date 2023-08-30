@@ -28,23 +28,14 @@ class HomeController extends MainController
         $articles = $this->getArticles();
         $user = $this->getSession("user");
         $alert = $this->getSession()["alert"];
-
-
         $comments = [];
 
         foreach ($articles as $article => $value) {
             
             $id = $value["id"];
-
             $relatedComments = ModelFactory::getModel("Comment")->listData($id, "articleId");
-
             $comments[] = $relatedComments;
         }
-
-        // echo "<pre>";
-        // var_dump($this->getSession());
-        // echo "</pre>";
-        // die();
 
         return  $this->twig->render("home.twig", [
                     "articles" => $articles,

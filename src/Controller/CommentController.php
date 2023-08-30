@@ -25,7 +25,7 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            "auteurId" => intval($this->auteurId),
+            "authorId" => intval($this->auteurId),
             "articleId" => intval($this->articleId),
             "content" => $this->content,
             "createdAt" => date("Y-m-d H:i:s")
@@ -74,7 +74,7 @@ class CommentController extends MainController
         $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"], "id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
 
-        return $this->twig->render("articles/simpleArticle.twig", [ "article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT" ]);
+        return $this->twig->render("articles/article.twig", [ "article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT" ]);
 
     }
 

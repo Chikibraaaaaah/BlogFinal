@@ -1,14 +1,4 @@
-{% block gallerie %}
-
-{% block alert %}
-    {{ alert.message }} 
-{% endblock %}
-
-    {% if user.role == 1 %}
-            {% block createArticle %}
-                {% include "articles/createArticle.twig" %}
-            {% endblock %}
-    {% endif %}
+{% block article %}
 
     {% for article in articles | sort((a, b) => a.createdAt <=> b.createdAt) | reverse %}
 
@@ -23,27 +13,14 @@
 
         </article>
 
-       <a href="index.php?access=article_renderArticle&id={{article.id}}">Ajout un commentaire</a>
+        <a href="index.php?access=article_renderArticle&id={{article.id}}">Ajout un commentaire</a>
 
-       {% if user.role == 1 %}
-       
-            <button>
-                <a href="index.php?access=article_editArticle&id={{article.id}}">Modifier</a>
-            </button>
-
-            <button>
-                <a href="index.php?access=article_alertDeleteArticle&id={{article.id}}">Supprimer</a>
-            </button>
-
-       {% endif %}
-
-       {% for commentaire in commentaires %}
-            {% if commentaire.articleId == article.id %}
-                 <p>{{ commentaire |length }}</p>
-            {% endif %}
-            
-       {% endfor %}
+        {% if user.role == 1 %}
         
+            {% include "articles/articleButton.twig" %}
+
+        {% endif %}
+
     {% endfor %}
 
 {% endblock %}
