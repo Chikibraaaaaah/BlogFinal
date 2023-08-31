@@ -2,6 +2,16 @@
 
 {% block article %}
 
+    {% block alert %}
+
+        <div class="alert alert-success" role="alert" id="alert">
+        
+               {{ message }}
+
+        </div>
+     
+    {% endblock %}
+
     {% if method == "GET" %}
 
         <article>

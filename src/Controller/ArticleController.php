@@ -17,24 +17,20 @@ class ArticleController extends MainController
     
     }
 
-    public function getArticleById(){
-        
-            $articleId = $this->getGet("id");
-            $article = ModelFactory::getModel("Article")->readData($articleId,"id");
-
-            return $article;
-    }
-
+    // Fonctions pour render
 
     public function renderArticleMethod(){
 
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
-        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId") ?? [];
+        $alerts = $this->getAlert(true) ?? [];
+        $user = $this->getSession()["user"] ?? [];
 
         return $this->twig->render("articles/articleSingle.twig",[
-            "user" => $this->getSession()["user"],
+            "user" => $user,
             "article" => $article,
             "comments" => $relatedComments,
+            "alerts" => $alerts,
             "method" => "GET"
         ]);
 
@@ -55,12 +51,11 @@ class ArticleController extends MainController
         ]);
     }
 
-        public function createArticleMethod(){ 
+    // Fonctions CRUD
+
+    public function createArticleMethod(){ 
 
             $destination = $this->uploadFile();
-
-            // var_dump($this->getPost());
-            // die();
 
             $article = [
                 "title"=> addslashes($this->getPost("title")),
@@ -78,20 +73,24 @@ class ArticleController extends MainController
 
     }
 
+    public function getArticleById(){
+        
+        $articleId = $this->getGet("id");
+        $article = ModelFactory::getModel("Article")->readData($articleId,"id");
+
+        return $article;
+    }
 
     public function updateArticleMethod() {
 
         $existingArticle = $this->getArticleById();     
-
-        var_dump($existingArticle);
-        die();
     
         if ($this->checkInputs()) {
 
             $updatedArticle = array_merge($existingArticle, $this->getPost());
        
             if (count($this->getFiles()) > 0) {
-                if ($this->getFiles()["article_img"]["size"] > 0 && $this->getFiles()["article_img"]["size"] < 1000000) {
+                if ($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
                     $this->deleteFile();
                     $destination = $this->uploadFile();
                     $updatedArticle["imgUrl"] = $destination;
@@ -102,26 +101,13 @@ class ArticleController extends MainController
     
             $updatedArticle["imgAlt"] = addslashes($this->getPost("content"));
             $updatedArticle["title"] = addslashes($updatedArticle["title"]);
-
-            // var_dump($updatedArticle["id"]);
-            // die();
             $updatedArticle["content"] = addslashes($updatedArticle["content"]);
             $updatedArticle["updatedAt"] = date("Y-m-d H:i:s");
-
-                        var_dump($updatedArticle);
-            die();
     
             ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
     
-            $this->redirect("article_renderArticle", ["id" => $updatedArticle["id"]]);
+            return $this->renderArticleMethod();
         }
-    }
-
-    public function alertDeleteArticleMethod(){
-
-        $this->setSession(["alert" => "danger", "message" => "Êtes-vous certain de vouloir supprimer cet article ?"]);
-
-            return $this->twig->render("alert.twig", ["alert" => "danger", "message" => $this->getSession()["alert"]["message"], "article" => ModelFactory::getModel("Article")->readData($this->getGet("id"), "id")]);
     }
 
     public function deleteArticleMethod(){
@@ -133,6 +119,23 @@ class ArticleController extends MainController
         
     }
    
+    // Alertes
+
+    public function getAlertMessageMethod(){
+
+        $test = $this->getAlert(true);
+        echo "<pre>"; 
+        var_dump($test);
+
+        echo "</pre>";
+
+        die();
+
+
+    }
+
+
+    // Fichiers
 
     public function uploadFile(){ 
 
