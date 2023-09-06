@@ -35,7 +35,7 @@ abstract class MainController extends GlobalsController
     public function redirect(string $page, array $params = [])
     {
         $params["access"] = $page;
-        header("Location: index.php?" . http_build_query($params));
+        header("Location: index.php?" .  htmlspecialchars(http_build_query($params)));
 
         exit;
     }

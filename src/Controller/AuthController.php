@@ -34,7 +34,7 @@ class AuthController extends MainController
     public function registerMethod(){
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
-        var_dump($this->getSession());
+        // var_dump($this->getSession());
 
         return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
 
