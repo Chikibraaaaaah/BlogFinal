@@ -13,12 +13,14 @@ abstract class MainModel
      * Database
      * @var PdoDb
      */
+
     protected $database = null;
 
     /**
      * Database Table
      * @var string
      */
+
     protected $table = null;
 
     /**
@@ -32,6 +34,7 @@ abstract class MainModel
         $model          = explode("\\", get_class($this));
         $this->table    = ucfirst(str_replace("Model", "", array_pop($model)));
     }
+
 
     /**
      * Lists all Datas from the id or another key
@@ -51,6 +54,7 @@ abstract class MainModel
         return $this->database->getAllData($query);
     }
 
+
     /**
      * Creates a new Data entry
      * @param array $data
@@ -63,6 +67,7 @@ abstract class MainModel
 
         $this->database->setData($query);
     }
+
 
     /**
      * Reads Data from its id or another key
@@ -80,6 +85,7 @@ abstract class MainModel
 
         return $this->database->getData($query, [$value]);
     }
+
 
     /**
      * Updates Data from its id or another key
@@ -106,6 +112,7 @@ abstract class MainModel
         $this->database->setData($query, [$value]);
     }
 
+
     /**
      * Deletes Data from its id or another key
      * @param string $value
@@ -121,4 +128,5 @@ abstract class MainModel
 
         $this->database->setData($query, [$value]);
     }
+    
 }

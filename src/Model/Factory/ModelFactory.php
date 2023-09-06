@@ -15,6 +15,7 @@ class ModelFactory
      * Model
      * @var array
      */
+
     private static $models = [];
 
     /**
@@ -34,4 +35,5 @@ class ModelFactory
 
         return self::$models[$table];
     }
+    
 }

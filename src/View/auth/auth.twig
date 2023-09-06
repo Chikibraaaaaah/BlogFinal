@@ -2,7 +2,7 @@
 
 {% block auth %}
 
-    {% if method === "login" %}
+    {% if method is same as ("login") %}
 
         {% include "auth/login.twig" %}
 

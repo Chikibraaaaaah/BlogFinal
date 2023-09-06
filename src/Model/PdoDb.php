@@ -15,6 +15,7 @@ class PdoDb
      * PDO Connection
      * @var PDO
      */
+
     private $pdo = null;
 
     /**
@@ -26,6 +27,7 @@ class PdoDb
     {
         $this->pdo = $pdo;
     }
+
 
     /**
      * Returns a unique result from the Database
@@ -41,6 +43,7 @@ class PdoDb
         return $PDOStatement->fetch();
     }
 
+
     /**
      * Returns many results from the Database
      * @param string $query
@@ -55,6 +58,7 @@ class PdoDb
         return $PDOStatement->fetchAll();
     }
 
+
     /**
      * Executes an action to the Database
      * @param string $query
@@ -67,4 +71,5 @@ class PdoDb
 
         return $PDOStatement->execute($params);
     }
+
 }

@@ -15,6 +15,7 @@ abstract class MainController extends GlobalsController
     /**
      * @var Environment|null
      */
+
     protected $twig = null;
 
     /**
@@ -25,21 +26,15 @@ abstract class MainController extends GlobalsController
     {
         parent::__construct();
         $this->twig = new Environment(new FilesystemLoader("../src/View"), array("cache" => false));
+
     }
+
 
     /**
      * Redirects to another URL
      * @param string $page
      * @param array $params
      * */ 
-    
-    // public function redirect(string $page, array $params = [])
-    //  {
-    //     $params["access"] = $page;
-    //     header("Location: index.php?" .  htmlspecialchars(http_build_query($params)));
-
-    //      exit;
-    //  }
 
     public function redirect(string $page, array $params = [])
     {
@@ -48,4 +43,11 @@ abstract class MainController extends GlobalsController
 
         return $redirectUrl;
     }
+
+    // public function redirect(string $page, array $params = [])
+    // {
+    // $params["access"] = $page;
+    // header("Location: index.php?" .  htmlspecialchars(http_build_query($params)));
+    // exit;
+    // }
 }
