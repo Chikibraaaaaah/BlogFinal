@@ -14,7 +14,7 @@ class CommentController extends MainController
     protected $content;
 
 
-    public function defaultMethod()
+    public  function defaultMethod()
     {
 
     }
@@ -25,7 +25,7 @@ class CommentController extends MainController
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
-    public function createCommentMethod()
+    public  function createCommentMethod()
     {
 
         $this->auteurId = $this->getSession()["user"]["id"];
@@ -33,18 +33,18 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-           "authorId"=> intval($this->auteurId),
-           "articleId"=> intval($this->articleId),
-           "content"=> $this->content,
-           "createdAt"=> date("Y-m-d H:i:s")
+            "authorId"=> intval($this->auteurId),
+            "articleId"=> intval($this->articleId),
+            "content"=> $this->content,
+            "createdAt"=> date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Comment")->createData($newComment);
 
         $this->setSession([
-           "alert"=>"success",
-           "message"=>"Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
-         ]);
+            "alert"=>"success",
+            "message"=>"Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
+        ]);
 
         return $this->redirect("article_renderArticle", ["id"=> intval($this->articleId)]);
     }

@@ -22,7 +22,11 @@ class HomeController extends MainController
      * @throws SyntaxError
      */
 
-    
+    /**
+     * Retrieves the default articles, user, alert, and comments to render the home view.
+     *
+     * @return string The rendered home view.
+     */ 
     public function defaultMethod()
     {  
 
@@ -40,15 +44,15 @@ class HomeController extends MainController
         }
 
         return  $this->twig->render("home.twig", [
-                   "articles"=> $articles,
-                   "alert"=> $alert,
-                   "user"=> $user,
-                   "comments"=> $comments[0]
+                    "articles"=> $articles,
+                    "alert"=> $alert,
+                    "user"=> $user,
+                    "comments"=> $comments[0]
                 ]);
     }
 
     public function getArticles(){
-    
+
         $articles = ModelFactory::getModel("Article")->listData();
 
         return $articles;

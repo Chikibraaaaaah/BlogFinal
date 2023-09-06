@@ -83,7 +83,7 @@ class AuthController extends MainController
                 }
 
                 $this->setSession(["alert"=>"danger","message"=>"Les mots de passe ne correspondent pas."]);
-                
+
                 return $this->createAccountMethod();
             }
         }

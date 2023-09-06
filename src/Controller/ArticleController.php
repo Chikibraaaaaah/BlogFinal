@@ -36,11 +36,11 @@ class ArticleController extends MainController
         $user = $this->getSession()["user"] ?? [];
 
         return $this->twig->render("articles/articleSingle.twig", [
-           "user"=> $user,
-           "article"=> $article,
-           "comments"=> $relatedComments,
-           "alerts"=> $alerts,
-           "method"=>"GET"
+                "user" => $user,
+                "article" => $article,
+                "comments" => $relatedComments,
+                "alerts" => $alerts,
+                "method" => "GET"
         ]);
     }
 
@@ -56,12 +56,12 @@ class ArticleController extends MainController
         $id = $this->getGet("id");
         $article = ModelFactory::getModel("Article")->readData($id,"id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
-  
+
         return $this->twig->render("articles/articleSingle.twig", [
-           "user"=> $this->getSession()["user"],
-           "article"=> $article,
-           "method"=>"PUT",
-           "comments"=> $relatedComments
+            "user" => $this->getSession()["user"],
+            "article" => $article,
+            "method" =>"PUT",
+            "comments" => $relatedComments
         ]);
     }
 
@@ -83,18 +83,23 @@ class ArticleController extends MainController
 
         $destination = $this->uploadFile();
         $article = [
-           "title"=> addslashes($this->getPost("title")),
-           "content"=> addslashes($this->getPost("content")),
-           "imgUrl"=> $destination,
-           "imgAlt"=> addslashes($this->getPost("content")),
-           "createdAt"=> date("Y-m-d H:i:s")
+           "title" => addslashes($this->getPost("title")),
+           "content" => addslashes($this->getPost("content")),
+           "imgUrl" => $destination,
+           "imgAlt" => addslashes($this->getPost("content")),
+           "createdAt" => date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Article")->createData($article);
-        $this->setSession(["alert"=>"success","message"=>"Votre article a été créé"]);
+        $this->setSession([
+            "alert" => "success",
+            "message" => "Votre article a été créé"
+         ]);
+
         $home = $this->redirect("home");
         header("Location: $home");
     }
+
 
     /**
      * Retrieves an article by its ID.
@@ -104,7 +109,7 @@ class ArticleController extends MainController
      */
     public  function getArticleById()
     {
-        
+
         $articleId = $this->getGet("id");
         $article = ModelFactory::getModel("Article")->readData($articleId,"id");
 
@@ -126,11 +131,11 @@ class ArticleController extends MainController
     {
 
         $existingArticle = $this->getArticleById();     
-    
+
         if($this->checkInputs()) {
 
             $updatedArticle = array_merge($existingArticle, $this->getPost());
-       
+
             if(count($this->getFiles()) > 0) {
                 if($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
                     $this->deleteFile();
@@ -138,14 +143,14 @@ class ArticleController extends MainController
                     $updatedArticle["imgUrl"] = $destination;
                 }
             }
-    
+
             $updatedArticle["imgAlt"] = addslashes($this->getPost("content"));
             $updatedArticle["title"] = addslashes($updatedArticle["title"]);
             $updatedArticle["content"] = addslashes($updatedArticle["content"]);
             $updatedArticle["updatedAt"] = date("Y-m-d H:i:s");
-    
+
             ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
-    
+
             return $this->renderArticleMethod();
         }
     }
@@ -164,9 +169,9 @@ class ArticleController extends MainController
         ModelFactory::getModel("Article")->deleteData($id);
 
         return $this->redirect("home");
-        
+
     }
-   
+
 
     // Fichiers
 
@@ -202,12 +207,12 @@ class ArticleController extends MainController
             default:
                 throw new RuntimeException('Erreur non identifiée.');
         }
-    
+
         // You should also check filesize here.
         if ($this->getFiles()['img']['size'] > 1000000) {
             throw new RuntimeException('Taille maiximale 1MB.');
         }
-    
+
         // Check MIME Type by yourself.
 
         $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
@@ -217,11 +222,14 @@ class ArticleController extends MainController
             'png' => 'image/png',
             'gif' => 'image/gif',
        );
-    
+
         $ext = array_search($fileMimeType, $validMimeTypes, true);
 
         if($ext ===  false) {
-            return $this->setSession(["alert"=>"danger","message"=>"Format invalide."]);
+            return $this->setSession([
+                "alert" => "danger",
+                "message"=>"Format invalide."
+            ]);
             // throw new RuntimeException('Invalid file format.');
         }
 
@@ -233,8 +241,7 @@ class ArticleController extends MainController
 
         // You should name it uniquely.
         // On this example, obtain safe unique name from its binary data.
-        if(!move_uploaded_file($this->getFiles()['img']['tmp_name'], $fileDestination)) {
-    
+        if (!move_uploaded_file($this->getFiles()['img']['tmp_name'], $fileDestination)) {
             throw new RuntimeException('Il y a eu un problème lors du déplacement du fichier.');
         }
 
@@ -244,7 +251,6 @@ class ArticleController extends MainController
         }catch (RuntimeException $e) {
             echo $e->getMessage();
         }
-  
     }
 
 
@@ -282,12 +288,12 @@ class ArticleController extends MainController
 
         $imgPath = $this->getArticleById()["imgUrl"];
 
-        if(file_exists($imgPath)){
+        if( file_exists($imgPath )){
             unlink($imgPath);
-           return ;
+            return ;
         }
 
         return $this->setSession(["alert"=>"danger","message"=>"Le fichier n'existe pas"]);
     }
-    
+
 }
