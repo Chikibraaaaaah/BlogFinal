@@ -4,11 +4,11 @@
 
             <h2>Ajoutez un commentaire à {{ article.title }} </h2>
 
-            <form action="index.php?access=comment_createComment&id={{ article.id }}" enctype="multipart/form-data" method="POST" class="commentaire_form">
+            <form action="index.php?access=comment_createComment&id={{ article.id }}"enctype="multipart/form-data"method="POST"class="commentaire_form">
 
                 <div class="mb-3">
-                    <label for="content" class="form-label">Votre commentaire: </label>
-                    <textarea class="form-control" name="content" id="content" rows="10" required placeholder="Il était deux fois"></textarea>
+                    <label for="content"class="form-label">Votre commentaire: </label>
+                    <textarea class="form-control"name="content"id="content"rows="10"required placeholder="Il était deux fois"></textarea>
                 </div>
 
                 <button class="btn btn-primary d-block">Commenter</button>

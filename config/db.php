@@ -2,15 +2,15 @@
 
 // Data Base name!
 
-define("DB_DSN", "mysql:host=localhost;dbname=blog");
+define("DB_DSN","mysql:host=localhost;dbname=blog");
 
 // Define user!
 
-define("DB_USER", "root");
+define("DB_USER","root");
 
 // Password!
 
-define("DB_PASS", "root");
+define("DB_PASS","root");
 
 // Define database options!
 

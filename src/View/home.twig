@@ -1,4 +1,4 @@
-{% extends "layout/layout.twig" %}
+{% extends"layout/layout.twig"%}
 
 {% block title %}{% endblock %}
 
@@ -8,19 +8,19 @@
 
         <h1>Bienvenue sur mon blog</h1>
 
-        <img src="../public/img/bg.jpeg" alt="gossBo">
+        <img src="../public/img/bg.jpeg"alt="gossBo">
 
         {% block gallerie %}
 
-        {% include "alerts/alert.twig" %}
+        {% include"alerts/alert.twig"%}
 
-        {% if user.role is same as(1)  %}
+        {% if user.role > 0  %}
         
-            {% include "articles/articleCreate.twig" %}
+            {% include"articles/articleCreate.twig"%}
         
         {% endif %}
     
-            {% include "articles/articleList.twig" %}
+            {% include"articles/articleList.twig"%}
             
         {% endblock %}
 

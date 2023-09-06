@@ -1,409 +1,409 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
+   "_readme": [
+       "This file locks the dependencies of your project to a known state",
+       "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+       "This file is @generated automatically"
     ],
-    "content-hash": "f46da69be151f16e72149d1b4f5ef782",
-    "packages": [
+   "content-hash":"f46da69be151f16e72149d1b4f5ef782",
+   "packages": [
         {
-            "name": "phpmailer/phpmailer",
-            "version": "v6.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "df16b615e371d81fb79e506277faea67a1be18f1"
+           "name":"phpmailer/phpmailer",
+           "version":"v6.8.0",
+           "source": {
+               "type":"git",
+               "url":"https://github.com/PHPMailer/PHPMailer.git",
+               "reference":"df16b615e371d81fb79e506277faea67a1be18f1"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/df16b615e371d81fb79e506277faea67a1be18f1",
-                "reference": "df16b615e371d81fb79e506277faea67a1be18f1",
-                "shasum": ""
+           "dist": {
+               "type":"zip",
+               "url":"https://api.github.com/repos/PHPMailer/PHPMailer/zipball/df16b615e371d81fb79e506277faea67a1be18f1",
+               "reference":"df16b615e371d81fb79e506277faea67a1be18f1",
+               "shasum":""
             },
-            "require": {
-                "ext-ctype": "*",
-                "ext-filter": "*",
-                "ext-hash": "*",
-                "php": ">=5.5.0"
+           "require": {
+               "ext-ctype":"*",
+               "ext-filter":"*",
+               "ext-hash":"*",
+               "php":">=5.5.0"
             },
-            "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
-                "doctrine/annotations": "^1.2.6 || ^1.13.3",
-                "php-parallel-lint/php-console-highlighter": "^1.0.0",
-                "php-parallel-lint/php-parallel-lint": "^1.3.2",
-                "phpcompatibility/php-compatibility": "^9.3.5",
-                "roave/security-advisories": "dev-latest",
-                "squizlabs/php_codesniffer": "^3.7.1",
-                "yoast/phpunit-polyfills": "^1.0.4"
+           "require-dev": {
+               "dealerdirect/phpcodesniffer-composer-installer":"^0.7.2",
+               "doctrine/annotations":"^1.2.6 || ^1.13.3",
+               "php-parallel-lint/php-console-highlighter":"^1.0.0",
+               "php-parallel-lint/php-parallel-lint":"^1.3.2",
+               "phpcompatibility/php-compatibility":"^9.3.5",
+               "roave/security-advisories":"dev-latest",
+               "squizlabs/php_codesniffer":"^3.7.1",
+               "yoast/phpunit-polyfills":"^1.0.4"
             },
-            "suggest": {
-                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
-                "ext-openssl": "Needed for secure SMTP sending and DKIM signing",
-                "greew/oauth2-azure-provider": "Needed for Microsoft Azure XOAUTH2 authentication",
-                "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
-                "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
-                "psr/log": "For optional PSR-3 debug logging",
-                "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
-                "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
+           "suggest": {
+               "ext-mbstring":"Needed to send email in multibyte encoding charset or decode encoded addresses",
+               "ext-openssl":"Needed for secure SMTP sending and DKIM signing",
+               "greew/oauth2-azure-provider":"Needed for Microsoft Azure XOAUTH2 authentication",
+               "hayageek/oauth2-yahoo":"Needed for Yahoo XOAUTH2 authentication",
+               "league/oauth2-google":"Needed for Google XOAUTH2 authentication",
+               "psr/log":"For optional PSR-3 debug logging",
+               "symfony/polyfill-mbstring":"To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
+               "thenetworg/oauth2-azure":"Needed for Microsoft XOAUTH2 authentication"
             },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PHPMailer\\PHPMailer\\": "src/"
+           "type":"library",
+           "autoload": {
+               "psr-4": {
+                   "PHPMailer\\PHPMailer\\":"src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1-only"
+           "notification-url":"https://packagist.org/downloads/",
+           "license": [
+               "LGPL-2.1-only"
             ],
-            "authors": [
+           "authors": [
                 {
-                    "name": "Marcus Bointon",
-                    "email": "phpmailer@synchromedia.co.uk"
+                   "name":"Marcus Bointon",
+                   "email":"phpmailer@synchromedia.co.uk"
                 },
                 {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
+                   "name":"Jim Jagielski",
+                   "email":"jimjag@gmail.com"
                 },
                 {
-                    "name": "Andy Prevost",
-                    "email": "codeworxtech@users.sourceforge.net"
+                   "name":"Andy Prevost",
+                   "email":"codeworxtech@users.sourceforge.net"
                 },
                 {
-                    "name": "Brent R. Matzelle"
+                   "name":"Brent R. Matzelle"
                 }
             ],
-            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "support": {
-                "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.8.0"
+           "description":"PHPMailer is a full-featured email creation and transfer class for PHP",
+           "support": {
+               "issues":"https://github.com/PHPMailer/PHPMailer/issues",
+               "source":"https://github.com/PHPMailer/PHPMailer/tree/v6.8.0"
             },
-            "funding": [
+           "funding": [
                 {
-                    "url": "https://github.com/Synchro",
-                    "type": "github"
+                   "url":"https://github.com/Synchro",
+                   "type":"github"
                 }
             ],
-            "time": "2023-03-06T14:43:22+00:00"
+           "time":"2023-03-06T14:43:22+00:00"
         },
         {
-            "name": "symfony/polyfill-ctype",
-            "version": "v1.27.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "5bbc823adecdae860bb64756d639ecfec17b050a"
+           "name":"symfony/polyfill-ctype",
+           "version":"v1.27.0",
+           "source": {
+               "type":"git",
+               "url":"https://github.com/symfony/polyfill-ctype.git",
+               "reference":"5bbc823adecdae860bb64756d639ecfec17b050a"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/5bbc823adecdae860bb64756d639ecfec17b050a",
-                "reference": "5bbc823adecdae860bb64756d639ecfec17b050a",
-                "shasum": ""
+           "dist": {
+               "type":"zip",
+               "url":"https://api.github.com/repos/symfony/polyfill-ctype/zipball/5bbc823adecdae860bb64756d639ecfec17b050a",
+               "reference":"5bbc823adecdae860bb64756d639ecfec17b050a",
+               "shasum":""
             },
-            "require": {
-                "php": ">=7.1"
+           "require": {
+               "php":">=7.1"
             },
-            "provide": {
-                "ext-ctype": "*"
+           "provide": {
+               "ext-ctype":"*"
             },
-            "suggest": {
-                "ext-ctype": "For best performance"
+           "suggest": {
+               "ext-ctype":"For best performance"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.27-dev"
+           "type":"library",
+           "extra": {
+               "branch-alias": {
+                   "dev-main":"1.27-dev"
                 },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+               "thanks": {
+                   "name":"symfony/polyfill",
+                   "url":"https://github.com/symfony/polyfill"
                 }
             },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
+           "autoload": {
+               "files": [
+                   "bootstrap.php"
                 ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
+               "psr-4": {
+                   "Symfony\\Polyfill\\Ctype\\":""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
+           "notification-url":"https://packagist.org/downloads/",
+           "license": [
+               "MIT"
             ],
-            "authors": [
+           "authors": [
                 {
-                    "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                   "name":"Gert de Pagter",
+                   "email":"BackEndTea@gmail.com"
                 },
                 {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
+                   "name":"Symfony Community",
+                   "homepage":"https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony polyfill for ctype functions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "ctype",
-                "polyfill",
-                "portable"
+           "description":"Symfony polyfill for ctype functions",
+           "homepage":"https://symfony.com",
+           "keywords": [
+               "compatibility",
+               "ctype",
+               "polyfill",
+               "portable"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.27.0"
+           "support": {
+               "source":"https://github.com/symfony/polyfill-ctype/tree/v1.27.0"
             },
-            "funding": [
+           "funding": [
                 {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
+                   "url":"https://symfony.com/sponsor",
+                   "type":"custom"
                 },
                 {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
+                   "url":"https://github.com/fabpot",
+                   "type":"github"
                 },
                 {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
+                   "url":"https://tidelift.com/funding/github/packagist/symfony/symfony",
+                   "type":"tidelift"
                 }
             ],
-            "time": "2022-11-03T14:55:06+00:00"
+           "time":"2022-11-03T14:55:06+00:00"
         },
         {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.27.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "8ad114f6b39e2c98a8b0e3bd907732c207c2b534"
+           "name":"symfony/polyfill-mbstring",
+           "version":"v1.27.0",
+           "source": {
+               "type":"git",
+               "url":"https://github.com/symfony/polyfill-mbstring.git",
+               "reference":"8ad114f6b39e2c98a8b0e3bd907732c207c2b534"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
-                "reference": "8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
-                "shasum": ""
+           "dist": {
+               "type":"zip",
+               "url":"https://api.github.com/repos/symfony/polyfill-mbstring/zipball/8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
+               "reference":"8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
+               "shasum":""
             },
-            "require": {
-                "php": ">=7.1"
+           "require": {
+               "php":">=7.1"
             },
-            "provide": {
-                "ext-mbstring": "*"
+           "provide": {
+               "ext-mbstring":"*"
             },
-            "suggest": {
-                "ext-mbstring": "For best performance"
+           "suggest": {
+               "ext-mbstring":"For best performance"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.27-dev"
+           "type":"library",
+           "extra": {
+               "branch-alias": {
+                   "dev-main":"1.27-dev"
                 },
-                "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+               "thanks": {
+                   "name":"symfony/polyfill",
+                   "url":"https://github.com/symfony/polyfill"
                 }
             },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
+           "autoload": {
+               "files": [
+                   "bootstrap.php"
                 ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
+               "psr-4": {
+                   "Symfony\\Polyfill\\Mbstring\\":""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
+           "notification-url":"https://packagist.org/downloads/",
+           "license": [
+               "MIT"
             ],
-            "authors": [
+           "authors": [
                 {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
+                   "name":"Nicolas Grekas",
+                   "email":"p@tchwork.com"
                 },
                 {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
+                   "name":"Symfony Community",
+                   "homepage":"https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
+           "description":"Symfony polyfill for the Mbstring extension",
+           "homepage":"https://symfony.com",
+           "keywords": [
+               "compatibility",
+               "mbstring",
+               "polyfill",
+               "portable",
+               "shim"
             ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.27.0"
+           "support": {
+               "source":"https://github.com/symfony/polyfill-mbstring/tree/v1.27.0"
             },
-            "funding": [
+           "funding": [
                 {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
+                   "url":"https://symfony.com/sponsor",
+                   "type":"custom"
                 },
                 {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
+                   "url":"https://github.com/fabpot",
+                   "type":"github"
                 },
                 {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
+                   "url":"https://tidelift.com/funding/github/packagist/symfony/symfony",
+                   "type":"tidelift"
                 }
             ],
-            "time": "2022-11-03T14:55:06+00:00"
+           "time":"2022-11-03T14:55:06+00:00"
         },
         {
-            "name": "tracy/tracy",
-            "version": "v2.9.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nette/tracy.git",
-                "reference": "1c6e9b5bad030fdf49194154c9674201fa6372bb"
+           "name":"tracy/tracy",
+           "version":"v2.9.7",
+           "source": {
+               "type":"git",
+               "url":"https://github.com/nette/tracy.git",
+               "reference":"1c6e9b5bad030fdf49194154c9674201fa6372bb"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/1c6e9b5bad030fdf49194154c9674201fa6372bb",
-                "reference": "1c6e9b5bad030fdf49194154c9674201fa6372bb",
-                "shasum": ""
+           "dist": {
+               "type":"zip",
+               "url":"https://api.github.com/repos/nette/tracy/zipball/1c6e9b5bad030fdf49194154c9674201fa6372bb",
+               "reference":"1c6e9b5bad030fdf49194154c9674201fa6372bb",
+               "shasum":""
             },
-            "require": {
-                "ext-json": "*",
-                "ext-session": "*",
-                "php": ">=7.2 <8.3"
+           "require": {
+               "ext-json":"*",
+               "ext-session":"*",
+               "php":">=7.2 <8.3"
             },
-            "conflict": {
-                "nette/di": "<3.0"
+           "conflict": {
+               "nette/di":"<3.0"
             },
-            "require-dev": {
-                "latte/latte": "^2.5",
-                "nette/di": "^3.0",
-                "nette/mail": "^3.0",
-                "nette/tester": "^2.2",
-                "nette/utils": "^3.0",
-                "phpstan/phpstan": "^1.0",
-                "psr/log": "^1.0 || ^2.0 || ^3.0"
+           "require-dev": {
+               "latte/latte":"^2.5",
+               "nette/di":"^3.0",
+               "nette/mail":"^3.0",
+               "nette/tester":"^2.2",
+               "nette/utils":"^3.0",
+               "phpstan/phpstan":"^1.0",
+               "psr/log":"^1.0 || ^2.0 || ^3.0"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.9-dev"
+           "type":"library",
+           "extra": {
+               "branch-alias": {
+                   "dev-master":"2.9-dev"
                 }
             },
-            "autoload": {
-                "files": [
-                    "src/Tracy/functions.php"
+           "autoload": {
+               "files": [
+                   "src/Tracy/functions.php"
                 ],
-                "classmap": [
-                    "src"
+               "classmap": [
+                   "src"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
+           "notification-url":"https://packagist.org/downloads/",
+           "license": [
+               "BSD-3-Clause"
             ],
-            "authors": [
+           "authors": [
                 {
-                    "name": "David Grudl",
-                    "homepage": "https://davidgrudl.com"
+                   "name":"David Grudl",
+                   "homepage":"https://davidgrudl.com"
                 },
                 {
-                    "name": "Nette Community",
-                    "homepage": "https://nette.org/contributors"
+                   "name":"Nette Community",
+                   "homepage":"https://nette.org/contributors"
                 }
             ],
-            "description": "😎  Tracy: the addictive tool to ease debugging PHP code for cool developers. Friendly design, logging, profiler, advanced features like debugging AJAX calls or CLI support. You will love it.",
-            "homepage": "https://tracy.nette.org",
-            "keywords": [
-                "Xdebug",
-                "debug",
-                "debugger",
-                "nette",
-                "profiler"
+           "description":"😎  Tracy: the addictive tool to ease debugging PHP code for cool developers. Friendly design, logging, profiler, advanced features like debugging AJAX calls or CLI support. You will love it.",
+           "homepage":"https://tracy.nette.org",
+           "keywords": [
+               "Xdebug",
+               "debug",
+               "debugger",
+               "nette",
+               "profiler"
             ],
-            "support": {
-                "issues": "https://github.com/nette/tracy/issues",
-                "source": "https://github.com/nette/tracy/tree/v2.9.7"
+           "support": {
+               "issues":"https://github.com/nette/tracy/issues",
+               "source":"https://github.com/nette/tracy/tree/v2.9.7"
             },
-            "time": "2023-02-28T13:01:54+00:00"
+           "time":"2023-02-28T13:01:54+00:00"
         },
         {
-            "name": "twig/twig",
-            "version": "v3.6.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd"
+           "name":"twig/twig",
+           "version":"v3.6.1",
+           "source": {
+               "type":"git",
+               "url":"https://github.com/twigphp/Twig.git",
+               "reference":"7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
-                "reference": "7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
-                "shasum": ""
+           "dist": {
+               "type":"zip",
+               "url":"https://api.github.com/repos/twigphp/Twig/zipball/7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
+               "reference":"7e7d5839d4bec168dfeef0ac66d5c5a2edbabffd",
+               "shasum":""
             },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-ctype": "^1.8",
-                "symfony/polyfill-mbstring": "^1.3"
+           "require": {
+               "php":">=7.2.5",
+               "symfony/polyfill-ctype":"^1.8",
+               "symfony/polyfill-mbstring":"^1.3"
             },
-            "require-dev": {
-                "psr/container": "^1.0|^2.0",
-                "symfony/phpunit-bridge": "^4.4.9|^5.0.9|^6.0"
+           "require-dev": {
+               "psr/container":"^1.0|^2.0",
+               "symfony/phpunit-bridge":"^4.4.9|^5.0.9|^6.0"
             },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Twig\\": "src/"
+           "type":"library",
+           "autoload": {
+               "psr-4": {
+                   "Twig\\":"src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
+           "notification-url":"https://packagist.org/downloads/",
+           "license": [
+               "BSD-3-Clause"
             ],
-            "authors": [
+           "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                   "name":"Fabien Potencier",
+                   "email":"fabien@symfony.com",
+                   "homepage":"http://fabien.potencier.org",
+                   "role":"Lead Developer"
                 },
                 {
-                    "name": "Twig Team",
-                    "role": "Contributors"
+                   "name":"Twig Team",
+                   "role":"Contributors"
                 },
                 {
-                    "name": "Armin Ronacher",
-                    "email": "armin.ronacher@active-4.com",
-                    "role": "Project Founder"
+                   "name":"Armin Ronacher",
+                   "email":"armin.ronacher@active-4.com",
+                   "role":"Project Founder"
                 }
             ],
-            "description": "Twig, the flexible, fast, and secure template language for PHP",
-            "homepage": "https://twig.symfony.com",
-            "keywords": [
-                "templating"
+           "description":"Twig, the flexible, fast, and secure template language for PHP",
+           "homepage":"https://twig.symfony.com",
+           "keywords": [
+               "templating"
             ],
-            "support": {
-                "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.6.1"
+           "support": {
+               "issues":"https://github.com/twigphp/Twig/issues",
+               "source":"https://github.com/twigphp/Twig/tree/v3.6.1"
             },
-            "funding": [
+           "funding": [
                 {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
+                   "url":"https://github.com/fabpot",
+                   "type":"github"
                 },
                 {
-                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
-                    "type": "tidelift"
+                   "url":"https://tidelift.com/funding/github/packagist/twig/twig",
+                   "type":"tidelift"
                 }
             ],
-            "time": "2023-06-08T12:52:13+00:00"
+           "time":"2023-06-08T12:52:13+00:00"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+   "packages-dev": [],
+   "aliases": [],
+   "minimum-stability":"stable",
+   "stability-flags": [],
+   "prefer-stable": false,
+   "prefer-lowest": false,
+   "platform": [],
+   "platform-dev": [],
+   "plugin-api-version":"2.3.0"
 }

@@ -1,20 +1,20 @@
 {
-    "name": "tristanriedinger/blog-final",
-    "type": "project",
-    "require": {
-        "tracy/tracy": "2.9.7",
-        "twig/twig": "^3.6",
-        "phpmailer/phpmailer": "^6.8"
+   "name":"tristanriedinger/blog-final",
+   "type":"project",
+   "require": {
+       "tracy/tracy":"2.9.7",
+       "twig/twig":"^3.6",
+       "phpmailer/phpmailer":"^6.8"
     },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
+   "autoload": {
+       "psr-4": {
+           "App\\":"src/"
         }
     },
-    "authors": [
+   "authors": [
         {
-            "name": "Tristan Riedinger",
-            "email": "tristanriedinger@gmail.com"
+           "name":"Tristan Riedinger",
+           "email":"tristanriedinger@gmail.com"
         }
     ]
 }

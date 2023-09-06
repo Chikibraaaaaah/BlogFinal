@@ -146,7 +146,7 @@ abstract class GlobalsController
         
         foreach($inputs as $input => $value) {
             if(empty($value)){
-                $this->setSession(["alert" => "danger", "message" => "Veuillez remplir le champ " . $input]);
+                $this->setSession(["alert"=>"danger","message"=>"Veuillez remplir le champ". $input]);
                 return false;
             }
         }
@@ -168,7 +168,7 @@ abstract class GlobalsController
 
             if ($type) {
 
-                return $this->alert["type"] ?? "";
+                return $this->alert["type"] ??"";
             }
 
             echo filter_var($this->alert["message"]);
@@ -189,7 +189,7 @@ abstract class GlobalsController
             return $this->env;
         }
         
-        return $this->env[$var] ?? "";
+        return $this->env[$var] ??"";
     }
 
     /**
@@ -204,12 +204,12 @@ abstract class GlobalsController
             return $this->files;
         }
 
-        if ($var === "file") {
+        if ($var ==="file") {
 
             return $this->file;
         }
         
-        return $this->file[$var] ?? "";
+        return $this->file[$var] ??"";
     }
 
     /**
@@ -224,7 +224,7 @@ abstract class GlobalsController
             return $this->get;
         }
         
-        return $this->get[$var] ?? "";
+        return $this->get[$var] ??"";
     }
 
     /**
@@ -239,7 +239,7 @@ abstract class GlobalsController
             return $this->post;
         }
 
-        return $this->post[$var] ?? "";
+        return $this->post[$var] ??"";
     }
 
     /**
@@ -254,7 +254,7 @@ abstract class GlobalsController
             return $this->request;
         }
         
-        return $this->request[$var] ?? "";
+        return $this->request[$var] ??"";
     }
 
     /**
@@ -269,7 +269,7 @@ abstract class GlobalsController
             return $this->server;
         }
         
-        return $this->server[$var] ?? "";
+        return $this->server[$var] ??"";
     }
 
     /**
@@ -284,7 +284,7 @@ abstract class GlobalsController
             return $this->session;
         }
 
-        if($var === "user") {
+        if($var ==="user") {
 
             return $this->user;
         }
@@ -293,7 +293,7 @@ abstract class GlobalsController
             $this->user[$var] = null;
         }
         
-        return $this->user[$var] ?? "";
+        return $this->user[$var] ??"";
     }
 
     // ******************** DESTROYER ******************** \\

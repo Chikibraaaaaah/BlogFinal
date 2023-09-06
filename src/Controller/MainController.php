@@ -25,7 +25,7 @@ abstract class MainController extends GlobalsController
     public function __construct()
     {
         parent::__construct();
-        $this->twig = new Environment(new FilesystemLoader("../src/View"), array("cache" => false));
+        $this->twig = new Environment(new FilesystemLoader("../src/View"), array("cache"=> false));
 
     }
 
@@ -39,7 +39,7 @@ abstract class MainController extends GlobalsController
     public function redirect(string $page, array $params = [])
     {
         $params["access"] = $page;
-        $redirectUrl = "index.php?" . htmlspecialchars(http_build_query($params));
+        $redirectUrl ="index.php?". htmlspecialchars(http_build_query($params));
 
         return $redirectUrl;
     }
@@ -47,7 +47,7 @@ abstract class MainController extends GlobalsController
     // public function redirect(string $page, array $params = [])
     // {
     // $params["access"] = $page;
-    // header("Location: index.php?" .  htmlspecialchars(http_build_query($params)));
+    // header("Location: index.php?".  htmlspecialchars(http_build_query($params)));
     // exit;
     // }
 }

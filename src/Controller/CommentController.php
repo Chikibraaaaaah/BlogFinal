@@ -33,20 +33,20 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            " authorId " => intval($this->auteurId),
-            " articleId " => intval($this->articleId),
-            " content " => $this->content,
-            " createdAt " => date("Y-m-d H:i:s")
+           "authorId"=> intval($this->auteurId),
+           "articleId"=> intval($this->articleId),
+           "content"=> $this->content,
+           "createdAt"=> date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Comment")->createData($newComment);
 
         $this->setSession([
-            "alert" => "success",
-            "message" => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
+           "alert"=>"success",
+           "message"=>"Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
          ]);
 
-        return $this->redirect("article_renderArticle", ["id" => intval($this->articleId)]);
+        return $this->redirect("article_renderArticle", ["id"=> intval($this->articleId)]);
     }
 
     /**
@@ -59,7 +59,7 @@ class CommentController extends MainController
     public function updateCommentMethod()
     {
     
-        $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(), "id")[0];
+        $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(),"id")[0];
 
         if($this->checkInputs()) {
 
@@ -69,7 +69,7 @@ class CommentController extends MainController
     
             ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);
 
-            $this->redirect("article_renderArticle", ["id" => $updatedComment["articleId"]]);
+            $this->redirect("article_renderArticle", ["id"=> $updatedComment["articleId"]]);
 
         }
     }
@@ -98,11 +98,11 @@ class CommentController extends MainController
     public function editCommentMethod()
     {
 
-        $commentaire = ModelFactory::getModel("Comment")->listData($this->getGet("id"), "id")[0];
-        $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"], "id");
-        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
+        $commentaire = ModelFactory::getModel("Comment")->listData($this->getGet("id"),"id")[0];
+        $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"],"id");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
 
-        return $this->twig->render("articles/article.twig", [ "article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT" ]);
+        return $this->twig->render("articles/article.twig", ["article"=> $article,"myCommentaire"=> $commentaire,"relatedComments"=> $relatedComments,"user"=> $this->getSession()["user"],"method"=>"PUT"]);
 
     }
 
@@ -115,9 +115,9 @@ class CommentController extends MainController
 
     public function confirmDeleteCommentMethod()
     {
-        $this->setSession(["alert" => "danger", "message" => "Êtes-vous certain de vouloir supprimer ce commentaire ?"]);
+        $this->setSession(["alert"=>"danger","message"=>"Êtes-vous certain de vouloir supprimer ce commentaire ?"]);
 
-        return $this->twig->render("alert.twig", ["alert" => "danger", "message" => $this->getSession()["alert"]["message"], "commentaire" => ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))]);
+        return $this->twig->render("alert.twig", ["alert"=>"danger","message"=> $this->getSession()["alert"]["message"],"commentaire"=> ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))]);
     }
 
     /**
@@ -135,7 +135,7 @@ class CommentController extends MainController
 
         ModelFactory::getModel("Comment")->deleteData($id);
 
-            return $this->redirect("article_getArticle", ["id" => intval($articleId)]);
+            return $this->redirect("article_getArticle", ["id"=> intval($articleId)]);
 
     }
 }

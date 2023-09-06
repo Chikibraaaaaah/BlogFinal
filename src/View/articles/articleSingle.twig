@@ -1,10 +1,10 @@
-{% extends "layout/layout.twig" %}
+{% extends"layout/layout.twig"%}
 
 {% block article %}
 
     {% block alert %}
 
-        <div class="alert alert-success" role="alert" id="alert">
+        <div class="alert alert-success"role="alert"id="alert">
         
                {{ message }}
 
@@ -20,10 +20,10 @@
 
             <figure>
 
-                <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
+                <img src="{{ article.imgUrl }}"width="300"alt="{{ article.altImg }}">
                 <figcaption>{{ article.content }}</figcaption>
 
-                {% if user.role is same as(1) %}
+                {% if user.role > 0 %}
                     <button>
                         <a href="index.php?access=article_deleteArticle&id={{article.id}}">Supprimer</a>
                     </button>
@@ -35,23 +35,23 @@
 
     {% else %}
 
-        <form action="index.php?access=article_updateArticle&id={{article.id}}" enctype="multipart/form-data" method="POST">
+        <form action="index.php?access=article_updateArticle&id={{article.id}}"enctype="multipart/form-data"method="POST">
 
             <div class="mb-3">
-                <label for="title_article" class="form-label">Nouveau titre de votre publication</label>
-                <input type="text" name="title" class="form-control form-control-lg" id="title_article" value="{{ article.title }}" required>
+                <label for="title_article"class="form-label">Nouveau titre de votre publication</label>
+                <input type="text"name="title"class="form-control form-control-lg"id="title_article"value="{{ article.title }}"required>
             </div>
 
-            <img src="{{ article.imgUrl }}" alt=" {{ article.altImg }}" class="mb-3 w-50 h-50">
+            <img src="{{ article.imgUrl }}"alt="{{ article.altImg }}"class="mb-3 w-50 h-50">
 
             <div class="mb-3">
-                <label for="article_content" class="form-label">Modifiez votre contenu</label>
-                <textarea class="form-control" name="content" id="article_content" rows="10" required >  {{ article.content }}  </textarea>
+                <label for="article_content"class="form-label">Modifiez votre contenu</label>
+                <textarea class="form-control"name="content"id="article_content"rows="10"required >  {{ article.content }}  </textarea>
             </div>
 
             <div class="mb-3">
-                <label for="article_img" class="form-label">Voulez-vous modifier l'image ?</label>
-                <input type="file" name="img" class="form-control" id="article_img">
+                <label for="article_img"class="form-label">Voulez-vous modifier l'image ?</label>
+                <input type="file"name="img"class="form-control"id="article_img">
             </div>
 
             <button class="btn btn-primary">Publier</button>
@@ -64,11 +64,11 @@
 
         {% block comments %}
 
-            {% include "comment/commentList.twig" %}
+            {% include"comment/commentList.twig"%}
 
-            {% if user and method is same as("GET") %}
+            {% if user and method == "GET" %}
 
-                {% include "comment/commentCreate.twig" %}
+                {% include"comment/commentCreate.twig"%}
                          
             {% endif %}
 

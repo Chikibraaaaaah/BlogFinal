@@ -2,7 +2,7 @@
 
     {% for comment in comments %}
     
-        {# {% if commentaire.valide === 1 %} #}
+        {# {% if commentaire.valide > 0 %} #}
             <div>
                 <p>
                     {{ comment.content }} - <strong>{{ comment.authorId }}</strong> 

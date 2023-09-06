@@ -7,7 +7,7 @@
             <h2> {{ article.title }} - {{ article.createdAt }}</h2>
 
             <figure>
-                <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
+                <img src="{{ article.imgUrl }}"width="300"alt="{{ article.altImg }}">
                 <figcaption>{{ article.content }}</figcaption>
             </figure>
 
@@ -15,9 +15,11 @@
 
         <a href="index.php?access=article_renderArticle&id={{article.id}}">Ajout un commentaire</a>
 
-        {% if user.role is same as (1) %}
-        
-            {% include "articles/articleButton.twig" %}
+        <p> {{ user.role}} </p>
+
+        {% if user.role > 0 %}
+
+            {% include "articles/articleButton.twig"%}
 
         {% endif %}
 

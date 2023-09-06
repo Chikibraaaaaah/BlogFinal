@@ -8,10 +8,17 @@ use RuntimeException;
 
 class ArticleController extends MainController
 {
-
+    /**
+     * A description of the entire PHP function.
+     *
+     * @param datatype $paramname description
+     * @throws Some_Exception_Class description of exception
+     * @return Some_Return_Value
+     */
     public  function defaultMethod()
     { 
     }
+
 
     // Render functions
 
@@ -20,46 +27,44 @@ class ArticleController extends MainController
      *
      * @return mixed
      */
-
     public  function renderArticleMethod()
     {
 
-        $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
+        $article = ModelFactory::getModel("Article")->readData($this->getGet("id"),"id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId") ?? [];
         $alerts = $this->getAlert(true) ?? [];
         $user = $this->getSession()["user"] ?? [];
 
         return $this->twig->render("articles/articleSingle.twig", [
-            " user " => $user,
-            " article " => $article,
-            " comments " => $relatedComments,
-            " alerts " => $alerts,
-            " method " => " GET "
+           "user"=> $user,
+           "article"=> $article,
+           "comments"=> $relatedComments,
+           "alerts"=> $alerts,
+           "method"=>"GET"
         ]);
-
     }
+
 
     /**
      * Modify the article method.
      *
      * @return string The rendered article single view.
      */
-
     public  function modifyArticleMethod()
     {
 
         $id = $this->getGet("id");
-        $article = ModelFactory::getModel("Article")->readData($id, "id");
-        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
+        $article = ModelFactory::getModel("Article")->readData($id,"id");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
   
         return $this->twig->render("articles/articleSingle.twig", [
-            "user" => $this->getSession()["user"],
-            "article" => $article,
-            "method" => "PUT",
-            "comments" => $relatedComments
-            ]
-       );
+           "user"=> $this->getSession()["user"],
+           "article"=> $article,
+           "method"=>"PUT",
+           "comments"=> $relatedComments
+        ]);
     }
+
 
     // CRUD functions
 
@@ -73,26 +78,22 @@ class ArticleController extends MainController
      *
      * @return void
      */
-
     public  function createArticleMethod()
     { 
 
-            $destination = $this->uploadFile();
+        $destination = $this->uploadFile();
+        $article = [
+           "title"=> addslashes($this->getPost("title")),
+           "content"=> addslashes($this->getPost("content")),
+           "imgUrl"=> $destination,
+           "imgAlt"=> addslashes($this->getPost("content")),
+           "createdAt"=> date("Y-m-d H:i:s")
+        ];
 
-            $article = [
-                "title" => addslashes($this->getPost("title")),
-                "content" => addslashes($this->getPost("content")),
-                "imgUrl" => $destination,
-                "imgAlt" => addslashes($this->getPost("content")),
-                "createdAt" => date("Y-m-d H:i:s")
-            ];
-
-            ModelFactory::getModel("Article")->createData($article);
-
-            $this->setSession(["alert" => "success", "message" => "Votre article a été créé"]);
-
-            $home = $this->redirect("home");
-            header("Location: $home");
+        ModelFactory::getModel("Article")->createData($article);
+        $this->setSession(["alert"=>"success","message"=>"Votre article a été créé"]);
+        $home = $this->redirect("home");
+        header("Location: $home");
     }
 
     /**
@@ -105,10 +106,11 @@ class ArticleController extends MainController
     {
         
         $articleId = $this->getGet("id");
-        $article = ModelFactory::getModel("Article")->readData($articleId, "id");
+        $article = ModelFactory::getModel("Article")->readData($articleId,"id");
 
         return $article;
     }
+
 
     /**
      * Update an article.
@@ -120,7 +122,6 @@ class ArticleController extends MainController
      * the database using the Article model, and returns the rendered article.
      * @return mixed The rendered article.
      */
-
     public  function updateArticleMethod() 
     {
 
@@ -149,13 +150,13 @@ class ArticleController extends MainController
         }
     }
 
+
     /**
      * Deletes an article.
      *
      * @throws Some_Exception_Class If the article cannot be deleted.
      * @return void
      */
-
     public  function deleteArticleMethod()
     {
        
@@ -166,6 +167,7 @@ class ArticleController extends MainController
         
     }
    
+
     // Fichiers
 
     /**
@@ -174,7 +176,6 @@ class ArticleController extends MainController
      * @throws RuntimeException if there are invalid parameters, file size is too large, MIME type is invalid, or there is an error moving the file.
      * @return string the file destination on success.
      */
-
     public  function uploadFile()
     { 
 
@@ -220,7 +221,7 @@ class ArticleController extends MainController
         $ext = array_search($fileMimeType, $validMimeTypes, true);
 
         if($ext ===  false) {
-            return $this->setSession(["alert" => "danger", "message" => "Format invalide."]);
+            return $this->setSession(["alert"=>"danger","message"=>"Format invalide."]);
             // throw new RuntimeException('Invalid file format.');
         }
 
@@ -246,6 +247,14 @@ class ArticleController extends MainController
   
     }
 
+
+    /**
+     * Checks if there is any error with the uploaded file.
+     *
+     * @throws RuntimeException if there is no file uploaded.
+     * @throws RuntimeException if the file size exceeds the maximum allowed (1MB).
+     * @throws RuntimeException if an unidentified error occurs.
+     */
     private  function checkFileError()
     {
         switch ($this->getFiles()['img']['error']) {
@@ -261,7 +270,6 @@ class ArticleController extends MainController
         }
     }
 
-   
 
     /**
      * Deletes a file.
@@ -269,7 +277,6 @@ class ArticleController extends MainController
      * @throws Some_Exception_Class If the file does not exist
      * @return void
      */
-
     public  function deleteFile()
     {
 
@@ -280,6 +287,7 @@ class ArticleController extends MainController
            return ;
         }
 
-        return $this->setSession(["alert" => "danger", "message" => "Le fichier n'existe pas"]);
+        return $this->setSession(["alert"=>"danger","message"=>"Le fichier n'existe pas"]);
     }
+    
 }

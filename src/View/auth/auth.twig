@@ -1,14 +1,14 @@
-{% extends "layout/layout.twig" %}
+{% extends"layout/layout.twig"%}
 
 {% block auth %}
 
     {% if method is same as ("login") %}
 
-        {% include "auth/login.twig" %}
+        {% include"auth/login.twig"%}
 
     {% else %}
             
-            {% include "auth/signup.twig" %}
+            {% include"auth/signup.twig"%}
 
     {% endif %}
 

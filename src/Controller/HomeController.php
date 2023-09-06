@@ -31,7 +31,7 @@ class HomeController extends MainController
         $alert = $this->getSession()["alert"];
         $comments = [];
 
-        foreach($articles as $article) {
+        foreach ($articles as $article) {
             
             $id = $article["id"]; 
             $relatedComments = ModelFactory::getModel("Comment")->listData($id, "articleId");
@@ -40,10 +40,10 @@ class HomeController extends MainController
         }
 
         return  $this->twig->render("home.twig", [
-                    "articles" => $articles,
-                    "alert" => $alert,
-                    "user" => $user,
-                    "comments" => $comments[0]
+                   "articles"=> $articles,
+                   "alert"=> $alert,
+                   "user"=> $user,
+                   "comments"=> $comments[0]
                 ]);
     }
 
@@ -53,4 +53,6 @@ class HomeController extends MainController
 
         return $articles;
    }
+
+
 }
