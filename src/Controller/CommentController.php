@@ -14,7 +14,7 @@ class CommentController extends MainController
     protected $content;
 
 
-    public function defaultMethod() 
+    public function defaultMethod()
     {
 
     }
@@ -25,7 +25,7 @@ class CommentController extends MainController
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
-    public function createCommentMethod() 
+    public function createCommentMethod()
     {
 
         $this->auteurId = $this->getSession()["user"]["id"];
@@ -56,10 +56,10 @@ class CommentController extends MainController
      * @return void
      */
 
-    public function updateCommentMethod() 
+    public function updateCommentMethod()
     {
-       
-        $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(), "id")[0];     
+    
+        $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(), "id")[0];
 
         if( $this->checkInputs() ) {
 
@@ -71,7 +71,7 @@ class CommentController extends MainController
 
             $this->redirect( "article_renderArticle", ["id" => $updatedComment["articleId"]] );
 
-        } 
+        }
     }
 
     /**
@@ -81,7 +81,7 @@ class CommentController extends MainController
      * @return int The ID of the comment
      */
 
-    public function getCommentById() 
+    public function getCommentById()
     {
        
         $commentId = $this->getGet()["id"];
@@ -95,7 +95,7 @@ class CommentController extends MainController
      * @return string The rendered template.
      */
 
-    public function editCommentMethod() 
+    public function editCommentMethod()
     {
 
         $commentaire = ModelFactory::getModel( "Comment" )->listData( $this->getGet( "id" ), "id" )[0];
@@ -113,7 +113,7 @@ class CommentController extends MainController
      * @return Some_Return_Value
      */
 
-    public function confirmDeleteCommentMethod() 
+    public function confirmDeleteCommentMethod()
     {
         $this->setSession(["alert" => "danger", "message" => "Êtes-vous certain de vouloir supprimer ce commentaire ?"]);
 
@@ -127,7 +127,7 @@ class CommentController extends MainController
      * @return Some_Return_Value
      */
 
-    public function deleteCommentMethod() 
+    public function deleteCommentMethod()
     {
         
         $id = $this->getRequest()["id"];

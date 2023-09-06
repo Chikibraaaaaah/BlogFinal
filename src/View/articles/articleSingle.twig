@@ -12,7 +12,7 @@
      
     {% endblock %}
 
-    {% if method == "GET" %}
+    {% if method is same as( "GET" ) %}
 
         <article>
 
@@ -23,7 +23,7 @@
                 <img src="{{ article.imgUrl }}" width="300" alt="{{ article.altImg }}">
                 <figcaption>{{ article.content }}</figcaption>
 
-                {% if user.role == 1 %}
+                {% if user.role is same as( 1 ) %}
                     <button>
                         <a href="index.php?access=article_deleteArticle&id={{article.id}}">Supprimer</a>
                     </button>
@@ -66,7 +66,7 @@
 
             {% include "comment/commentList.twig" %}
 
-            {% if user and method == "GET" %}
+            {% if user and method is same as( "GET" ) %}
 
                 {% include "comment/commentCreate.twig" %}
                          

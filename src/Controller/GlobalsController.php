@@ -72,18 +72,18 @@ abstract class GlobalsController
         $this->files    = filter_var_array($_FILES) ?? [];
         $this->request  = filter_var_array($_REQUEST) ?? [];
 
-        if (isset($this->files["file"])) {
+        if( isset( $this->files["file"] ) ) {
             $this->file = $this->files["file"];
         }
 
-        if (array_key_exists("alert", $_SESSION) === false) {
+        if( array_key_exists( "alert", $_SESSION ) === false ){
             $_SESSION["alert"] = [];
         }
 
         $this->session  = filter_var_array($_SESSION) ?? [];
         $this->alert    = $this->session["alert"];
 
-        if (isset($this->session["user"])) {
+        if( isset( $this->session["user"] ) ) {
             $this->user = $this->session["user"];
         }
     }
@@ -95,19 +95,18 @@ abstract class GlobalsController
      * @param array $user
      * @param bool $alert
      */
-    protected function setSession(array $user, bool $session = false)
+    protected function setSession( array $user, bool $session = false )
     {
-        if ($session === false) {
+        if ( $session === false ) {
 
             $_SESSION["alert"] = $user;
 
-        } elseif ($session === true) {
+        } elseif ( $session === true ) {
 
-            if (isset($user["pass"])) {
-                unset($user["pass"]);
-    
-            } elseif (isset($user["password"])) {
-                unset($user["password"]);
+            if ( isset( $user["pass"] ) ) {
+                unset( $user["pass"] );
+            } elseif ( isset( $user["password"] ) ) {
+                unset( $user["password"] );
             }
     
             $_SESSION["user"] = $user;
@@ -123,16 +122,16 @@ abstract class GlobalsController
      * @param bool $alert
      * @return bool
      */
-    protected function checkUser(bool $alert = false)
+    protected function checkUser( bool $alert = false )
     {
-        if ($alert) {
+        if( $alert ) {
 
-            return empty($this->alert) === false;
+            return empty( $this->alert ) === false;
         }
 
-        if (array_key_exists("user", $this->session)) {
+        if( array_key_exists( "user", $this->session ) ) {
 
-            if (!empty($this->user)) {
+            if( !empty( $this->user ) ) {
 
                 return true;
             }
@@ -145,9 +144,9 @@ abstract class GlobalsController
 
         $inputs = $this->getPost();
         
-        foreach ($inputs as $input => $value) {
-            if(empty($value)){
-                $this->setSession(["alert" => "danger", "message" => "Veuillez remplir le champ " . $input]);
+        foreach( $inputs as $input => $value ) {
+            if( empty( $value ) ){
+                $this->setSession( ["alert" => "danger", "message" => "Veuillez remplir le champ " . $input] );
                 return false;
             }
         }
@@ -163,18 +162,18 @@ abstract class GlobalsController
      * @param bool $type
      * @return string|void
      */
-    protected function getAlert(bool $type = false)
+    protected function getAlert( bool $type = false )
     {
-        if (isset($this->alert)) {
+        if ( isset( $this->alert ) ) {
 
-            if ($type) {
+            if ( $type ) {
 
                 return $this->alert["type"] ?? "";
             }
 
-            echo filter_var($this->alert["message"]);
+            echo filter_var( $this->alert["message"] );
 
-            unset($_SESSION["alert"]);
+            unset( $_SESSION["alert"] );
         }
     }
 
@@ -183,9 +182,9 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getEnv(string $var = null)
+    protected function getEnv( string $var = null )
     {
-        if ($var === null) {
+        if ( $var === null ) {
 
             return $this->env;
         }
@@ -198,14 +197,14 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getFiles(string $var = null)
+    protected function getFiles( string $var = null )
     {
-        if ($var === null) {
+        if ( $var === null ) {
 
             return $this->files;
         }
 
-        if ($var === "file") {
+        if ( $var === "file" ) {
 
             return $this->file;
         }
@@ -218,9 +217,9 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getGet(string $var = null)
+    protected function getGet( string $var = null )
     {
-        if ($var === null) {
+        if ( $var === null ) {
 
             return $this->get;
         }

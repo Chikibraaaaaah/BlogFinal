@@ -9,7 +9,7 @@ use RuntimeException;
 class ArticleController extends MainController
 {
 
-    public function defaultMethod()
+    public  function defaultMethod()
     { 
     }
 
@@ -21,7 +21,7 @@ class ArticleController extends MainController
      * @return mixed
      */
 
-    public function renderArticleMethod()
+    public  function renderArticleMethod()
     {
 
         $article = ModelFactory::getModel( "Article" )->readData( $this->getGet( "id" ), "id" );
@@ -45,7 +45,7 @@ class ArticleController extends MainController
      * @return string The rendered article single view.
      */
 
-    public function modifyArticleMethod()
+    public  function modifyArticleMethod()
     {
 
         $id = $this->getGet( "id" );
@@ -74,7 +74,7 @@ class ArticleController extends MainController
      * @return void
      */
 
-    public function createArticleMethod()
+    public  function createArticleMethod()
     { 
 
             $destination = $this->uploadFile();
@@ -101,7 +101,7 @@ class ArticleController extends MainController
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
-    public function getArticleById()
+    public  function getArticleById()
     {
         
         $articleId = $this->getGet( "id" );
@@ -112,18 +112,16 @@ class ArticleController extends MainController
 
     /**
      * Update an article.
-     *
-     * This function updates an existing article by merging the existing article 
-     * with the new post data. It also handles the uploading of a new image if 
-     * one is provided, and updates the image URL accordingly. The function then 
-     * adds slashes to the content, title, and updated content fields to escape 
-     * any special characters. Finally, the function updates the article data in 
+     * This function updates an existing article by merging the existing article
+     * with the new post data. It also handles the uploading of a new image if
+     * one is provided, and updates the image URL accordingly. The function then
+     * adds slashes to the content, title, and updated content fields to escape
+     * any special characters. Finally, the function updates the article data in
      * the database using the Article model, and returns the rendered article.
-     *
      * @return mixed The rendered article.
      */
 
-    public function updateArticleMethod() 
+    public  function updateArticleMethod() 
     {
 
         $existingArticle = $this->getArticleById();     
@@ -158,7 +156,7 @@ class ArticleController extends MainController
      * @return void
      */
 
-    public function deleteArticleMethod()
+    public  function deleteArticleMethod()
     {
        
         $id = $this->getGet()["id"];
@@ -177,7 +175,7 @@ class ArticleController extends MainController
      * @return string the file destination on success.
      */
 
-    public function uploadFile()
+    public  function uploadFile()
     { 
 
         try {
@@ -248,7 +246,7 @@ class ArticleController extends MainController
   
     }
 
-    private function checkFileError()
+    private  function checkFileError()
     {
         switch ( $this->getFiles()['img']['error'] ) {
             case UPLOAD_ERR_OK:
@@ -272,7 +270,7 @@ class ArticleController extends MainController
      * @return void
      */
 
-    public function deleteFile()
+    public  function deleteFile()
     {
 
         $imgPath = $this->getArticleById()["imgUrl"];

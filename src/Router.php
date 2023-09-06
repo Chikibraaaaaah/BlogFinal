@@ -60,7 +60,7 @@ class Router
 
         $access             = explode("_", $access);
         $this->controller   = $access[0];
-        $this->method       = count($access) == 1 ? "default" : $access[1];
+        $this->method       = count($access) === 1 ? "default" : $access[1];
 
         // var_dump($this->controller);
 
