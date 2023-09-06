@@ -31,14 +31,15 @@ abstract class MainController extends GlobalsController
      * Redirects to another URL
      * @param string $page
      * @param array $params
-     */
+     * */ 
+    
     // public function redirect(string $page, array $params = [])
-    // {
+    //  {
     //     $params["access"] = $page;
     //     header("Location: index.php?" .  htmlspecialchars(http_build_query($params)));
 
-    //     exit;
-    // }
+    //      exit;
+    //  }
 
     public function redirect(string $page, array $params = [])
     {
