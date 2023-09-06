@@ -115,7 +115,8 @@ class AuthController extends MainController
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
                 $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);
-                $this->redirect("home");
+                $home = $this->redirect("home");
+                header("Location: $home");
             }
 
             $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide."]);

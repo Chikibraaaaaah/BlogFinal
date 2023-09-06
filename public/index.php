@@ -2,15 +2,14 @@
 
 use Tracy\Debugger;
 
-require_once "../vendor/autoload.php";
+require __DIR__ . '/../vendor/autoload.php';
 
 Debugger::enable();
 
 $router = new \App\Router();
 
-if(session_status() === PHP_SESSION_NONE){
+if (empty(session_id())) {
     session_start();
 }
 
 $router->run();
-

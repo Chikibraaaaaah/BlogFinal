@@ -1,17 +1,20 @@
 <?php
 
-// Data Base name
+// Data Base name!
 
 define("DB_DSN", "mysql:host=localhost;dbname=blog");
 
-// Define user
+// Define user!
 
 define("DB_USER", "root");
 
-//Password
+// Password!
 
 define("DB_PASS", "root");
 
-// Define database options
+// Define database options!
 
-define("DB_OPTIONS", array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+define("DB_OPTIONS", array(
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+));
