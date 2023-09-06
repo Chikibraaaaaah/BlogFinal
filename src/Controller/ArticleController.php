@@ -8,10 +8,6 @@ use RuntimeException;
 
 class ArticleController extends MainController
 {
-    private $title;
-    private $content;
-    private $img;
-    private $createdAt;
 
     public function defaultMethod(){
     
@@ -71,7 +67,7 @@ class ArticleController extends MainController
 
             $home = $this->redirect("home");
             header("Location: $home");
-            // die();
+
 
     }
 
@@ -126,12 +122,12 @@ class ArticleController extends MainController
     public function getAlertMessageMethod(){
 
         $test = $this->getAlert(true);
-        echo "<pre>"; 
-        var_dump($test);
+        // echo "<pre>"; 
+        // var_dump($test);
 
-        echo "</pre>";
+        // echo "</pre>";
 
-        die();
+        // die();
 
 
     }

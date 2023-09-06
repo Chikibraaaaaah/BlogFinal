@@ -12,10 +12,6 @@ use Twig\Error\SyntaxError;
 class AuthController extends MainController
 {
 
-    private $userName;
-    private $email;
-    private $password;
-
     public function defaultMethod(){
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
@@ -66,7 +62,7 @@ class AuthController extends MainController
                     $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
 
                     $this->setSession($userCreated, true);
-                    $user["isLogged"] = true;
+                    $userCreated["isLogged"] = true;
                     
                     return $this->redirect("home");
 
