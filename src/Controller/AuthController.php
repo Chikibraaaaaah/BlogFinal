@@ -127,7 +127,14 @@ class AuthController extends MainController
 
     private function checkByUserName()
     {
-        
+        $userName = $this->getPost("userName");
+        $userFound = ModelFactory::getModel("User")->listData($userName, "userName");
+
+        if($userFound){
+
+            return $userFound[0];
+
+        }
     }
 
     private function checkPasswordsCorrespond()
@@ -146,12 +153,10 @@ class AuthController extends MainController
 
     }
 
-     
-    
     public function logoutMethod()
     {
         $this->destroyGlobal();
-        $user["isLogged"] = false;
+
         return $this->redirect("home");
     }
 
