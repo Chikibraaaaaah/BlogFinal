@@ -14,22 +14,30 @@ class CommentController extends MainController
     protected $content;
 
 
-    public function defaultMethod() {
+    public function defaultMethod() 
+    {
 
     }
 
-    public function createCommentMethod() {
+    /**
+     * Creates a new comment for an article.
+     *
+     * @throws Some_Exception_Class description of exception
+     * @return Some_Return_Value
+     */
+    public function createCommentMethod() 
+    {
 
         $this->auteurId = $this->getSession()["user"]["id"];
         $this->content = $this->getPost("content");
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            "authorId" => intval($this->auteurId),
-            "articleId" => intval($this->articleId),
-            "content" => $this->content,
-            "createdAt" => date("Y-m-d H:i:s")
-        ];
+                       "authorId" => intval($this->auteurId),
+                       "articleId" => intval($this->articleId),
+                       "content" => $this->content,
+                       "createdAt" => date("Y-m-d H:i:s")
+                       ];
 
         ModelFactory::getModel("Comment")->createData($newComment);
 
@@ -41,7 +49,15 @@ class CommentController extends MainController
         return $this->redirect("article_renderArticle", ["id" => intval($this->articleId)]);
     }
 
-    public function updateCommentMethod() {
+    /**
+     * Updates a comment method.
+     *
+     * @throws Some_Exception_Class description of exception
+     * @return void
+     */
+
+    public function updateCommentMethod() 
+    {
        
         $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(), "id")[0];     
 
@@ -53,14 +69,20 @@ class CommentController extends MainController
     
             ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);
 
-
-
-            // $this->redirect("article_renderArticle", ["id" => $updatedComment["articleId"]]);
+            $this->redirect("article_renderArticle", ["id" => $updatedComment["articleId"]]);
 
         } 
-}
+    }
 
-    public function getCommentById() {
+    /**
+     * Retrieves a comment by its ID.
+     *
+     * @throws Some_Exception_Class if the comment ID is not provided
+     * @return int The ID of the comment
+     */
+
+    public function getCommentById() 
+    {
        
         $commentId = $this->getGet()["id"];
 
@@ -68,7 +90,14 @@ class CommentController extends MainController
 
     }
 
-    public function editCommentMethod() {
+    /**
+     * Edit the comment method.
+     *
+     * @return string The rendered template.
+     */
+
+    public function editCommentMethod() 
+    {
 
         $commentaire = ModelFactory::getModel("Comment")->listData($this->getGet("id"), "id")[0];
         $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"], "id");
@@ -78,13 +107,29 @@ class CommentController extends MainController
 
     }
 
-    public function confirmDeleteCommentMethod() {
+    /**
+     * Confirm the deletion of a comment.
+     *
+     * @throws Some_Exception_Class Description of exception.
+     * @return Some_Return_Value
+     */
+
+    public function confirmDeleteCommentMethod() 
+    {
         $this->setSession(["alert" => "danger", "message" => "Êtes-vous certain de vouloir supprimer ce commentaire ?"]);
 
         return $this->twig->render("alert.twig", ["alert" => "danger", "message" => $this->getSession()["alert"]["message"], "commentaire" => ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))]);
     }
 
-    public function deleteCommentMethod() {
+    /**
+     * Deletes a comment.
+     *
+     * @throws Some_Exception_Class description of exception
+     * @return Some_Return_Value
+     */
+
+    public function deleteCommentMethod() 
+    {
         
         $id = $this->getRequest()["id"];
         $articleId = ModelFactory::getModel("Comment")->listData()[0]["articleId"];
@@ -94,8 +139,4 @@ class CommentController extends MainController
             return $this->redirect("article_getArticle", ["id" => intval($articleId)]);
 
     }
-
-    
-
-
 }

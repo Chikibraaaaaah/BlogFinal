@@ -12,14 +12,17 @@ use Twig\Error\SyntaxError;
 class AuthController extends MainController
 {
 
-    public function defaultMethod(){
 
-        $message = $this->getSession()["alert"]["message"] ?? "" ;
+    public function defaultMethod()
+    {
+
+        $message = $this->getSession() ?? "" ;
         
         return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
     }
 
-    public function createAccountMethod(){
+    public function createAccountMethod()
+    {
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
@@ -27,18 +30,19 @@ class AuthController extends MainController
         
     }
 
-    public function registerMethod(){
+    public function registerMethod()
+    {
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
-        // var_dump($this->getSession());
 
         return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
 
     }
 
-    public function signupMethod(){
+    public function signupMethod()
+    {
 
-        if( $this->checkInputs()){
+        if( $this->checkInputs() === TRUE ){
 
             $existingUser = $this->checkByEmail();  
 
@@ -65,7 +69,6 @@ class AuthController extends MainController
                     $userCreated["isLogged"] = true;
                     
                     return $this->redirect("home");
-
                 }
 
                 $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas."]);
@@ -109,7 +112,8 @@ class AuthController extends MainController
         
     }
 
-    private function checkByEmail(){
+    private function checkByEmail()
+    {
 
         $email = $this->getPost("email");
         $userFound = ModelFactory::getModel("User")->listData($email, "email");
@@ -121,11 +125,13 @@ class AuthController extends MainController
         }
     }
 
-    private function checkByUserName(){
+    private function checkByUserName()
+    {
         
     }
 
-    private function checkPasswordsCorrespond(){
+    private function checkPasswordsCorrespond()
+    {
         
         $password = $this->getPost("password");
         $secondPassword = $this->getPost("password_check");
@@ -142,7 +148,8 @@ class AuthController extends MainController
 
      
     
-    public function logoutMethod(){
+    public function logoutMethod()
+    {
         $this->destroyGlobal();
         $user["isLogged"] = false;
         return $this->redirect("home");

@@ -1,12 +1,17 @@
 <?php
-/* Replace the host value (localhost here) with your database host & the dbname value (php_mvc) with your database name */
+
+// Data Base name 
+
 define("DB_DSN", "mysql:host=localhost;dbname=blog");
 
-/* Replace root with the user name of your database */
+// Define user 
+
 define("DB_USER", "root");
 
-/* Add the user password of your database
-WARNING : Add this file name to.gitignore file before adding the password */
+//Password
+
 define("DB_PASS", "root");
+
+// Define database options 
 
 define("DB_OPTIONS", array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
