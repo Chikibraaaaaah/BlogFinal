@@ -32,11 +32,19 @@ abstract class MainController extends GlobalsController
      * @param string $page
      * @param array $params
      */
+    // public function redirect(string $page, array $params = [])
+    // {
+    //     $params["access"] = $page;
+    //     header("Location: index.php?" .  htmlspecialchars(http_build_query($params)));
+
+    //     exit;
+    // }
+
     public function redirect(string $page, array $params = [])
     {
         $params["access"] = $page;
-        header("Location: index.php?" .  htmlspecialchars(http_build_query($params)));
+        $redirectUrl = "index.php?" . htmlspecialchars(http_build_query($params));
 
-        exit;
+        return $redirectUrl;
     }
 }

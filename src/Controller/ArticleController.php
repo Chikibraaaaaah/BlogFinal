@@ -69,7 +69,9 @@ class ArticleController extends MainController
 
             $this->setSession(["alert" => "success", "message" => "Votre article a été créé"]);
 
-            $this->redirect("home");
+            $home = $this->redirect("home");
+            header("Location: $home");
+            // die();
 
     }
 
