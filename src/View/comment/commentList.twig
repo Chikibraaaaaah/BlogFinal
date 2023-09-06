@@ -8,7 +8,7 @@
                     {{ comment.content }} - <strong>{{ comment.authorId }}</strong> 
                     <time datetime="{{ commentaire.createdAt }}">{{ commentaire.createdAt }}</time>
 
-                    {% if comment.authorId is same as( user.id )  or user.role is same as( 1 ) %}
+                    {% if comment.authorId is same as(user.id)  or user.role is same as(1) %}
 
                         <button class="btn btn-danger">
                         <a href="index.php?access=comment_confirmDeleteComment&id={{ comment.id }}">Supprimer</a></button>

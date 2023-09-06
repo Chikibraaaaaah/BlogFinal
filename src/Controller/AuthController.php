@@ -22,7 +22,7 @@ class AuthController extends MainController
 
         $message = $this->getSession() ?? "" ;
         
-        return $this->twig->render( "auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"] );
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
     }
 
     /**
@@ -35,7 +35,7 @@ class AuthController extends MainController
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
-        return $this->twig->render( "auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "signup"] );
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "signup"]);
         
     }
 
@@ -49,7 +49,7 @@ class AuthController extends MainController
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
-        return $this->twig->render( "auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"] );
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
 
     }
 
@@ -61,25 +61,25 @@ class AuthController extends MainController
     public function signupMethod()
     {
 
-        if( $this->checkInputs() === TRUE ){
+        if($this->checkInputs() === TRUE){
             $existingUser = $this->checkByEmail();  
-            if ( $existingUser === NULL ){
+            if ($existingUser === NULL){
                 $mpChek = $this->checkPasswordsCorrespond();
-                if( $mpChek === true ) {
-                    $hashedPassword = password_hash( $this->getPost( "password" ), PASSWORD_DEFAULT );
+                if($mpChek === true) {
+                    $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
                     $newUser = [
-                        "userName" => $this->getPost( "userName" ),
-                        "email" => $this->getPost( "email" ),
+                        "userName" => $this->getPost("userName"),
+                        "email" => $this->getPost("email"),
                         "password" => $hashedPassword,
-                        "createdAt" => date( "Y-m-d H:i:s" )
+                        "createdAt" => date("Y-m-d H:i:s")
                     ];
-                    ModelFactory::getModel( "User" )->createData( $newUser );
-                    $userCreated = ModelFactory::getModel( "User" )->readData( $newUser["email"], "email" );
+                    ModelFactory::getModel("User")->createData($newUser);
+                    $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
 
-                    $this->setSession( $userCreated, true );
+                    $this->setSession($userCreated, true);
                     $userCreated["isLogged"] = true;
                     
-                    return $this->redirect( "home" );
+                    return $this->redirect("home");
                 }
 
                 $this->setSession(["alert" => "danger", "message" => "Les mots de passe ne correspondent pas."]);
@@ -102,29 +102,29 @@ class AuthController extends MainController
      */
     public function loginMethod()
     {
-        if( $this->checkInputs() ){
+        if($this->checkInputs()){
 
-            $user = ModelFactory::getModel( "User" )->listData( $this->getPost( "email" ), "email" )[0];
+            $user = ModelFactory::getModel("User")->listData($this->getPost("email"), "email")[0];
 
-            if( !$user ){
-                $this->setSession( ["alert" => "danger", "message" => "Email non reconnu."] );
-                $this->redirect( "auth_register" );
+            if(!$user){
+                $this->setSession(["alert" => "danger", "message" => "Email non reconnu."]);
+                $this->redirect("auth_register");
             }
 
-            if ( password_verify( $this->getPost( "password" ), $user['password'] ) ) {
+            if (password_verify($this->getPost("password"), $user['password'])) {
                 $user["isLogged"] = true;
-                $this->setSession( $user, true );
-                $this->setSession( ["alert" => "success", "message" => "Connexion réussie."] );
-                $this->redirect( "home" );
+                $this->setSession($user, true);
+                $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);
+                $this->redirect("home");
             }
 
-            $this->setSession( ["alert" => "danger", "message" => "Mot de passe invalide."] );
-            $this->redirect( "auth_register" );
+            $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide."]);
+            $this->redirect("auth_register");
         }
 
-        $this->setSession( ["alert" => "danger", "message" => "Veuillez remplir tous les champs."] );
+        $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
-        return $this->redirect( "auth" );
+        return $this->redirect("auth");
     }
 
     /**
@@ -136,10 +136,10 @@ class AuthController extends MainController
     private function checkByEmail()
     {
 
-        $email = $this->getPost( "email" );
-        $userFound = ModelFactory::getModel( "User" )->listData( $email, "email" );
+        $email = $this->getPost("email");
+        $userFound = ModelFactory::getModel("User")->listData($email, "email");
 
-        if( $userFound ){
+        if($userFound){
             return $userFound[0];
         }
     }
@@ -152,10 +152,10 @@ class AuthController extends MainController
      */
     private function checkByUserName()
     {
-        $userName = $this->getPost( "userName" );
-        $userFound = ModelFactory::getModel( "User" )->listData( $userName, "userName" );
+        $userName = $this->getPost("userName");
+        $userFound = ModelFactory::getModel("User")->listData($userName, "userName");
 
-        if( $userFound ){
+        if($userFound){
             return $userFound[0];
         }
     }
@@ -168,10 +168,10 @@ class AuthController extends MainController
     private function checkPasswordsCorrespond()
     {
         
-        $password = $this->getPost( "password" );
-        $secondPassword = $this->getPost( "password_check" );
+        $password = $this->getPost("password");
+        $secondPassword = $this->getPost("password_check");
 
-        if( $password != $secondPassword ){
+        if($password != $secondPassword){
             return false;
         }
         return true;
@@ -187,6 +187,6 @@ class AuthController extends MainController
     {
         $this->destroyGlobal();
 
-        return $this->redirect( "home" );
+        return $this->redirect("home");
     }
 }

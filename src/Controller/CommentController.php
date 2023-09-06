@@ -29,24 +29,24 @@ class CommentController extends MainController
     {
 
         $this->auteurId = $this->getSession()["user"]["id"];
-        $this->content = $this->getPost( "content" );
-        $this->articleId = $this->getGet( "id" );
+        $this->content = $this->getPost("content");
+        $this->articleId = $this->getGet("id");
 
         $newComment = [
-            " authorId " => intval( $this->auteurId ),
-            " articleId " => intval( $this->articleId ),
+            " authorId " => intval($this->auteurId),
+            " articleId " => intval($this->articleId),
             " content " => $this->content,
-            " createdAt " => date( "Y-m-d H:i:s" )
+            " createdAt " => date("Y-m-d H:i:s")
         ];
 
-        ModelFactory::getModel( "Comment" )->createData( $newComment );
+        ModelFactory::getModel("Comment")->createData($newComment);
 
-        $this->setSession( [
+        $this->setSession([
             "alert" => "success",
             "message" => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
-         ] );
+         ]);
 
-        return $this->redirect( "article_renderArticle", ["id" => intval($this->articleId )] );
+        return $this->redirect("article_renderArticle", ["id" => intval($this->articleId)]);
     }
 
     /**
@@ -61,15 +61,15 @@ class CommentController extends MainController
     
         $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(), "id")[0];
 
-        if( $this->checkInputs() ) {
+        if($this->checkInputs()) {
 
-            $updatedComment = array_merge( $existingComment, $this->getPost()["content"] );
-            $updatedComment["content"] = addslashes( $updatedComment["content"] );
-            $updatedComment["updatedAt"] = date( "Y-m-d H:i:s" );
+            $updatedComment = array_merge($existingComment, $this->getPost()["content"]);
+            $updatedComment["content"] = addslashes($updatedComment["content"]);
+            $updatedComment["updatedAt"] = date("Y-m-d H:i:s");
     
-            ModelFactory::getModel( "Comment" )->updateData( $existingComment["id"], $updatedComment );
+            ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);
 
-            $this->redirect( "article_renderArticle", ["id" => $updatedComment["articleId"]] );
+            $this->redirect("article_renderArticle", ["id" => $updatedComment["articleId"]]);
 
         }
     }
@@ -98,11 +98,11 @@ class CommentController extends MainController
     public function editCommentMethod()
     {
 
-        $commentaire = ModelFactory::getModel( "Comment" )->listData( $this->getGet( "id" ), "id" )[0];
-        $article = ModelFactory::getModel( "Article" )->readData( $commentaire["articleId"], "id" );
-        $relatedComments = ModelFactory::getModel( "Comment" )->listData( $article["id"], "articleId" );
+        $commentaire = ModelFactory::getModel("Comment")->listData($this->getGet("id"), "id")[0];
+        $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"], "id");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
 
-        return $this->twig->render( "articles/article.twig", [ "article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT" ] );
+        return $this->twig->render("articles/article.twig", [ "article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT" ]);
 
     }
 
@@ -131,11 +131,11 @@ class CommentController extends MainController
     {
         
         $id = $this->getRequest()["id"];
-        $articleId = ModelFactory::getModel( "Comment" )->listData()[0]["articleId"];
+        $articleId = ModelFactory::getModel("Comment")->listData()[0]["articleId"];
 
-        ModelFactory::getModel( "Comment" )->deleteData($id);
+        ModelFactory::getModel("Comment")->deleteData($id);
 
-            return $this->redirect( "article_getArticle", ["id" => intval( $articleId )] );
+            return $this->redirect("article_getArticle", ["id" => intval($articleId)]);
 
     }
 }
