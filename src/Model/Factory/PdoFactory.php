@@ -15,7 +15,6 @@ class PdoFactory
      * Stores the Connection
      * @var null
      */
-
     private static $pdo = null;
 
     /**
@@ -24,6 +23,7 @@ class PdoFactory
      */
     public static function getPDO()
     {
+
         require_once"../config/db.php";
 
         if (self::$pdo === null) {
@@ -32,6 +32,7 @@ class PdoFactory
         }
 
         return self::$pdo;
+
     }
-    
+
 }

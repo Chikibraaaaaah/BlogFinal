@@ -15,7 +15,6 @@ class ModelFactory
      * Model
      * @var array
      */
-
     private static $models = [];
 
     /**
@@ -25,7 +24,8 @@ class ModelFactory
      */
     public static function getModel(string $table)
     {
-        if(array_key_exists($table, self::$models)) {
+
+        if (array_key_exists($table, self::$models)) {
 
             return self::$models[$table];
         }
@@ -34,6 +34,8 @@ class ModelFactory
         self::$models[$table]   = new $class(new PdoDb(PdoFactory::getPDO()));
 
         return self::$models[$table];
+
     }
-    
+
+
 }

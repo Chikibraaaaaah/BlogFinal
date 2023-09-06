@@ -15,7 +15,6 @@ class PdoDb
      * PDO Connection
      * @var PDO
      */
-
     private $pdo = null;
 
     /**
@@ -25,7 +24,9 @@ class PdoDb
      */
     public function __construct(PDO $pdo)
     {
+
         $this->pdo = $pdo;
+
     }
 
 
@@ -37,10 +38,12 @@ class PdoDb
      */
     public function getData(string $query, array $params = [])
     {
+
         $PDOStatement = $this->pdo->prepare($query);
         $PDOStatement->execute($params);
 
         return $PDOStatement->fetch();
+
     }
 
 
@@ -52,10 +55,12 @@ class PdoDb
      */
     public function getAllData(string $query, array $params = [])
     {
+
         $PDOStatement = $this->pdo->prepare($query);
         $PDOStatement->execute($params);
 
         return $PDOStatement->fetchAll();
+
     }
 
 
@@ -67,9 +72,12 @@ class PdoDb
      */
     public function setData(string $query, array $params = [])
     {
+
         $PDOStatement = $this->pdo->prepare($query);
 
         return $PDOStatement->execute($params);
+
     }
+
 
 }

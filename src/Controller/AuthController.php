@@ -27,6 +27,7 @@ class AuthController extends MainController
             "message" => $message,
             "method" => "login"
         ]);
+
     }
 
 
@@ -45,7 +46,7 @@ class AuthController extends MainController
             "message" => $message,
             "method" => "signup"
         ]);
-        
+
     }
 
 
@@ -64,6 +65,7 @@ class AuthController extends MainController
             "message"=> $message,
             "method"=>"login"
         ]);
+
     }
 
 
@@ -75,9 +77,9 @@ class AuthController extends MainController
     public function signupMethod()
     {
 
-        if($this->checkInputs() === TRUE){
+        if ($this->checkInputs() === TRUE) {
             $existingUser = $this->checkByEmail();  
-            if ($existingUser === NULL){
+            if ($existingUser === NULL) {
                 $mpChek = $this->checkPasswordsCorrespond();
                 if ($mpChek === true) {
                     $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
@@ -108,6 +110,7 @@ class AuthController extends MainController
             "alert"=>"danger",
             "message"=>"Veuillez remplir tous les champs."
         ]);
+
     }
 
 
@@ -123,7 +126,8 @@ class AuthController extends MainController
      */
     public function loginMethod()
     {
-        if ($this->checkInputs()){
+
+        if ($this->checkInputs()) {
 
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
@@ -159,6 +163,7 @@ class AuthController extends MainController
         ]);
 
         return $this->redirect("auth");
+
     }
 
 
@@ -174,10 +179,12 @@ class AuthController extends MainController
         $email = $this->getPost("email");
         $userFound = ModelFactory::getModel("User")->listData($email,"email");
 
-        if ($userFound){
+        if ($userFound) {
             return $userFound[0];
         }
+
     }
+
 
     /**
      * Checks the user by their username.
@@ -187,12 +194,14 @@ class AuthController extends MainController
      */
     private function checkByUserName()
     {
+
         $userName = $this->getPost("userName");
         $userFound = ModelFactory::getModel("User")->listData($userName,"userName");
 
         if ($userFound){
             return $userFound[0];
         }
+
     }
 
 
@@ -203,7 +212,7 @@ class AuthController extends MainController
      */
     private function checkPasswordsCorrespond()
     {
-        
+
         $password = $this->getPost("password");
         $secondPassword = $this->getPost("password_check");
 
@@ -211,7 +220,9 @@ class AuthController extends MainController
             return false;
         }
         return true;
+
     }
+
 
     /**
      * Logout the user and redirect to the home page.
@@ -221,8 +232,11 @@ class AuthController extends MainController
      */
     public function logoutMethod()
     {
+
         $this->destroyGlobal();
 
         return $this->redirect("home");
+
     }
+
 }

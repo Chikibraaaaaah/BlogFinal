@@ -20,27 +20,29 @@ class ArticleController extends MainController
     }
 
 
-    // Render functions
+// Render functions
     /**
- * Render the article method.
- *
- * @return mixed
- */
-public function renderArticleMethod()
-{
-    $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
-    $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId") ?? [];
-    $alerts = $this->getAlert(true) ?? [];
-    $user = $this->getSession()["user"] ?? [];
+     * Render the article method.
+     *
+     * @return mixed
+     */
+    public function renderArticleMethod()
+    {
 
-    return $this->twig->render("articles/articleSingle.twig", [
-        "user"      => $user,
-        "article"   => $article,
-        "comments"  => $relatedComments,
-        "alerts"    => $alerts,
-        "method"    => "GET"
-    ]);
-}
+        $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId") ?? [];
+        $alerts = $this->getAlert(true) ?? [];
+        $user = $this->getSession()["user"] ?? [];
+
+        return $this->twig->render("articles/articleSingle.twig", [
+            "user"      => $user,
+            "article"   => $article,
+            "comments"  => $relatedComments,
+            "alerts"    => $alerts,
+            "method"    => "GET"
+        ]);
+
+    }
 
 
     /**
@@ -61,6 +63,7 @@ public function renderArticleMethod()
             "method" =>"PUT",
             "comments" => $relatedComments
         ]);
+
     }
 
 
@@ -95,6 +98,7 @@ public function renderArticleMethod()
 
         $home = $this->redirect("home");
         header("Location: $home");
+
     }
 
 
@@ -111,6 +115,7 @@ public function renderArticleMethod()
         $article = ModelFactory::getModel("Article")->readData($articleId,"id");
 
         return $article;
+
     }
 
 
@@ -129,7 +134,7 @@ public function renderArticleMethod()
 
         $existingArticle = $this->getArticleById();     
 
-        if($this->checkInputs()) {
+        if ($this->checkInputs()) {
 
             $updatedArticle = array_merge($existingArticle, $this->getPost());
 
@@ -150,6 +155,7 @@ public function renderArticleMethod()
 
             return $this->renderArticleMethod();
         }
+
     }
 
 
@@ -186,7 +192,7 @@ public function renderArticleMethod()
         if (!isset($this->getFiles()['img']['error']) || is_array($this->getFiles()['img']['error'])) {
             throw new RuntimeException('Invalid parameters.');
         }
-    
+
         // Check $this->getFiles()['img']['error'] value.
         switch ($this->getFiles()['img']['error']) {
             case UPLOAD_ERR_OK:
@@ -216,12 +222,12 @@ public function renderArticleMethod()
 
         $ext = array_search($fileMimeType, $validMimeTypes, true);
 
-        if($ext ===  false) {
+        if ($ext ===  false) {
             return $this->setSession([
                 "alert" => "danger",
                 "message"=>"Format invalide."
             ]);
-            // throw new RuntimeException('Invalid file format.');
+// throw new RuntimeException('Invalid file format.');
         }
 
         $fileDestination = sprintf(
@@ -239,9 +245,10 @@ public function renderArticleMethod()
         // echo 'Votre photo a été importée avec succès.';
         return $fileDestination;
 
-        }catch (RuntimeException $e) {
+        } catch (RuntimeException $e) {
             echo $e->getMessage();
         }
+
     }
 
 
@@ -254,6 +261,7 @@ public function renderArticleMethod()
      */
     private  function checkFileError()
     {
+
         switch ($this->getFiles()['img']['error']) {
             case UPLOAD_ERR_OK:
                 break;
@@ -265,6 +273,7 @@ public function renderArticleMethod()
             default:
                 throw new RuntimeException('Erreur non identifiée.');
         }
+
     }
 
 
@@ -279,12 +288,13 @@ public function renderArticleMethod()
 
         $imgPath = $this->getArticleById()["imgUrl"];
 
-        if( file_exists($imgPath )){
+        if( file_exists($imgPath)) {
             unlink($imgPath);
             return ;
         }
 
         return $this->setSession(["alert"=>"danger","message"=>"Le fichier n'existe pas"]);
+
     }
 
 }

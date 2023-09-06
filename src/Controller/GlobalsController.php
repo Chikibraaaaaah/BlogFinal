@@ -64,6 +64,7 @@ abstract class GlobalsController
      */
     public function __construct()
     {
+
         $this->env      = filter_input_array(INPUT_ENV) ?? [];
         $this->get      = filter_input_array(INPUT_GET) ?? [];
         $this->post     = filter_input_array(INPUT_POST) ?? [];
@@ -72,20 +73,21 @@ abstract class GlobalsController
         $this->files    = filter_var_array($_FILES) ?? [];
         $this->request  = filter_var_array($_REQUEST) ?? [];
 
-        if(isset($this->files["file"])) {
+        if (isset($this->files["file"])) {
             $this->file = $this->files["file"];
         }
 
-        if(array_key_exists("alert", $_SESSION) === false){
+        if (array_key_exists("alert", $_SESSION) === false ){
             $_SESSION["alert"] = [];
         }
 
         $this->session  = filter_var_array($_SESSION) ?? [];
         $this->alert    = $this->session["alert"];
 
-        if(isset($this->session["user"])) {
+        if (isset($this->session["user"])) {
             $this->user = $this->session["user"];
         }
+
     }
 
     // ******************** SETTERS ******************** \\
@@ -96,6 +98,7 @@ abstract class GlobalsController
      */
     protected function setSession(array $user, bool $session = false)
     {
+
         if ($session === false) {
 
             $_SESSION["alert"] = $user;
@@ -107,12 +110,12 @@ abstract class GlobalsController
             } elseif (isset($user["password"])) {
                 unset($user["password"]);
             }
-    
+
             $_SESSION["user"] = $user;
         }
+
     }
 
-  
 
     // ******************** CHECKERS ******************** \\
     /**
@@ -122,34 +125,36 @@ abstract class GlobalsController
      */
     protected function checkUser(bool $alert = false)
     {
-        if($alert) {
 
+        if($alert) {
             return empty($this->alert) === false;
         }
 
         if(array_key_exists("user", $this->session)) {
-
             if(!empty($this->user)) {
-
                 return true;
             }
         }
 
         return false;
+
     }
 
-    protected function checkInputs(){
+
+    protected function checkInputs()
+    {
 
         $inputs = $this->getPost();
         
-        foreach($inputs as $input => $value) {
-            if(empty($value)){
+        foreach ($inputs as $input => $value) {
+            if (empty($value)) {
                 $this->setSession(["alert"=>"danger","message"=>"Veuillez remplir le champ". $input]);
                 return false;
             }
         }
-        
+
         return true;
+
     }
 
 
@@ -161,18 +166,18 @@ abstract class GlobalsController
      */
     protected function getAlert(bool $type = false)
     {
+
         if (isset($this->alert)) {
-
             if ($type) {
-
                 return $this->alert["type"] ??"";
             }
 
             echo filter_var($this->alert["message"]);
-
             unset($_SESSION["alert"]);
         }
+
     }
+
 
     /**
      * Get Env Array or Env Var
@@ -181,13 +186,15 @@ abstract class GlobalsController
      */
     protected function getEnv(string $var = null)
     {
-        if ($var === null) {
 
+        if ($var === null) {
             return $this->env;
         }
-        
+
         return $this->env[$var] ??"";
+
     }
+
 
     /**
      * Get Files Array, File Array or File Var
@@ -196,18 +203,19 @@ abstract class GlobalsController
      */
     protected function getFiles(string $var = null)
     {
-        if ($var === null) {
 
+        if ($var === null) {
             return $this->files;
         }
 
         if ($var ==="file") {
-
             return $this->file;
         }
-        
+
         return $this->file[$var] ??"";
+
     }
+
 
     /**
      * Get Get Array or Get Var
@@ -216,13 +224,15 @@ abstract class GlobalsController
      */
     protected function getGet(string $var = null)
     {
-        if ($var === null) {
 
+        if ($var === null) {
             return $this->get;
         }
         
         return $this->get[$var] ??"";
+
     }
+
 
     /**
      * Get Post Array or Post Var
@@ -231,13 +241,15 @@ abstract class GlobalsController
      */
     protected function getPost(string $var = null)
     {
-        if($var === null) {
 
+        if($var === null) {
             return $this->post;
         }
 
         return $this->post[$var] ??"";
+
     }
+
 
     /**
      * Get Request Array or Request Var
@@ -246,12 +258,13 @@ abstract class GlobalsController
      */
     protected function getRequest(string $var = null)
     {
-        if($var === null) {
 
+        if($var === null) {
             return $this->request;
         }
-        
+
         return $this->request[$var] ??"";
+
     }
 
     /**
@@ -261,13 +274,15 @@ abstract class GlobalsController
      */
     protected function getServer(string $var = null)
     {
-        if($var === null) {
 
+        if ($var === null) {
             return $this->server;
         }
-        
+
         return $this->server[$var] ??"";
+
     }
+
 
     /**
      * Get Session Array, User Array or User Var
@@ -276,21 +291,21 @@ abstract class GlobalsController
      */
     protected function getSession(string $var = null)
     {
-        if($var === null) {
 
+        if ($var === null) {
             return $this->session;
         }
 
-        if($var ==="user") {
-
+        if ($var ==="user") {
             return $this->user;
         }
 
-        if(!$this->checkUser()) {
+        if (!$this->checkUser()) {
             $this->user[$var] = null;
         }
-        
+
         return $this->user[$var] ??"";
+
     }
 
     // ******************** DESTROYER ******************** \\
@@ -303,4 +318,5 @@ abstract class GlobalsController
         $_SESSION["user"] = [];
         session_destroy();
     }
+
 }

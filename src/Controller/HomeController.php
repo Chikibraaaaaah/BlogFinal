@@ -49,13 +49,17 @@ class HomeController extends MainController
                     "user"=> $user,
                     "comments"=> $comments[0]
                 ]);
+
     }
 
-    public function getArticles(){
+
+    public function getArticles()
+    {
 
         $articles = ModelFactory::getModel("Article")->listData();
 
         return $articles;
+
    }
 
 

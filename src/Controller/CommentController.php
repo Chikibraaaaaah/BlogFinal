@@ -47,6 +47,7 @@ class CommentController extends MainController
         ]);
 
         return $this->redirect("article_renderArticle", ["id"=> intval($this->articleId)]);
+
     }
 
 
@@ -74,6 +75,7 @@ class CommentController extends MainController
             ]);
 
         }
+
     }
 
 
@@ -85,10 +87,11 @@ class CommentController extends MainController
      */
     public function getCommentById()
     {
-       
+
         $commentId = $this->getGet()["id"];
 
         return $commentId;
+
     }
 
 
@@ -117,12 +120,14 @@ class CommentController extends MainController
      */
     public function confirmDeleteCommentMethod()
     {
+
         $this->setSession([
             "alert"=>"danger",
             "message"=>"Êtes-vous certain de vouloir supprimer ce commentaire ?"
         ]);
 
         return $this->twig->render("alert.twig", ["alert"=>"danger","message"=> $this->getSession()["alert"]["message"],"commentaire"=> ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))]);
+
     }
 
 
@@ -143,5 +148,6 @@ class CommentController extends MainController
             return $this->redirect("article_getArticle", [
                 "id"=> intval($articleId)
             ]);
+
     }
 }
