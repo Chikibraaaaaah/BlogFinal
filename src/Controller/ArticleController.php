@@ -22,26 +22,25 @@ class ArticleController extends MainController
 
     // Render functions
     /**
-     * Render the article method.
-     *
-     * @return mixed
-     */
-    public  function renderArticleMethod()
-    {
+ * Render the article method.
+ *
+ * @return mixed
+ */
+public function renderArticleMethod()
+{
+    $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
+    $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId") ?? [];
+    $alerts = $this->getAlert(true) ?? [];
+    $user = $this->getSession()["user"] ?? [];
 
-        $article = ModelFactory::getModel("Article")->readData($this->getGet("id"),"id");
-        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId") ?? [];
-        $alerts = $this->getAlert(true) ?? [];
-        $user = $this->getSession()["user"] ?? [];
-
-        return $this->twig->render("articles/articleSingle.twig", [
-                "user" => $user,
-                "article" => $article,
-                "comments" => $relatedComments,
-                "alerts" => $alerts,
-                "method" => "GET"
-        ]);
-    }
+    return $this->twig->render("articles/articleSingle.twig", [
+        "user"      => $user,
+        "article"   => $article,
+        "comments"  => $relatedComments,
+        "alerts"    => $alerts,
+        "method"    => "GET"
+    ]);
+}
 
 
     /**
@@ -162,7 +161,7 @@ class ArticleController extends MainController
      */
     public  function deleteArticleMethod()
     {
-       
+
         $id = $this->getGet()["id"];
         ModelFactory::getModel("Article")->deleteData($id);
 
@@ -184,15 +183,11 @@ class ArticleController extends MainController
         try {
         // Undefined | Multiple Files | $this->getFiles() Corruption Attack
         // If this request falls under any of them, treat it invalid.
-        if(
-            !isset($this->getFiles()['img']['error']) ||
-            is_array($this->getFiles()['img']['error'])
-       ) {
+        if (!isset($this->getFiles()['img']['error']) || is_array($this->getFiles()['img']['error'])) {
             throw new RuntimeException('Invalid parameters.');
         }
     
         // Check $this->getFiles()['img']['error'] value.
-
         switch ($this->getFiles()['img']['error']) {
             case UPLOAD_ERR_OK:
                 break;

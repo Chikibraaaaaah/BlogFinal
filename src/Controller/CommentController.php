@@ -33,10 +33,10 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            "authorId"=> intval($this->auteurId),
-            "articleId"=> intval($this->articleId),
-            "content"=> $this->content,
-            "createdAt"=> date("Y-m-d H:i:s")
+            "authorId" => intval($this->auteurId),
+            "articleId" => intval($this->articleId),
+            "content" => $this->content,
+            "createdAt" => date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Comment")->createData($newComment);
@@ -49,16 +49,16 @@ class CommentController extends MainController
         return $this->redirect("article_renderArticle", ["id"=> intval($this->articleId)]);
     }
 
+
     /**
      * Updates a comment method.
      *
      * @throws Some_Exception_Class description of exception
      * @return void
      */
-
     public function updateCommentMethod()
     {
-    
+
         $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(),"id")[0];
 
         if($this->checkInputs()) {
@@ -66,13 +66,16 @@ class CommentController extends MainController
             $updatedComment = array_merge($existingComment, $this->getPost()["content"]);
             $updatedComment["content"] = addslashes($updatedComment["content"]);
             $updatedComment["updatedAt"] = date("Y-m-d H:i:s");
-    
+
             ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);
 
-            $this->redirect("article_renderArticle", ["id"=> $updatedComment["articleId"]]);
+            $this->redirect("article_renderArticle", [
+                "id"=> $updatedComment["articleId"]
+            ]);
 
         }
     }
+
 
     /**
      * Retrieves a comment by its ID.
@@ -80,7 +83,6 @@ class CommentController extends MainController
      * @throws Some_Exception_Class if the comment ID is not provided
      * @return int The ID of the comment
      */
-
     public function getCommentById()
     {
        
@@ -89,12 +91,12 @@ class CommentController extends MainController
         return $commentId;
     }
 
+
     /**
      * Edit the comment method.
      *
      * @return string The rendered template.
      */
-
     public function editCommentMethod()
     {
 
@@ -106,19 +108,23 @@ class CommentController extends MainController
 
     }
 
+
     /**
      * Confirm the deletion of a comment.
      *
      * @throws Some_Exception_Class Description of exception.
      * @return Some_Return_Value
      */
-
     public function confirmDeleteCommentMethod()
     {
-        $this->setSession(["alert"=>"danger","message"=>"Êtes-vous certain de vouloir supprimer ce commentaire ?"]);
+        $this->setSession([
+            "alert"=>"danger",
+            "message"=>"Êtes-vous certain de vouloir supprimer ce commentaire ?"
+        ]);
 
         return $this->twig->render("alert.twig", ["alert"=>"danger","message"=> $this->getSession()["alert"]["message"],"commentaire"=> ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))]);
     }
+
 
     /**
      * Deletes a comment.
@@ -126,16 +132,16 @@ class CommentController extends MainController
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
-
     public function deleteCommentMethod()
     {
-        
+
         $id = $this->getRequest()["id"];
         $articleId = ModelFactory::getModel("Comment")->listData()[0]["articleId"];
 
         ModelFactory::getModel("Comment")->deleteData($id);
 
-            return $this->redirect("article_getArticle", ["id"=> intval($articleId)]);
-
+            return $this->redirect("article_getArticle", [
+                "id"=> intval($articleId)
+            ]);
     }
 }

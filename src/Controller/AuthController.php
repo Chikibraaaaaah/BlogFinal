@@ -21,9 +21,14 @@ class AuthController extends MainController
     {
 
         $message = $this->getSession() ??"";
-        
-        return $this->twig->render("auth/auth.twig", ["alert"=>"danger","message"=> $message,"method"=>"login"]);
+
+        return $this->twig->render("auth/auth.twig", [
+            "alert" => "danger",
+            "message" => $message,
+            "method" => "login"
+        ]);
     }
+
 
     /**
      * Create an account using the createAccountMethod.
@@ -35,9 +40,14 @@ class AuthController extends MainController
 
         $message = $this->getSession()["alert"]["message"] ??"";
 
-        return $this->twig->render("auth/auth.twig", ["alert"=>"danger","message"=> $message,"method"=>"signup"]);
+        return $this->twig->render("auth/auth.twig", [
+            "alert" => "danger",
+            "message" => $message,
+            "method" => "signup"
+        ]);
         
     }
+
 
     /**
      * Register a method.
@@ -49,9 +59,13 @@ class AuthController extends MainController
 
         $message = $this->getSession()["alert"]["message"] ??"";
 
-        return $this->twig->render("auth/auth.twig", ["alert"=>"danger","message"=> $message,"method"=>"login"]);
-
+        return $this->twig->render("auth/auth.twig", [
+            "alert" => "danger",
+            "message"=> $message,
+            "method"=>"login"
+        ]);
     }
+
 
     /**
      * Validates the user input, creates a new user account, and redirects to the home page.
@@ -65,7 +79,7 @@ class AuthController extends MainController
             $existingUser = $this->checkByEmail();  
             if ($existingUser === NULL){
                 $mpChek = $this->checkPasswordsCorrespond();
-                if($mpChek === true) {
+                if ($mpChek === true) {
                     $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
                     $newUser = [
                        "userName"=> $this->getPost("userName"),
@@ -78,17 +92,24 @@ class AuthController extends MainController
 
                     $this->setSession($userCreated, true);
                     $userCreated["isLogged"] = true;
-                    
+
                     return $this->redirect("home");
                 }
 
-                $this->setSession(["alert"=>"danger","message"=>"Les mots de passe ne correspondent pas."]);
+                $this->setSession([
+                    "alert"=>"danger",
+                    "message"=>"Les mots de passe ne correspondent pas."
+                ]);
 
                 return $this->createAccountMethod();
             }
         }
-        $this->setSession(["alert"=>"danger","message"=>"Veuillez remplir tous les champs."]);
+        $this->setSession([
+            "alert"=>"danger",
+            "message"=>"Veuillez remplir tous les champs."
+        ]);
     }
+
 
     /**
      * Login method.
@@ -102,31 +123,44 @@ class AuthController extends MainController
      */
     public function loginMethod()
     {
-        if($this->checkInputs()){
+        if ($this->checkInputs()){
 
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
-            if(!$user){
-                $this->setSession(["alert"=>"danger","message"=>"Email non reconnu."]);
+            if (!$user){
+                $this->setSession([
+                    "alert"=>"danger",
+                    "message"=>"Email non reconnu."
+                ]);
                 $this->redirect("auth_register");
             }
 
             if (password_verify($this->getPost("password"), $user['password'])) {
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
-                $this->setSession(["alert"=>"success","message"=>"Connexion réussie."]);
+                $this->setSession([
+                    "alert"=>"success",
+                    "message"=>"Connexion réussie."
+                ]);
                 $home = $this->redirect("home");
                 header("Location: $home");
             }
 
-            $this->setSession(["alert"=>"danger","message"=>"Mot de passe invalide."]);
+            $this->setSession([
+                "alert"=>"danger",
+                "message"=>"Mot de passe invalide."
+            ]);
             $this->redirect("auth_register");
         }
 
-        $this->setSession(["alert"=>"danger","message"=>"Veuillez remplir tous les champs."]);
+        $this->setSession([
+            "alert"=>"danger",
+            "message"=>"Veuillez remplir tous les champs."
+        ]);
 
         return $this->redirect("auth");
     }
+
 
     /**
      * Check user by email.
@@ -140,7 +174,7 @@ class AuthController extends MainController
         $email = $this->getPost("email");
         $userFound = ModelFactory::getModel("User")->listData($email,"email");
 
-        if($userFound){
+        if ($userFound){
             return $userFound[0];
         }
     }
@@ -156,10 +190,11 @@ class AuthController extends MainController
         $userName = $this->getPost("userName");
         $userFound = ModelFactory::getModel("User")->listData($userName,"userName");
 
-        if($userFound){
+        if ($userFound){
             return $userFound[0];
         }
     }
+
 
     /**
      * Checks if the passwords entered by the user correspond to each other.
@@ -172,7 +207,7 @@ class AuthController extends MainController
         $password = $this->getPost("password");
         $secondPassword = $this->getPost("password_check");
 
-        if($password != $secondPassword){
+        if ($password != $secondPassword){
             return false;
         }
         return true;
