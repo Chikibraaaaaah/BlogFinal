@@ -192,17 +192,19 @@ class ArticleController extends MainController
         }
     
         // Check $this->getFiles()['img']['error'] value.
-        switch ($this->getFiles()['img']['error']) {
-            case UPLOAD_ERR_OK:
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                throw new RuntimeException('Aucun fichier transmis.');
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
-            default:
-                throw new RuntimeException('Erreur non identifiée.');
-        }
+
+        $this->checkFileError();
+        // switch ($this->getFiles()['img']['error']) {
+        //     case UPLOAD_ERR_OK:
+        //         break;
+        //     case UPLOAD_ERR_NO_FILE:
+        //         throw new RuntimeException('Aucun fichier transmis.');
+        //     case UPLOAD_ERR_INI_SIZE:
+        //     case UPLOAD_ERR_FORM_SIZE:
+        //         throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
+        //     default:
+        //         throw new RuntimeException('Erreur non identifiée.');
+        // }
     
         // You should also check filesize here.
         if ($this->getFiles()['img']['size'] > 1000000) {
@@ -250,6 +252,23 @@ class ArticleController extends MainController
         }
   
     }
+
+    private function checkFileError()
+    {
+        switch ($this->getFiles()['img']['error']) {
+            case UPLOAD_ERR_OK:
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                throw new RuntimeException('Aucun fichier transmis.');
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
+            default:
+                throw new RuntimeException('Erreur non identifiée.');
+        }
+    }
+
+   
 
     /**
      * Deletes a file.

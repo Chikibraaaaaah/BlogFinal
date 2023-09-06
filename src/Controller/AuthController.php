@@ -55,11 +55,11 @@ class AuthController extends MainController
                     $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
 
                     $newUser = [
-                        "userName"=> $this->getPost("userName"),
-                        "email" => $this->getPost("email"),
-                        "password" => $hashedPassword,
-                        "createdAt" =>  date("Y-m-d H:i:s")
-                    ];
+                                    "userName" => $this->getPost("userName"),
+                                    "email" => $this->getPost("email"),
+                                    "password" => $hashedPassword,
+                                    "createdAt" => date("Y-m-d H:i:s")
+                                ];
 
                     ModelFactory::getModel("User")->createData($newUser);
 

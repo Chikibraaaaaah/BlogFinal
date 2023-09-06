@@ -26,13 +26,13 @@ class HomeController extends MainController
     public function defaultMethod()
     {  
 
-        if( !$this->getSession() ) {
+        // if( !$this->getSession() ) {
 
-            session_regenerate_id(true);
+        //     session_regenerate_id(true);
 
-            session_start();
+        //     session_start();
 
-        }
+        // }
 
         $articles = $this->getArticles();
         $user = $this->getSession("user");
