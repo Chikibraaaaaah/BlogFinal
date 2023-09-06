@@ -70,15 +70,15 @@ abstract class MainModel
      * @param string|null $key
      * @return mixed
      */
-    public function readData(string $value, string $key = null)
+    public function readData( string $value, string $key = null )
     {
-        if (isset($key)) {
+        if( isset( $key ) ) {
             $query = "SELECT * FROM " . $this->table . " WHERE " . $key . " = ?";
         } else {
             $query = "SELECT * FROM " . $this->table . " WHERE id = ?";
         }
 
-        return $this->database->getData($query, [$value]);
+        return $this->database->getData( $query, [$value] );
     }
 
     /**
@@ -87,23 +87,23 @@ abstract class MainModel
      * @param array $data
      * @param string|null $key
      */
-    public function updateData(string $value, array $data, string $key = null)
+    public function updateData( string $value, array $data, string $key = null )
     {
         $set = null;
 
-        foreach ($data as $dataKey => $dataValue) {
+        foreach( $data as $dataKey => $dataValue ) {
             $set .= $dataKey . " = '" . $dataValue . "', ";
         }
 
-        $set = substr_replace($set, "", -2);
+        $set = substr_replace( $set, "", -2 );
 
-        if (isset($key)) {
+        if( isset( $key ) ) {
             $query = "UPDATE " . $this->table . " SET " . $set . " WHERE " . $key . " = ?";
         } else {
             $query = "UPDATE " . $this->table . " SET " . $set . " WHERE id = ?";
         }
 
-        $this->database->setData($query, [$value]);
+        $this->database->setData( $query, [$value] );
     }
 
     /**
@@ -111,14 +111,14 @@ abstract class MainModel
      * @param string $value
      * @param string|null $key
      */
-    public function deleteData(string $value, string $key = null)
+    public function deleteData( string $value, string $key = null )
     {
-        if (isset($key)) {
+        if ( isset( $key ) ) {
             $query = "DELETE FROM " . $this->table . " WHERE " . $key . " = ?";
         } else {
             $query = "DELETE FROM " . $this->table . " WHERE id = ?";
         }
 
-        $this->database->setData($query, [$value]);
+        $this->database->setData( $query, [$value] );
     }
 }

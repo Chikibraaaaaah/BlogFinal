@@ -233,9 +233,9 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getPost(string $var = null)
+    protected function getPost( string $var = null )
     {
-        if ($var === null) {
+        if( $var === null ) {
 
             return $this->post;
         }
@@ -248,9 +248,9 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getRequest(string $var = null)
+    protected function getRequest( string $var = null )
     {
-        if ($var === null) {
+        if( $var === null ) {
 
             return $this->request;
         }
@@ -265,7 +265,7 @@ abstract class GlobalsController
      */
     protected function getServer(string $var = null)
     {
-        if ($var === null) {
+        if( $var === null ) {
 
             return $this->server;
         }
@@ -278,19 +278,19 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getSession(string $var = null)
+    protected function getSession( string $var = null )
     {
-        if ($var === null) {
+        if( $var === null ) {
 
             return $this->session;
         }
 
-        if ($var === "user") {
+        if( $var === "user" ) {
 
             return $this->user;
         }
 
-        if (!$this->checkUser()) {
+        if( !$this->checkUser() ) {
             $this->user[$var] = null;
         }
         
@@ -303,7 +303,7 @@ abstract class GlobalsController
      * Destroy $name Cookie or Current Session
      * @param string $name
      */
-    protected function destroyGlobal(string $name = null)
+    protected function destroyGlobal( string $name = null )
     {
         $_SESSION["user"] = [];
         session_destroy();
