@@ -21,7 +21,6 @@ class ArticleController extends MainController
 
 
     // Render functions
-
     /**
      * Render the article method.
      *
@@ -67,7 +66,6 @@ class ArticleController extends MainController
 
 
     // CRUD functions
-
     /**
      * Create an article method.
      *
@@ -174,7 +172,6 @@ class ArticleController extends MainController
 
 
     // Fichiers
-
     /**
      * Uploads a file.
      *
@@ -214,7 +211,6 @@ class ArticleController extends MainController
         }
 
         // Check MIME Type by yourself.
-
         $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
         $validMimeTypes = array(
             'jpg' => 'image/jpg',

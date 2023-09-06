@@ -89,7 +89,6 @@ abstract class GlobalsController
     }
 
     // ******************** SETTERS ******************** \\
-
     /**
      * Set User Session or User Alert
      * @param array $user
@@ -116,7 +115,6 @@ abstract class GlobalsController
   
 
     // ******************** CHECKERS ******************** \\
-
     /**
      * Check User Alert or User Session
      * @param bool $alert
@@ -156,7 +154,6 @@ abstract class GlobalsController
 
 
     // ******************** GETTERS ******************** \\
-
     /**
      * Get Alert Type or Alert Message
      * @param bool $type
@@ -297,7 +294,6 @@ abstract class GlobalsController
     }
 
     // ******************** DESTROYER ******************** \\
-
     /**
      * Destroy $name Cookie or Current Session
      * @param string $name
