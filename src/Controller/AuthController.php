@@ -23,9 +23,9 @@ class AuthController extends MainController
         $message = $this->getSession() ??"";
 
         return $this->twig->render("auth/auth.twig", [
-            "alert"         => "danger",
-            "message"       => $message,
-            "method"        => "login"
+            "alert" => "danger",
+            "message"   => $message,
+            "method"    => "login"
         ]);
 
     }
@@ -61,9 +61,9 @@ class AuthController extends MainController
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
         return $this->twig->render("auth/auth.twig", [
-            "alert"         => "danger",
-            "message"       => $message,
-            "method"        => "login"
+            "alert"     => "danger",
+            "message"   => $message,
+            "method"    => "login"
         ]);
 
     }
@@ -84,10 +84,10 @@ class AuthController extends MainController
                 if ($mpChek === TRUE) {
                     $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
                     $newUser = [
-                        "userName"          => $this->getPost("userName"),
-                        "email"             => $this->getPost("email"),
-                        "password"          => $hashedPassword,
-                        "createdAt"         => date("Y-m-d H:i:s")
+                        "userName"  => $this->getPost("userName"),
+                        "email"     => $this->getPost("email"),
+                        "password"  => $hashedPassword,
+                        "createdAt" => date("Y-m-d H:i:s")
                     ];
                     ModelFactory::getModel("User")->createData($newUser);
                     $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
@@ -100,8 +100,8 @@ class AuthController extends MainController
                 }
     
                 $this->setSession([
-                    "alert"                    => "danger",
-                    "message"                  => "Les mots de passe ne correspondent pas.",
+                    "alert"     => "danger",
+                    "message"   => "Les mots de passe ne correspondent pas.",
                 ]);
     
                 return $this->createAccountMethod();
@@ -109,8 +109,8 @@ class AuthController extends MainController
         }
     
         $this->setSession([
-            "alert"                    => "danger",
-            "message"                  => "Veuillez remplir tous les champs."
+            "alert"     => "danger",
+            "message"   => "Veuillez remplir tous les champs."
         ]);
     
     }
@@ -135,8 +135,8 @@ class AuthController extends MainController
 
             if (!$user) {
                 $this->setSession([
-                    "alert"                    => "danger",
-                    "message"                  => "Email non reconnu.",
+                    "alert"     => "danger",
+                    "message"   => "Email non reconnu.",
                 ]);
                 $this->redirect("auth_register");
             }
@@ -145,23 +145,23 @@ class AuthController extends MainController
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
                 $this->setSession([
-                    "alert"                    => "success",
-                    "message"                  => "Connexion réussie."
+                    "alert"     => "success",
+                    "message"   => "Connexion réussie."
                 ]);
                 $home = $this->redirect("home");
                 header("Location: $home");
             }
 
             $this->setSession([
-                "alert"                => "danger",
-                "message"              => "Mot de passe invalide."
+                "alert"     => "danger",
+                "message"   => "Mot de passe invalide."
             ]);
             $this->redirect("auth_register");
         }
 
         $this->setSession([
-            "alert"            => "danger",
-            "message"          => "Veuillez remplir tous les champs."
+            "alert"     => "danger",
+            "message"   => "Veuillez remplir tous les champs."
         ]);
 
         return $this->redirect("auth");

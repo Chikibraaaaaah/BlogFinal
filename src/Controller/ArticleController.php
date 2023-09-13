@@ -36,11 +36,11 @@ class ArticleController extends MainController
         $user = ($this->getSession()["user"]) ?? [];
 
         return $this->twig->render("articles/articleSingle.twig", [
-            "user"          => $user,
-            "article"       => $article,
-            "comments"      => $relatedComments,
-            "alerts"        => $alerts,
-            "method"        => "GET"
+            "user"      => $user,
+            "article"   => $article,
+            "comments"  => $relatedComments,
+            "alerts"    => $alerts,
+            "method"    => "GET"
         ]);
 
     }
@@ -59,10 +59,10 @@ class ArticleController extends MainController
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
     
         return $this->twig->render("articles/articleSingle.twig", [
-            "user"              => $this->getSession()["user"],
-            "article"           => $article,
-            "method"            => "PUT",
-            "comments"          => $relatedComments
+            "user"      => $this->getSession()["user"],
+            "article"   => $article,
+            "method"    => "PUT",
+            "comments"  => $relatedComments
         ]);
 
     }
@@ -84,17 +84,17 @@ class ArticleController extends MainController
 
         $destination = $this->uploadFile();
         $article = [
-            "title"                    => addslashes($this->getPost("title")),
-            "content"                  => addslashes($this->getPost("content")),
-            "imgUrl"                   => $destination,
-            "imgAlt"                   => addslashes($this->getPost("content")),
-            "createdAt"                => date("Y-m-d H:i:s")
+            "title"     => addslashes($this->getPost("title")),
+            "content"   => addslashes($this->getPost("content")),
+            "imgUrl"    => $destination,
+            "imgAlt"    => addslashes($this->getPost("content")),
+            "createdAt" => date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Article")->createData($article);
         $this->setSession([
-            "alert"                    => "success",
-            "message"                  => "Votre article a été créé"
+            "alert"     => "success",
+            "message"   => "Votre article a été créé"
          ]);
 
         $home = $this->redirect("home");
