@@ -57,21 +57,21 @@ class Router
 
     /**
      * Parses the URL to get the Controller & his Method
-     * 
+     *
      * @return void
      */
     public function parseUrl()
     {
 
         $access = filter_input(INPUT_GET, "access");
-    
+
         if (!isset($access)) {
             $access = "home";
         }
-    
+
         $access = explode("_", $access);
         $this->controller = $access[0];
-    
+
         if (count($access) === 1) {
             $this->method = "default";
         } else {
@@ -83,6 +83,7 @@ class Router
 
     /**
      * Sets the requested Controller
+     * @return void
      */
     public  function setController()
     {

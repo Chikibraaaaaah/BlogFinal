@@ -20,7 +20,7 @@ class PdoDb
     /**
      * PdoDb constructor
      * Receive the PDO Connection & store it
-     * @param PDO $pdo
+     * @param PDO database $pdo
      */
     public function __construct(PDO $pdo)
     {

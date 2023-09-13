@@ -62,6 +62,7 @@ abstract class MainModel
     /**
      * Creates a new Data entry
      * @param array $data
+     * @return mixed
      */
     public  function createData(array $data)
     {

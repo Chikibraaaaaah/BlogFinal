@@ -19,7 +19,7 @@ class ModelFactory
 
     /**
      * Returns the Model if it exists or creates it before returning it
-     * @param $table
+     * @param string $table
      * @return mixed
      */
     public static function getModel(string $table)

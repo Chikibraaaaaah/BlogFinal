@@ -13,11 +13,22 @@ class CommentController extends MainController
 
     protected $content;
 
-
+    /**
+     * Retrieves the comment data from the database based on the provided ID.
+     *
+     * @param int $id The ID of the comment to retrieve.
+     * @throws Some_Exception_Class Description of the exception that could be thrown.
+     * @return mixed The comment data retrieved from the database.
+     */
     public  function defaultMethod()
     {
 
-    }
+        $id = $this->getGet("id");
+        $comment = ModelFactory::getModel("Comment")->readData($id, "id");
+
+        return $comment;
+
+    } // End defaultMethod!
 
 
     /**

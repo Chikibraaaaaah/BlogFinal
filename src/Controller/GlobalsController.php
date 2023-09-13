@@ -94,7 +94,8 @@ abstract class GlobalsController
     /**
      * Set User Session or User Alert
      * @param array $user
-     * @param bool $alert
+     * @param bool $session
+     * @return array|void
      */
     protected  function setSession(array $user, bool $session = false)
     {
@@ -103,11 +104,11 @@ abstract class GlobalsController
 
             $_SESSION["alert"] = $user;
 
-        } else if ($session === true){
+        } elseif ($session === true){
 
             if (isset($user["pass"])) {
                 unset($user["pass"]);
-            } else if (isset($user["password"])) {
+            } elseif (isset($user["password"])) {
                 unset($user["password"]);
             }
 
@@ -145,7 +146,7 @@ abstract class GlobalsController
     {
 
         $inputs = $this->getPost();
-        
+
         foreach ($inputs as $input => $value) {
             if (empty($value)) {
                 $this->setSession(["alert"=>"danger","message"=>"Veuillez remplir le champ". $input]);

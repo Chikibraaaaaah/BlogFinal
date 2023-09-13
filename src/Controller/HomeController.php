@@ -26,30 +26,30 @@ class HomeController extends MainController
      * Retrieves the default articles, user, alert, and comments to render the home view.
      *
      * @return string The rendered home view.
-     */ 
-    public function defaultMethod()
-    {  
-    
+     */
+    public  function defaultMethod()
+    {
+
         $articles = $this->getArticles();
         $user = $this->getSession("user");
         $alert = $this->getSession()["alert"];
         $comments = [];
-    
+
         foreach ($articles as $article) {
-            
+
             $id = $article["id"]; 
             $relatedComments = ModelFactory::getModel("Comment")->listData($id, "articleId");
             $comments[] = $relatedComments;
-    
+
         }
-    
+
         return  $this->twig->render("home.twig", [
             "articles"  => $articles,
             "alert"     => $alert,
             "user"      => $user,
             "comments"  => $comments[0]
         ]);
-    
+
     }
 
     /**
@@ -57,7 +57,7 @@ class HomeController extends MainController
      *
      * @return array The list of articles.
      */
-    public function getArticles()
+    public  function getArticles()
     {
 
         $articles = ModelFactory::getModel("Article")->listData();

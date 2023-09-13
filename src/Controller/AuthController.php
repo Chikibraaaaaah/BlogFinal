@@ -76,9 +76,9 @@ class AuthController extends MainController
      */
     public  function signupMethod()
     {
-    
+
         if ($this->checkInputs() === TRUE) {
-            $existingUser = $this->checkByEmail();  
+            $existingUser = $this->checkByEmail();
             if ($existingUser === NULL) {
                 $mpChek = $this->checkPasswordsCorrespond();
                 if ($mpChek === TRUE) {
@@ -119,9 +119,9 @@ class AuthController extends MainController
     /**
      * Login method.
      * checks the user input, retrieves the user data from the database,
-     * and verifies the password. If the input is valid and 
+     * and verifies the password. If the input is valid and
      * the password matches, it sets the user session and redirects
-     * to the home page. Otherwise, it sets an error message and redirects 
+     * to the home page. Otherwise, it sets an error message and redirects
      *to the registration page. If the input is invalid or incomplete, it sets an
      *error message and redirects back to the login page.
      * @return void

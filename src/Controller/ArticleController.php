@@ -9,14 +9,17 @@ use RuntimeException;
 class ArticleController extends MainController
 {
     /**
-     * A description of the entire PHP function.
-     * @param datatype $paramname description
-     * @throws Some_Exception_Class description of exception
-     * @return Some_Return_Value
+     * A description of the defaultMethod PHP function
+     * @return $article
      */
-    public  function defaultMethod()
-    { 
 
+    public  function defaultMethod()
+    {
+
+        $id = $this->getGet("id");
+        $article = ModelFactory::getModel("Article")->readData($id, "id");
+
+        $this->redirect("article_renderArticle", ["id" => $id]);
 
     } // End defaultMethod!
 
@@ -27,6 +30,7 @@ class ArticleController extends MainController
      *
      * @return mixed
      */
+
     public function renderArticleMethod()
     {
 
@@ -51,6 +55,7 @@ class ArticleController extends MainController
      *
      * @return string The rendered article single view.
      */
+
     public function modifyArticleMethod()
     {
 
@@ -79,6 +84,7 @@ class ArticleController extends MainController
      *
      * @return void
      */
+
     public  function createArticleMethod()
     { 
 
@@ -109,6 +115,7 @@ class ArticleController extends MainController
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
+
     public  function getArticleById()
     {
 
@@ -130,6 +137,7 @@ class ArticleController extends MainController
      * the database using the Article model, and returns the rendered article.
      * @return mixed The rendered article.
      */
+
     public  function updateArticleMethod()
     {
 
@@ -166,6 +174,7 @@ class ArticleController extends MainController
      * @throws Some_Exception_Class If the article cannot be deleted.
      * @return void
      */
+
     public  function deleteArticleMethod()
     {
 
@@ -185,6 +194,7 @@ class ArticleController extends MainController
      * @throws RuntimeException if there are invalid parameters, file size is too large, MIME type is invalid, or there is an error moving the file.
      * @return string the file destination on success.
      */
+
     public  function uploadFile()
     { 
 
@@ -195,19 +205,6 @@ class ArticleController extends MainController
             throw new RuntimeException('Invalid parameters.');
         }
 
-        // Check $this->getFiles()['img']['error'] value!
-        // switch ($this->getFiles()['img']['error']) {
-        //     case UPLOAD_ERR_OK:
-        //         break;
-        //     case UPLOAD_ERR_NO_FILE:
-        //         throw new RuntimeException('Aucun fichier transmis.');
-        //     case UPLOAD_ERR_INI_SIZE:
-        //     case UPLOAD_ERR_FORM_SIZE:
-        //         throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
-        //     default:
-        //         throw new RuntimeException('Erreur non identifiée.');
-        // }
-
         $this->checkFileError();
 
         // You should also check filesize here!
@@ -215,24 +212,7 @@ class ArticleController extends MainController
             throw new RuntimeException('Taille maiximale 1MB.');
         }
 
-        // Check MIME Type by yourself!
-        $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
-        $validMimeTypes = [
-            'jpg'   => 'image/jpg',
-            'jpeg'  => 'image/jpeg',
-            'png'   => 'image/png',
-            'gif'   => 'image/gif'
-        ];
-
-        $ext = array_search($fileMimeType, $validMimeTypes, true);
-
-        if ($ext ===  false) {
-            return $this->setSession([
-                "alert"     => "danger",
-                "message"   =>"Format invalide."
-            ]);
-        // throw new RuntimeException('Invalid file format.');
-        }
+        $ext = $this->checkFileMime();
 
         $fileDestination = sprintf(
             './img/%s.%s',
@@ -263,6 +243,7 @@ class ArticleController extends MainController
      * @throws RuntimeException if the file size exceeds the maximum allowed (1MB).
      * @throws RuntimeException if an unidentified error occurs.
      */
+
     private  function checkFileError()
     {
 
@@ -287,7 +268,8 @@ class ArticleController extends MainController
      * @throws Some_Exception_Class If the file does not exist
      * @return void
      */
-    public  function deleteFile()
+
+    private  function deleteFile()
     {
 
         $imgPath = $this->getArticleById()["imgUrl"];
@@ -303,5 +285,43 @@ class ArticleController extends MainController
         ]);
 
     }
+
+
+    /**
+     * Check the MIME Type of a file.
+     *
+     * This function checks the MIME Type of a file by using the `mime_content_type` function.
+     * It retrieves the file MIME Type from the uploaded image file and compares it with a list of valid MIME Types.
+     * If the MIME Type is not found in the list of valid types, it sets a session variable with an error message.
+     *
+     * @return string|void Returns the file extension if it is a valid MIME Type, or void if it is not.
+     */
+
+    private  function checkFileMime()
+    {
+
+        // Check MIME Type by yourself!
+        $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
+        $validMimeTypes = [
+            'jpg'   => 'image/jpg',
+            'jpeg'  => 'image/jpeg',
+            'png'   => 'image/png',
+            'gif'   => 'image/gif'
+        ];
+
+        $ext = array_search($fileMimeType, $validMimeTypes, true);
+
+        if ($ext ===  false) {
+            return $this->setSession([
+                "alert"     => "danger",
+                "message"   =>"Format invalide."
+            ]);
+        // throw new RuntimeException('Invalid file format.');
+        }
+
+        return $ext;
+    
+    }
+
 
 }

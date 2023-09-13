@@ -23,18 +23,19 @@ abstract class MainController extends GlobalsController
      */
     public  function __construct()
     {
-    
+
         parent::__construct();
         $this->twig = new Environment(new FilesystemLoader("../src/View"), ["cache" => false]);
-    
-    }
+
+    } // End __construct
 
 
     /**
      * Redirects to another URL
      * @param string $page
      * @param array $params
-     * */ 
+     * @return string $redirectUrl
+     **/ 
     public  function redirect(string $page, array $params = [])
     {
 
