@@ -152,8 +152,8 @@ class ArticleController extends MainController
             $updatedArticle["content"] = PDO::quote($updatedArticle["content"]);
             $updatedArticle["updatedAt"] = date("Y-m-d H:i:s");
 
-            ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
-
+            ModelFactory::getModel("Article")->updateData((int)$updatedArticle["id"], $updatedArticle);
+            
             return $this->renderArticleMethod();
         }
 

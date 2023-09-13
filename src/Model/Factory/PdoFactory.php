@@ -15,6 +15,7 @@ class PdoFactory
      * Stores the Connection
      * @var null
      */
+    
     private static $pdo = null;
 
     /**

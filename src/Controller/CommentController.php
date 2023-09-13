@@ -34,8 +34,8 @@ class CommentController extends MainController
     $this->articleId = $this->getGet("id");
 
     $newComment = [
-        "authorId"   => intval($this->auteurId),
-        "articleId"  => intval($this->articleId),
+        "authorId"   => (int)$this->auteurId,
+        "articleId"  => (int)$this->articleId,
         "content"    => $this->content,
         "createdAt"  => date("Y-m-d H:i:s")
     ];
@@ -68,7 +68,7 @@ class CommentController extends MainController
         if($this->checkInputs()) {
 
             $updatedComment = array_merge($existingComment, $this->getPost()["content"]);
-            $updatedComment["content"] = addslashes($updatedComment["content"]);
+            $updatedComment["content"] = PDO::quote($updatedComment["content"]);
             $updatedComment["updatedAt"] = date("Y-m-d H:i:s");
 
             ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);
