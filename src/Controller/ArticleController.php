@@ -84,17 +84,17 @@ class ArticleController extends MainController
 
         $destination = $this->uploadFile();
         $article = [
-           "title" => addslashes($this->getPost("title")),
-           "content" => addslashes($this->getPost("content")),
-           "imgUrl" => $destination,
-           "imgAlt" => addslashes($this->getPost("content")),
-           "createdAt" => date("Y-m-d H:i:s")
+           "title"      => PDO::quote($this->getPost("title")),
+           "content"    => addslashes($this->getPost("content")),
+           "imgUrl"     => $destination,
+           "imgAlt"     => addslashes($this->getPost("content")),
+           "createdAt"  => date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Article")->createData($article);
         $this->setSession([
-            "alert" => "success",
-            "message" => "Votre article a été créé"
+            "alert"     => "success",
+            "message"   => "Votre article a été créé"
          ]);
 
         $home = $this->redirect("home");
@@ -216,20 +216,20 @@ class ArticleController extends MainController
         // Check MIME Type by yourself.
         $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
         $validMimeTypes = array(
-            'jpg' => 'image/jpg',
-            'jpeg' => 'image/jpeg',
-            'png' => 'image/png',
-            'gif' => 'image/gif',
+            'jpg'   => 'image/jpg',
+            'jpeg'  => 'image/jpeg',
+            'png'   => 'image/png',
+            'gif'   => 'image/gif',
        );
 
         $ext = array_search($fileMimeType, $validMimeTypes, true);
 
         if ($ext ===  false) {
             return $this->setSession([
-                "alert" => "danger",
-                "message"=>"Format invalide."
+                "alert"     => "danger",
+                "message"   =>"Format invalide."
             ]);
-// throw new RuntimeException('Invalid file format.');
+        // throw new RuntimeException('Invalid file format.');
         }
 
         $fileDestination = sprintf(
@@ -295,7 +295,10 @@ class ArticleController extends MainController
             return ;
         }
 
-        return $this->setSession(["alert"=>"danger","message"=>"Le fichier n'existe pas"]);
+        return $this->setSession([
+            "alert"     => "danger",
+            "message"   => "Le fichier n'existe pas"
+        ]);
 
     }
 

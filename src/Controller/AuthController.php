@@ -100,8 +100,8 @@ class AuthController extends MainController
                 }
 
                 $this->setSession([
-                    "alert"     => "danger",
-                    "message"   => "Les mots de passe ne correspondent pas."
+                    "alert"   => "danger",
+                    "message" => "Les mots de passe ne correspondent pas."
                 ]);
 
                 return $this->createAccountMethod();
@@ -109,8 +109,8 @@ class AuthController extends MainController
         }
 
         $this->setSession([
-            "alert"     => "danger",
-            "message"   => "Veuillez remplir tous les champs."
+            "alert"   => "danger",
+            "message" => "Veuillez remplir tous les champs."
         ]);
 
     }
@@ -133,10 +133,10 @@ class AuthController extends MainController
 
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
-            if (!$user){
+            if (!$user) {
                 $this->setSession([
-                    "alert"     => "danger",
-                    "message"   => "Email non reconnu."
+                    "alert"   => "danger",
+                    "message" => "Email non reconnu."
                 ]);
                 $this->redirect("auth_register");
             }
@@ -145,23 +145,23 @@ class AuthController extends MainController
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
                 $this->setSession([
-                    "alert"     => "success",
-                    "message"   => "Connexion réussie."
+                    "alert"   => "success",
+                    "message" => "Connexion réussie."
                 ]);
                 $home = $this->redirect("home");
                 header("Location: $home");
             }
 
             $this->setSession([
-                "alert"     => "danger",
-                "message"   => "Mot de passe invalide."
+                "alert"   => "danger",
+                "message" => "Mot de passe invalide."
             ]);
             $this->redirect("auth_register");
         }
 
         $this->setSession([
-            "alert"     => "danger",
-            "message"   => "Veuillez remplir tous les champs."
+            "alert"   => "danger",
+            "message" => "Veuillez remplir tous les champs."
         ]);
 
         return $this->redirect("auth");

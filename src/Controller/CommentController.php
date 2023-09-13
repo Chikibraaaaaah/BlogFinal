@@ -48,8 +48,8 @@ class CommentController extends MainController
         ]);
 
         $articleId = urlencode($this->articleId);
-        $article = $this->redirect("article_renderArticle", ["id" => intval($articleId)]);
-        header("Location: ".$article);
+        $article = $this->redirect("article_renderArticle", ["id" => (int) $articleId]);
+        header("Location: " . $article);
 
     }
 
@@ -103,13 +103,11 @@ class CommentController extends MainController
      *
      * @return string The rendered template.
      */
-    public function editCommentMethod()
-    {
-
+    public function editCommentMethod() {
         $commentaire = ModelFactory::getModel("Comment")->listData($this->getGet("id"),"id")[0];
         $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"],"id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
-
+    
         return $this->twig->render("articles/article.twig", [
             "article"           => $article,
             "myCommentaire"     => $commentaire,
@@ -117,7 +115,6 @@ class CommentController extends MainController
             "user"              => $this->getSession()["user"],
             "method"            => "PUT"
         ]);
-
     }
 
 
@@ -129,18 +126,18 @@ class CommentController extends MainController
      */
     public function confirmDeleteCommentMethod()
     {
-
+    
         $this->setSession([
-            "alert"     => "danger",
-            "message"   => "Êtes-vous certain de vouloir supprimer ce commentaire ?"
+            "alert"   => "danger",
+            "message" => "Êtes-vous certain de vouloir supprimer ce commentaire ?"
         ]);
-
+    
         return $this->twig->render("alert.twig", [
-            "alert"         =>"danger",
-            "message"       => $this->getSession()["alert"]["message"],
-            "commentaire"   => ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))
+            "alert"       => "danger",
+            "message"     => $this->getSession()["alert"]["message"],
+            "commentaire" => ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))
         ]);
-
+    
     }
 
 
