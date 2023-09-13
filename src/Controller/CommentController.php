@@ -27,31 +27,31 @@ class CommentController extends MainController
      * @return Some_Return_Value
      */
     public  function createCommentMethod()
-    {
+{
 
-        $this->auteurId = $this->getSession()["user"]["id"];
-        $this->content = $this->getPost("content");
-        $this->articleId = $this->getGet("id");
+    $this->auteurId = $this->getSession()["user"]["id"];
+    $this->content = $this->getPost("content");
+    $this->articleId = $this->getGet("id");
 
-        $newComment = [
-            "authorId"  => intval($this->auteurId),
-            "articleId" => intval($this->articleId),
-            "content"   => $this->content,
-            "createdAt" => date("Y-m-d H:i:s")
-        ];
+    $newComment = [
+        "authorId"   => intval($this->auteurId),
+        "articleId"  => intval($this->articleId),
+        "content"    => $this->content,
+        "createdAt"  => date("Y-m-d H:i:s")
+    ];
 
-        ModelFactory::getModel("Comment")->createData($newComment);
+    ModelFactory::getModel("Comment")->createData($newComment);
 
-        $this->setSession([
-            "alert"     => "success",
-            "message"   => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
-        ]);
+    $this->setSession([
+        "alert"     => "success",
+        "message"   => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
+    ]);
 
-        $articleId = urlencode($this->articleId);
-        $article = $this->redirect("article_renderArticle", ["id" => (int) $articleId]);
-        header("Location: " . $article);
+    $articleId = urlencode($this->articleId);
+    $article = $this->redirect("article_renderArticle", ["id" => (int) $articleId]);
+    header("Location: " . $article);
 
-    }
+}
 
 
     /**
@@ -103,10 +103,11 @@ class CommentController extends MainController
      *
      * @return string The rendered template.
      */
-    public function editCommentMethod() {
-        $commentaire = ModelFactory::getModel("Comment")->listData($this->getGet("id"),"id")[0];
-        $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"],"id");
-        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
+    public function editCommentMethod()
+    {
+        $commentaire = ModelFactory::getModel("Comment")->listData($this->getGet("id"), "id")[0];
+        $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"], "id");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
     
         return $this->twig->render("articles/article.twig", [
             "article"           => $article,
@@ -149,16 +150,14 @@ class CommentController extends MainController
      */
     public function deleteCommentMethod()
     {
-
         $id = $this->getRequest()["id"];
         $articleId = ModelFactory::getModel("Comment")->listData()[0]["articleId"];
-
+    
         ModelFactory::getModel("Comment")->deleteData($id);
-
-            return $this->redirect("article_getArticle", [
-                "id"=> intval($articleId)
-            ]);
-
+    
+        return $this->redirect("article_getArticle", [
+            "id" => (int)$articleId
+        ]);
     }
 
 

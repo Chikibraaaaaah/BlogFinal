@@ -23,12 +23,12 @@ abstract class MainController extends GlobalsController
      */
     public function __construct()
     {
-
+    
         parent::__construct();
         $this->twig = new Environment(new FilesystemLoader("../src/View"), [
             "cache" => false
         ]);
-
+    
     }
 
 

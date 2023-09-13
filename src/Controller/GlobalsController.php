@@ -313,7 +313,7 @@ abstract class GlobalsController
      * Destroy $name Cookie or Current Session
      * @param string $name
      */
-    protected function destroyGlobal(string $name = null)
+    protected function destroyGlobal(/*string $name = null*/)
     {
         $_SESSION["user"] = [];
         session_destroy();

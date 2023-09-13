@@ -27,22 +27,22 @@ class ArticleController extends MainController
      *
      * @return mixed
      */
-    public function renderArticleMethod()
+    public  function renderArticleMethod()
     {
-
+    
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId") ?? [];
         $alerts = $this->getAlert(true) ?? [];
         $user = $this->getSession()["user"] ?? [];
-
+    
         return $this->twig->render("articles/articleSingle.twig", [
-            "user"      => $user,
-            "article"   => $article,
-            "comments"  => $relatedComments,
-            "alerts"    => $alerts,
-            "method"    => "GET"
+            "user" => $user,
+            "article" => $article,
+            "comments" => $relatedComments,
+            "alerts" => $alerts,
+            "method" => "GET"
         ]);
-
+    
     }
 
 
@@ -51,7 +51,7 @@ class ArticleController extends MainController
      *
      * @return string The rendered article single view.
      */
-    public function modifyArticleMethod()
+    public  function modifyArticleMethod()
     {
 
         $id = $this->getGet("id");
@@ -85,9 +85,9 @@ class ArticleController extends MainController
         $destination = $this->uploadFile();
         $article = [
            "title"      => PDO::quote($this->getPost("title")),
-           "content"    => addslashes($this->getPost("content")),
+           "content"    => PDO::quote($this->getPost("content")),
            "imgUrl"     => $destination,
-           "imgAlt"     => addslashes($this->getPost("content")),
+           "imgAlt"     => PDO::quote($this->getPost("content")),
            "createdAt"  => date("Y-m-d H:i:s")
         ];
 
@@ -147,9 +147,9 @@ class ArticleController extends MainController
                 }
             }
 
-            $updatedArticle["imgAlt"] = addslashes($this->getPost("content"));
-            $updatedArticle["title"] = addslashes($updatedArticle["title"]);
-            $updatedArticle["content"] = addslashes($updatedArticle["content"]);
+            $updatedArticle["imgAlt"] = PDO::quote($updatedArticle["content"]);
+            $updatedArticle["title"] = PDO::quote($updatedArticle["title"]);
+            $updatedArticle["content"] = PDO::quote($updatedArticle["content"]);
             $updatedArticle["updatedAt"] = date("Y-m-d H:i:s");
 
             ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
