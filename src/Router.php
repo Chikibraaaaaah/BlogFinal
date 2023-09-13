@@ -31,20 +31,20 @@ class Router
      * Requested Controller
      * @var string
      */
-
     private $controller = self::DEFAULT_CONTROLLER;
 
     /**
      * Requested Method
      * @var string
      */
-
     private $method = self::DEFAULT_METHOD;
 
     /**
      * Router constructor
      * Parses the URL, sets the Controller & his Method
      */
+
+
     public  function __construct()
     {
 
@@ -125,5 +125,6 @@ class Router
         echo filter_var($response);
 
     }
+
 
 }

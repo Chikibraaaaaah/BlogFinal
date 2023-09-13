@@ -20,6 +20,8 @@ class CommentController extends MainController
      * @throws Some_Exception_Class Description of the exception that could be thrown.
      * @return mixed The comment data retrieved from the database.
      */
+
+     
     public  function defaultMethod()
     {
 
@@ -47,9 +49,9 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            "authorId" => (int)$this->auteurId,
+            "authorId"  => (int)$this->auteurId,
             "articleId" => (int)$this->articleId,
-            "content" => $this->content,
+            "content"   => $this->content,
             "createdAt" => date("Y-m-d H:i:s")
         ];
 
@@ -75,7 +77,7 @@ class CommentController extends MainController
 
         $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(),"id")[0];
 
-        if($this->checkInputs() === TRUE) {
+        if ($this->checkInputs() === TRUE) {
 
             $updatedComment = array_merge($existingComment, $this->getPost()["content"]);
             $updatedComment["content"] = PDO::quote($updatedComment["content"]);
@@ -122,6 +124,7 @@ class CommentController extends MainController
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
 
         return $this->twig->render("articles/article.twig", ["article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT"]);
+
     }
 
 
@@ -159,7 +162,7 @@ class CommentController extends MainController
 
         ModelFactory::getModel("Comment")->deleteData($id);
 
-        return $this->redirect("article_getArticle", ["id" => (int)$articleId]);
+        return $this->redirect("article_getArticle", [ "id" => (int)$articleId ]);
 
     }
 

@@ -99,7 +99,7 @@ class AuthController extends MainController
 
                 return $this->createAccountMethod();
             }
-        }
+        } // End if
 
         $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
@@ -125,7 +125,7 @@ class AuthController extends MainController
 
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
-            if (!$user === TRUE) {
+            if ($user === FALSE) {
                 $this->setSession(["alert" => "danger", "message" => "Email non reconnu."]);
                 $this->redirect("auth_register");
             }
@@ -184,7 +184,7 @@ class AuthController extends MainController
         $userName = $this->getPost("userName");
         $userFound = ModelFactory::getModel("User")->listData($userName,"userName");
 
-        if ($userFound){
+        if ($userFound === TRUE) {
             return $userFound[0];
         }
 
@@ -204,7 +204,7 @@ class AuthController extends MainController
         $password = $this->getPost("password");
         $secondPassword = $this->getPost("password_check");
 
-        if ($password !== $secondPassword){
+        if ($password !== $secondPassword) {
             return false;
         }
         return true;

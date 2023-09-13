@@ -15,6 +15,7 @@ class ModelFactory
      * Model
      * @var array
      */
+
     private static $models = [];
 
     /**
@@ -22,7 +23,9 @@ class ModelFactory
      * @param string $table
      * @return mixed
      */
-    public static function getModel(string $table)
+
+
+    public  static function getModel(string $table)
     {
 
         if (array_key_exists($table, self::$models) === TRUE) {

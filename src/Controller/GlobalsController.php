@@ -11,50 +11,61 @@ abstract class GlobalsController
     /**
      * @var array
      */
+
     private $alert = [];
+
     /**
      * @var array
      */
+
     private $env = [];
 
     /**
      * @var array
      */
+
     private $file = [];
 
     /**
      * @var array
      */
+
     private $files = [];
 
     /**
      * @var array
      */
+
     private $get = [];
 
     /**
      * @var array
      */
+
     private $post = [];
 
     /**
      * @var array
      */
+
     private $request = [];
 
     /**
      * @var array
      */
+
     private $server = [];
 
     /**
      * @var array
      */
+
     private $session = [];
 
     /**
      * @var array
      */
+
     private $user = [];
 
     /**
@@ -93,7 +104,7 @@ abstract class GlobalsController
     } // END OF CONSTRUCTOR
 
 
-    // SETTERS
+    // SETTERS!
     /**
      * Set User Session or User Alert
      * @param array $user
@@ -109,11 +120,11 @@ abstract class GlobalsController
 
             $_SESSION["alert"] = $user;
 
-        } elseif ($session === true){
+        } elseif ($session === true) {
 
-            if (isset($user["pass"])) {
+            if (isset($user["pass"]) === TRUE) {
                 unset($user["pass"]);
-            } elseif (isset($user["password"])) {
+            } elseif (isset($user["password"]) === TRUE) {
                 unset($user["password"]);
             }
 
@@ -131,15 +142,15 @@ abstract class GlobalsController
      */
 
 
-    protected  function checkUser(bool $alert = FALSE)
+    protected  function checkUser(bool $alert= FALSE)
     {
 
-        if($alert === TRUE) {
+        if ($alert === TRUE) {
             return empty($this->alert) === FALSE;
         }
 
-        if(array_key_exists("user", $this->session)) {
-            if(empty($this->user) === FALSE) {
+        if (array_key_exists("user", $this->session)) {
+            if (empty($this->user) === FALSE) {
                 return true;
             }
         }
@@ -174,11 +185,11 @@ abstract class GlobalsController
      */
 
 
-    protected  function getAlert(bool $type = false)
+    protected  function getAlert(bool $type= false)
     {
 
-        if (isset($this->alert)) {
-            if ($type) {
+        if (isset($this->alert) === TRUE) {
+            if ($type === TRUE) {
                 return $this->alert["type"] ??"";
             }
 
@@ -286,6 +297,7 @@ abstract class GlobalsController
         return $this->request[$var] ??"";
 
     }
+
 
     /**
      * Get Server Array or Server Var

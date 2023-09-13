@@ -48,6 +48,7 @@ class HomeController extends MainController
         return  $this->twig->render("home.twig", ["articles" => $articles, "alert" => $alert, "user" => $user, "comments" => $comments[0]]);
 
     } // End defaultMethod()!
+    
 
     /**
      * Retrieves a list of articles.
@@ -63,7 +64,7 @@ class HomeController extends MainController
 
         return $articles;
 
-   }
+    } // End getArticles()!
 
 
 }

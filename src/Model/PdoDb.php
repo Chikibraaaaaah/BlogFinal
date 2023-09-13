@@ -22,7 +22,9 @@ class PdoDb
      * Receive the PDO Connection & store it
      * @param PDO database $pdo
      */
-    public function __construct(PDO $pdo)
+
+
+    public  function __construct(PDO $pdo)
     {
 
         $this->pdo = $pdo;
@@ -36,6 +38,8 @@ class PdoDb
      * @param array $params
      * @return mixed
      */
+
+
     public  function getData(string $query, array $params = [])
     {
 
@@ -53,6 +57,8 @@ class PdoDb
      * @param array $params
      * @return array|mixed
      */
+
+
     public  function getAllData(string $query, array $params = [])
     {
 
@@ -70,6 +76,8 @@ class PdoDb
      * @param array $params
      * @return bool|mixed
      */
+
+
     public  function setData(string $query, array $params = [])
     {
 

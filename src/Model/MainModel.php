@@ -13,12 +13,14 @@ abstract class MainModel
      * Database
      * @var PdoDb
      */
+
     protected $database = null;
 
     /**
      * Database Table
      * @var string
      */
+
     protected $table = null;
 
     /**
@@ -26,6 +28,8 @@ abstract class MainModel
      * Receives the Database Object & creates the Table Name
      * @param PdoDb $database
      */
+
+
     public  function __construct(PdoDb $database)
     {
 
@@ -43,6 +47,8 @@ abstract class MainModel
      * @param string $key
      * @return array|mixed
      */
+
+
     public  function listData(string $value = null, string $key = null)
     {
 
@@ -64,6 +70,8 @@ abstract class MainModel
      * @param array $data
      * @return mixed
      */
+
+
     public  function createData(array $data)
     {
 
@@ -82,10 +90,12 @@ abstract class MainModel
      * @param string|null $key
      * @return mixed
      */
+
+
     public  function readData(string $value, string $key = null)
     {
 
-        if (isset($key)) {
+        if (isset($key) === TRUE) {
             $query = "SELECT * FROM ".$this->table." WHERE ".$key." = ?";
         } else {
             $query = "SELECT * FROM ".$this->table." WHERE id = ?";
@@ -102,6 +112,8 @@ abstract class MainModel
      * @param array $data
      * @param string|null $key
      */
+
+
     public  function updateData(string $value, array $data, string $key = null)
     {
 
@@ -129,6 +141,8 @@ abstract class MainModel
      * @param string $value
      * @param string|null $key
      */
+
+
     public  function deleteData(string $value, string $key = null)
     {
 

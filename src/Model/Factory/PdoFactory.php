@@ -22,10 +22,8 @@ class PdoFactory
      * Returns the Connection if it exists or creates it before returning it
      * @return PDO|null
      */
-    /**
-     * Retourne la connexion si elle existe ou la crée avant de la retourner
-     * @return PDO|null
-     */
+
+
     public  static function getPDO()
     {
 

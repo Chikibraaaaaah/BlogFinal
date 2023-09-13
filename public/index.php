@@ -3,7 +3,7 @@
 use Tracy\Debugger;
 
 require __DIR__.'/../vendor/autoload.php';
-// require dirname(__DIR__) . '/vendor/autoload.php';
+// Require dirname(__DIR__) . '/vendor/autoload.php';
 
 Debugger::enable();
 

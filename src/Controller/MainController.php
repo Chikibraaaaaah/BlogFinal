@@ -15,6 +15,7 @@ abstract class MainController extends GlobalsController
     /**
      * @var Environment|null
      */
+
     protected $twig = null;
 
     /**
@@ -40,7 +41,7 @@ abstract class MainController extends GlobalsController
      **/ 
 
 
-    public  function redirect(string $page, array $params = [])
+    public  function redirect(string $page, array $params= [])
     {
 
         $params["access"] = $page;

@@ -158,7 +158,7 @@ class ArticleController extends MainController
             ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
 
             return $this->renderArticleMethod();
-        }
+        } // End if
 
     }
 
@@ -198,7 +198,7 @@ class ArticleController extends MainController
         try {
             // Undefined | Multiple Files | $this->getFiles() Corruption Attack!
             // If this request falls under any of them, treat it invalid!
-            if (!isset($this->getFiles()['img']['error']) === TRUE || is_array($this->getFiles()['img']['error']) === TRUE) {
+            if (isset($this->getFiles()['img']['error']) === TRUE || is_array($this->getFiles()['img']['error']) === TRUE) {
                 throw new RuntimeException('Invalid parameters.');
             }
 
@@ -219,11 +219,11 @@ class ArticleController extends MainController
 
             // You should name it uniquely.
             // On this example, obtain safe unique name from its binary data.
-            if (!move_uploaded_file($this->getFiles()['img']['tmp_name'], $fileDestination)) {
+            if (move_uploaded_file($this->getFiles()['img']['tmp_name'], $fileDestination) === FALSE) {
                 throw new RuntimeException('Il y a eu un problème lors du déplacement du fichier.');
             }
 
-            // echo 'Votre photo a été importée avec succès.';
+            // Echo 'Votre photo a été importée avec succès.';
             return $fileDestination;
 
         } catch (RuntimeException $e) {
@@ -247,7 +247,7 @@ class ArticleController extends MainController
 
         switch ($this->getFiles()['img']['error']) {
             case UPLOAD_ERR_OK:
-                break;
+            break;
             case UPLOAD_ERR_NO_FILE:
                 throw new RuntimeException('Aucun fichier transmis.');
             case UPLOAD_ERR_INI_SIZE:
@@ -255,7 +255,7 @@ class ArticleController extends MainController
                 throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
             default:
                 throw new RuntimeException('Erreur non identifiée.');
-        }
+            }
 
     }
 
@@ -273,7 +273,7 @@ class ArticleController extends MainController
 
         $imgPath = $this->getArticleById()["imgUrl"];
 
-        if( file_exists($imgPath)) {
+        if (file_exists($imgPath) === TRUE) {
             unlink($imgPath);
             return ;
         }
