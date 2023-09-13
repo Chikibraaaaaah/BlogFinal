@@ -90,7 +90,7 @@ abstract class GlobalsController
             $this->file = $this->files["file"];
         }
 
-        if (array_key_exists("alert", $_SESSION) === false ) {
+        if (array_key_exists("alert", $_SESSION) === false) {
             $_SESSION["alert"] = [];
         }
 
@@ -113,21 +113,17 @@ abstract class GlobalsController
      */
 
 
-    protected  function setSession(array $user, bool $session = false)
+    protected  function setSession(array $user, bool $session=false)
     {
 
         if ($session === false) {
-
             $_SESSION["alert"] = $user;
-
         } elseif ($session === true) {
-
             if (isset($user["pass"]) === TRUE) {
                 unset($user["pass"]);
             } elseif (isset($user["password"]) === TRUE) {
                 unset($user["password"]);
             }
-
             $_SESSION["user"] = $user;
         }
 
@@ -142,14 +138,14 @@ abstract class GlobalsController
      */
 
 
-    protected  function checkUser(bool $alert= FALSE)
+    protected  function checkUser(bool $alert=FALSE)
     {
 
         if ($alert === TRUE) {
             return empty($this->alert) === FALSE;
         }
 
-        if (array_key_exists("user", $this->session)) {
+        if (array_key_exists("user", $this->session) === TRUE) {
             if (empty($this->user) === FALSE) {
                 return true;
             }
@@ -185,12 +181,12 @@ abstract class GlobalsController
      */
 
 
-    protected  function getAlert(bool $type= false)
+    protected  function getAlert(bool $type=false)
     {
 
         if (isset($this->alert) === TRUE) {
             if ($type === TRUE) {
-                return $this->alert["type"] ??"";
+                return $this->alert["type"] ?? "";
             }
 
             echo filter_var($this->alert["message"]);
@@ -207,14 +203,14 @@ abstract class GlobalsController
      */
 
 
-    protected  function getEnv(string $var = null)
+    protected  function getEnv(string $var=null)
     {
 
         if ($var === null) {
             return $this->env;
         }
 
-        return $this->env[$var] ??"";
+        return $this->env[$var] ?? "";
 
     }
 
@@ -226,18 +222,18 @@ abstract class GlobalsController
      */
 
 
-    protected  function getFiles(string $var = null)
+    protected  function getFiles(string $var=null)
     {
 
         if ($var === null) {
             return $this->files;
         }
 
-        if ($var ==="file") {
+        if ($var === "file") {
             return $this->file;
         }
 
-        return $this->file[$var] ??"";
+        return $this->file[$var] ?? "";
 
     }
 
@@ -255,7 +251,7 @@ abstract class GlobalsController
         if ($var === null) {
             return $this->get;
         }
-        
+
         return $this->get[$var] ??"";
 
     }
@@ -343,6 +339,7 @@ abstract class GlobalsController
         return $this->user[$var] ??"";
 
     }
+
 
     // ******************** DESTROYER ******************** \\
     /**

@@ -12,10 +12,10 @@ use Twig\Loader\FilesystemLoader;
  */
 abstract class MainController extends GlobalsController
 {
+
     /**
      * @var Environment|null
      */
-
     protected $twig = null;
 
     /**
@@ -38,19 +38,18 @@ abstract class MainController extends GlobalsController
      * @param string $page
      * @param array $params
      * @return string $redirectUrl
-     **/ 
+     **/
 
 
-    public  function redirect(string $page, array $params= [])
+    public  function redirect(string $page, array $params=[])
     {
 
         $params["access"] = $page;
-        $redirectUrl = "index.php?" . http_build_query($params);
+        $redirectUrl = "index.php?".http_build_query($params);
 
         return $redirectUrl;
 
-    } // End redirect()
-
+    }// End redirect()
 
     // Public function redirect(string $page, array $params = [])
     // {

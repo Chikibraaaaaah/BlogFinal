@@ -6,16 +6,23 @@ use App\Model\Factory\ModelFactory;
 
 class CommentController extends MainController
 {
-
+    /**
+     * @var int $auteurId
+     */
     protected $auteurId;
 
+    /**
+     * @var int $articleId
+     */
     protected $articleId;
 
+    /**
+     * @var string $content
+     */
     protected $content;
 
     /**
      * Retrieves the comment data from the database based on the provided ID.
-     *
      * @param int $id The ID of the comment to retrieve.
      * @throws Some_Exception_Class Description of the exception that could be thrown.
      * @return mixed The comment data retrieved from the database.
@@ -49,8 +56,8 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            "authorId"  => (int)$this->auteurId,
-            "articleId" => (int)$this->articleId,
+            "authorId"  => (int) $this->auteurId,
+            "articleId" => (int) $this->articleId,
             "content"   => $this->content,
             "createdAt" => date("Y-m-d H:i:s")
         ];
@@ -59,7 +66,7 @@ class CommentController extends MainController
         $this->setSession(["alert" => "success", "message" => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"]);
         $articleId = urlencode($this->articleId);
         $article = $this->redirect("article_renderArticle", ["id" => (int) $articleId]);
-        header("Location: " . $article);
+        header("Location: ".$article);
 
     }
 
@@ -78,13 +85,11 @@ class CommentController extends MainController
         $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(),"id")[0];
 
         if ($this->checkInputs() === TRUE) {
-
             $updatedComment = array_merge($existingComment, $this->getPost()["content"]);
-            $updatedComment["content"] = PDO::quote($updatedComment["content"]);
+            $updatedComment["content"] = addslashes($updatedComment["content"]);
             $updatedComment["updatedAt"] = date("Y-m-d H:i:s");
 
             ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);
-
             $this->redirect("article_renderArticle", ["id" => $updatedComment["articleId"]]);
 
         }
@@ -162,7 +167,7 @@ class CommentController extends MainController
 
         ModelFactory::getModel("Comment")->deleteData($id);
 
-        return $this->redirect("article_getArticle", [ "id" => (int)$articleId ]);
+        return $this->redirect("article_getArticle", [ "id" => (int) $articleId ]);
 
     }
 

@@ -11,11 +11,11 @@ use App\Model\PdoDb;
  */
 class ModelFactory
 {
+
     /**
      * Model
      * @var array
      */
-
     private static $models = [];
 
     /**

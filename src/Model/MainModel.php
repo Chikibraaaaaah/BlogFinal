@@ -9,11 +9,11 @@ namespace App\Model;
  */
 abstract class MainModel
 {
+
     /**
      * Database
      * @var PdoDb
      */
-
     protected $database = null;
 
     /**
@@ -49,7 +49,7 @@ abstract class MainModel
      */
 
 
-    public  function listData(string $value = null, string $key = null)
+    public  function listData(string $value=null, string $key=null)
     {
 
         if (isset($key) === TRUE) {
@@ -92,7 +92,7 @@ abstract class MainModel
      */
 
 
-    public  function readData(string $value, string $key = null)
+    public  function readData(string $value, string $key=null)
     {
 
         if (isset($key) === TRUE) {
@@ -114,7 +114,7 @@ abstract class MainModel
      */
 
 
-    public  function updateData(string $value, array $data, string $key = null)
+    public  function updateData(string $value, array $data, string $key=null)
     {
 
         $set = null;
@@ -125,8 +125,8 @@ abstract class MainModel
 
         $set = substr_replace($set, "",  -2);
 
-        if (isset($key)) {
-            $query = "UPDATE ".$this->table." SET ".$set." WHERE ".$key ." = ?";
+        if (isset($key) === TRUE) {
+            $query = "UPDATE ".$this->table." SET ".$set." WHERE ".$key." = ?";
         } else {
             $query = "UPDATE ".$this->table." SET ".$set." WHERE id = ?";
         }
@@ -143,7 +143,7 @@ abstract class MainModel
      */
 
 
-    public  function deleteData(string $value, string $key = null)
+    public  function deleteData(string $value, string $key=null)
     {
 
         if (isset($key)) {

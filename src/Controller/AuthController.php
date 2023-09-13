@@ -98,8 +98,8 @@ class AuthController extends MainController
                 $this->setSession(["alert" => "danger","message" => "Les mots de passe ne correspondent pas."]);
 
                 return $this->createAccountMethod();
-            }
-        } // End if
+            }// End if!
+        }// End if!
 
         $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
@@ -112,8 +112,8 @@ class AuthController extends MainController
      * and verifies the password. If the input is valid and
      * the password matches, it sets the user session and redirects
      * to the home page. Otherwise, it sets an error message and redirects
-     *to the registration page. If the input is invalid or incomplete, it sets an
-     *error message and redirects back to the login page.
+     * to the registration page. If the input is invalid or incomplete, it sets an
+     * error message and redirects back to the login page.
      * @return void
      */
 
@@ -122,7 +122,6 @@ class AuthController extends MainController
     {
 
         if ($this->checkInputs() === TRUE) {
-
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
             if ($user === FALSE) {
@@ -207,6 +206,7 @@ class AuthController extends MainController
         if ($password !== $secondPassword) {
             return false;
         }
+
         return true;
 
     }

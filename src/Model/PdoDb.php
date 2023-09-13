@@ -40,7 +40,7 @@ class PdoDb
      */
 
 
-    public  function getData(string $query, array $params = [])
+    public  function getData(string $query, array $params=[])
     {
 
         $PDOStatement = $this->pdo->prepare($query);
@@ -59,7 +59,7 @@ class PdoDb
      */
 
 
-    public  function getAllData(string $query, array $params = [])
+    public  function getAllData(string $query, array $params=[])
     {
 
         $PDOStatement = $this->pdo->prepare($query);
@@ -78,7 +78,7 @@ class PdoDb
      */
 
 
-    public  function setData(string $query, array $params = [])
+    public  function setData(string $query, array $params=[])
     {
 
         $PDOStatement = $this->pdo->prepare($query);

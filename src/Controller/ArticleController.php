@@ -10,9 +10,9 @@ class ArticleController extends MainController
 {
     /**
      * A description of the defaultMethod PHP function
-     * 
+     *
      * @return $article
-     * 
+     *
      */
 
 
@@ -53,7 +53,7 @@ class ArticleController extends MainController
      * Modify the article method.
      *
      * @return string The rendered article single view.
-     * 
+     *
      */
 
 
@@ -139,7 +139,6 @@ class ArticleController extends MainController
         $existingArticle = $this->getArticleById();
 
         if ($this->checkInputs() === TRUE) {
-
             $updatedArticle = array_merge($existingArticle, $this->getPost());
 
             if (count($this->getFiles()) > 0) {
@@ -158,7 +157,7 @@ class ArticleController extends MainController
             ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
 
             return $this->renderArticleMethod();
-        } // End if
+        }// End if!
 
     }
 
@@ -213,22 +212,21 @@ class ArticleController extends MainController
 
             $fileDestination = sprintf(
                 './img/%s.%s',
-                sha1_file($this->getFiles()['img']['tmp_name']), 
+                sha1_file($this->getFiles()['img']['tmp_name']),
                 $ext
             );
 
-            // You should name it uniquely.
-            // On this example, obtain safe unique name from its binary data.
+            // You should name it uniquely!
+            // On this example, obtain safe unique name from its binary data!
             if (move_uploaded_file($this->getFiles()['img']['tmp_name'], $fileDestination) === FALSE) {
                 throw new RuntimeException('Il y a eu un problème lors du déplacement du fichier.');
             }
 
-            // Echo 'Votre photo a été importée avec succès.';
+            // Echo 'Votre photo a été importée avec succès.';!
             return $fileDestination;
-
         } catch (RuntimeException $e) {
             echo $e->getMessage();
-        }
+        }// End catch
 
     }
 
@@ -246,16 +244,16 @@ class ArticleController extends MainController
     {
 
         switch ($this->getFiles()['img']['error']) {
-            case UPLOAD_ERR_OK:
+        case UPLOAD_ERR_OK:
             break;
-            case UPLOAD_ERR_NO_FILE:
-                throw new RuntimeException('Aucun fichier transmis.');
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
-            default:
-                throw new RuntimeException('Erreur non identifiée.');
-            }
+        case UPLOAD_ERR_NO_FILE:
+            throw new RuntimeException('Aucun fichier transmis.');
+        case UPLOAD_ERR_INI_SIZE:
+        case UPLOAD_ERR_FORM_SIZE:
+            throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
+        default:
+            throw new RuntimeException('Erreur non identifiée.');
+        }
 
     }
 
@@ -308,9 +306,9 @@ class ArticleController extends MainController
 
         $ext = array_search($fileMimeType, $validMimeTypes, true);
 
-        if ($ext ===  false) {
+        if ($ext === false) {
             return $this->setSession(["alert" => "danger", "message" => "Format invalide."]);
-        // throw new RuntimeException('Invalid file format.');
+        // Throw new RuntimeException('Invalid file format.')!
         }
 
         return $ext;

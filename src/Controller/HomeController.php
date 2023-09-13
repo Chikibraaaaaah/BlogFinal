@@ -37,18 +37,17 @@ class HomeController extends MainController
         $alert = $this->getSession()["alert"];
         $comments = [];
 
-        foreach ($articles as $article) {
+        foreach ($articles as $article){
 
-            $id = $article["id"]; 
+            $id = $article["id"];
             $relatedComments = ModelFactory::getModel("Comment")->listData($id, "articleId");
             $comments[] = $relatedComments;
-
         }
 
         return  $this->twig->render("home.twig", ["articles" => $articles, "alert" => $alert, "user" => $user, "comments" => $comments[0]]);
 
     } // End defaultMethod()!
-    
+
 
     /**
      * Retrieves a list of articles.

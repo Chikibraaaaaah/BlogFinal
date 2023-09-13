@@ -11,6 +11,7 @@ use PDO;
  */
 class PdoFactory
 {
+
     /**
      * Stores the Connection
      * @var null
