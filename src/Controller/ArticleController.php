@@ -10,8 +10,11 @@ class ArticleController extends MainController
 {
     /**
      * A description of the defaultMethod PHP function
+     * 
      * @return $article
+     * 
      */
+
 
     public  function defaultMethod()
     {
@@ -29,7 +32,9 @@ class ArticleController extends MainController
      * Render the article method.
      *
      * @return mixed
+     * 
      */
+
 
     public function renderArticleMethod()
     {
@@ -54,7 +59,9 @@ class ArticleController extends MainController
      * Modify the article method.
      *
      * @return string The rendered article single view.
+     * 
      */
+
 
     public function modifyArticleMethod()
     {
@@ -84,6 +91,7 @@ class ArticleController extends MainController
      *
      * @return void
      */
+
 
     public  function createArticleMethod()
     { 
@@ -116,6 +124,7 @@ class ArticleController extends MainController
      * @return Some_Return_Value
      */
 
+
     public  function getArticleById()
     {
 
@@ -137,6 +146,7 @@ class ArticleController extends MainController
      * the database using the Article model, and returns the rendered article.
      * @return mixed The rendered article.
      */
+
 
     public  function updateArticleMethod()
     {
@@ -175,6 +185,7 @@ class ArticleController extends MainController
      * @return void
      */
 
+
     public  function deleteArticleMethod()
     {
 
@@ -194,6 +205,7 @@ class ArticleController extends MainController
      * @throws RuntimeException if there are invalid parameters, file size is too large, MIME type is invalid, or there is an error moving the file.
      * @return string the file destination on success.
      */
+
 
     public  function uploadFile()
     { 
@@ -244,6 +256,7 @@ class ArticleController extends MainController
      * @throws RuntimeException if an unidentified error occurs.
      */
 
+
     private  function checkFileError()
     {
 
@@ -268,6 +281,7 @@ class ArticleController extends MainController
      * @throws Some_Exception_Class If the file does not exist
      * @return void
      */
+
 
     private  function deleteFile()
     {
@@ -296,6 +310,7 @@ class ArticleController extends MainController
      *
      * @return string|void Returns the file extension if it is a valid MIME Type, or void if it is not.
      */
+
 
     private  function checkFileMime()
     {

@@ -27,6 +27,8 @@ class HomeController extends MainController
      *
      * @return string The rendered home view.
      */
+
+
     public  function defaultMethod()
     {
 
@@ -57,6 +59,8 @@ class HomeController extends MainController
      *
      * @return array The list of articles.
      */
+
+
     public  function getArticles()
     {
 

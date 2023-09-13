@@ -62,6 +62,8 @@ abstract class GlobalsController
      * Assign all Globals to Properties
      * With some Checking for Files & Session
      */
+
+
     public  function __construct()
     {
 
@@ -90,6 +92,7 @@ abstract class GlobalsController
 
     }
 
+
     // SETTERS
     /**
      * Set User Session or User Alert
@@ -97,6 +100,8 @@ abstract class GlobalsController
      * @param bool $session
      * @return array|void
      */
+
+
     protected  function setSession(array $user, bool $session = false)
     {
 
@@ -124,6 +129,8 @@ abstract class GlobalsController
      * @param bool $alert
      * @return bool
      */
+
+
     protected  function checkUser(bool $alert = FALSE)
     {
 
@@ -165,6 +172,8 @@ abstract class GlobalsController
      * @param bool $type
      * @return string|void
      */
+
+
     protected  function getAlert(bool $type = false)
     {
 
@@ -185,6 +194,8 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
+
+
     protected  function getEnv(string $var = null)
     {
 
@@ -202,6 +213,8 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
+
+
     protected  function getFiles(string $var = null)
     {
 
@@ -223,6 +236,8 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
+
+
     protected  function getGet(string $var = null)
     {
 
@@ -240,6 +255,8 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
+
+
     protected  function getPost(string $var = null)
     {
 
@@ -257,6 +274,8 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
+
+
     protected  function getRequest(string $var = null)
     {
 
@@ -273,6 +292,8 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
+
+
     protected  function getServer(string $var = null)
     {
 
@@ -290,6 +311,8 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
+
+
     protected  function getSession(string $var = null)
     {
 
@@ -314,10 +337,15 @@ abstract class GlobalsController
      * Destroy $name Cookie or Current Session
      * @param string $name
      */
+
+
     protected  function destroyGlobal(/*string $name = null*/)
     {
+
         $_SESSION["user"] = [];
         session_destroy();
+
     }
+
 
 }

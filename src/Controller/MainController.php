@@ -21,6 +21,8 @@ abstract class MainController extends GlobalsController
      * MainController constructor
      * Creates the Template Engine & adds its Extensions
      */
+
+
     public  function __construct()
     {
 
@@ -36,6 +38,8 @@ abstract class MainController extends GlobalsController
      * @param array $params
      * @return string $redirectUrl
      **/ 
+
+
     public  function redirect(string $page, array $params = [])
     {
 

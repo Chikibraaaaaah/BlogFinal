@@ -17,6 +17,8 @@ class AuthController extends MainController
      *
      * @return Some_Return_Value
      */
+
+
     public  function defaultMethod()
     {
 
@@ -36,6 +38,8 @@ class AuthController extends MainController
      *
      * @return string The rendered template for the authentication page.
      */
+
+
     public  function createAccountMethod()
     {
 
@@ -55,6 +59,8 @@ class AuthController extends MainController
      *
      * @return string The rendered template.
      */
+
+
     public  function registerMethod()
     {
 
@@ -74,6 +80,8 @@ class AuthController extends MainController
      *
      * @return void
      */
+
+
     public  function signupMethod()
     {
 
@@ -91,28 +99,28 @@ class AuthController extends MainController
                     ];
                     ModelFactory::getModel("User")->createData($newUser);
                     $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
-    
+
                     $this->setSession($userCreated, true);
                     $userCreated["isLogged"] = true;
-    
+
                     $home = $this->redirect("home");
                     header("Location: " . $home);
                 }
-    
+
                 $this->setSession([
                     "alert"     => "danger",
                     "message"   => "Les mots de passe ne correspondent pas.",
                 ]);
-    
+
                 return $this->createAccountMethod();
             }
         }
-    
+
         $this->setSession([
             "alert"     => "danger",
             "message"   => "Veuillez remplir tous les champs."
         ]);
-    
+
     }
 
 
@@ -126,6 +134,8 @@ class AuthController extends MainController
      *error message and redirects back to the login page.
      * @return void
      */
+
+
     public  function loginMethod()
     {
 
@@ -175,6 +185,8 @@ class AuthController extends MainController
      * @throws Some_Exception_Class description of exception
      * @return mixed
      */
+
+
     private  function checkByEmail()
     {
 
@@ -194,6 +206,8 @@ class AuthController extends MainController
      * @throws Some_Exception_Class A description of the exception that can be thrown.
      * @return Some_Return_Value The value returned by the function.
      */
+
+
     private  function checkByUserName()
     {
 
@@ -212,6 +226,8 @@ class AuthController extends MainController
      *
      * @return bool Returns true if the passwords correspond, false otherwise.
      */
+
+
     private  function checkPasswordsCorrespond()
     {
 
@@ -232,6 +248,8 @@ class AuthController extends MainController
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
+
+
     public  function logoutMethod()
     {
 
