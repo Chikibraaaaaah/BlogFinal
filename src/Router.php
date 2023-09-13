@@ -65,7 +65,7 @@ class Router
 
         $access = filter_input(INPUT_GET, "access");
 
-        if (!isset($access)) {
+        if (isset($access) === FALSE) {
             $access = "home";
         }
 
@@ -91,7 +91,7 @@ class Router
         $this->controller = ucfirst(strtolower($this->controller))."Controller";
         $this->controller = self::DEFAULT_PATH.$this->controller;
 
-        if (!class_exists($this->controller)) {
+        if (class_exists($this->controller) === FALSE) {
             $this->controller = self::DEFAULT_PATH.self::DEFAULT_CONTROLLER;
         }
 
@@ -106,7 +106,7 @@ class Router
 
         $this->method = strtolower($this->method)."Method";
 
-        if (!method_exists($this->controller, $this->method)) {
+        if (method_exists($this->controller, $this->method) === FALSE) {
             $this->method = self::DEFAULT_METHOD;
         }
 

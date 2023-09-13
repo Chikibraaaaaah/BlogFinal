@@ -45,12 +45,7 @@ class HomeController extends MainController
 
         }
 
-        return  $this->twig->render("home.twig", [
-            "articles"  => $articles,
-            "alert"     => $alert,
-            "user"      => $user,
-            "comments"  => $comments[0]
-        ]);
+        return  $this->twig->render("home.twig", ["articles" => $articles, "alert" => $alert, "user" => $user, "comments" => $comments[0]]);
 
     }
 

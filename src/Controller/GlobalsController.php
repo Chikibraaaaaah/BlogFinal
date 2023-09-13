@@ -75,7 +75,7 @@ abstract class GlobalsController
         $this->files    = filter_var_array($_FILES) ?? [];
         $this->request  = filter_var_array($_REQUEST) ?? [];
 
-        if (isset($this->files["file"])) {
+        if (isset($this->files["file"]) === TRUE) {
             $this->file = $this->files["file"];
         }
 
@@ -86,7 +86,7 @@ abstract class GlobalsController
         $this->session  = filter_var_array($_SESSION) ?? [];
         $this->alert    = $this->session["alert"];
 
-        if (isset($this->session["user"])) {
+        if (isset($this->session["user"]) === TRUE) {
             $this->user = $this->session["user"];
         }
 
@@ -134,12 +134,12 @@ abstract class GlobalsController
     protected  function checkUser(bool $alert = FALSE)
     {
 
-        if($alert) {
+        if($alert === TRUE) {
             return empty($this->alert) === FALSE;
         }
 
         if(array_key_exists("user", $this->session)) {
-            if(!empty($this->user) === FALSE) {
+            if(empty($this->user) === FALSE) {
                 return true;
             }
         }
@@ -155,7 +155,7 @@ abstract class GlobalsController
         $inputs = $this->getPost();
 
         foreach ($inputs as $input => $value) {
-            if (empty($value)) {
+            if (empty($value) === TRUE) {
                 $this->setSession(["alert"=>"danger","message"=>"Veuillez remplir le champ". $input]);
                 return false;
             }

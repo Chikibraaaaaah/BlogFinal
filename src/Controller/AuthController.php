@@ -22,13 +22,9 @@ class AuthController extends MainController
     public  function defaultMethod()
     {
 
-        $message = $this->getSession() ??"";
+        $message = $this->getSession() ?? "";
 
-        return $this->twig->render("auth/auth.twig", [
-            "alert" => "danger",
-            "message"   => $message,
-            "method"    => "login"
-        ]);
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message"   => $message, "method"    => "login"]);
 
     }
 
@@ -107,19 +103,13 @@ class AuthController extends MainController
                     header("Location: " . $home);
                 }
 
-                $this->setSession([
-                    "alert"     => "danger",
-                    "message"   => "Les mots de passe ne correspondent pas.",
-                ]);
+                $this->setSession(["alert" => "danger","message" => "Les mots de passe ne correspondent pas."]);
 
                 return $this->createAccountMethod();
             }
         }
 
-        $this->setSession([
-            "alert"     => "danger",
-            "message"   => "Veuillez remplir tous les champs."
-        ]);
+        $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
     }
 
@@ -139,11 +129,11 @@ class AuthController extends MainController
     public  function loginMethod()
     {
 
-        if ($this->checkInputs()) {
+        if ($this->checkInputs() === TRUE) {
 
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
-            if (!$user) {
+            if (!$user === TRUE) {
                 $this->setSession([
                     "alert"     => "danger",
                     "message"   => "Email non reconnu.",
@@ -151,7 +141,7 @@ class AuthController extends MainController
                 $this->redirect("auth_register");
             }
 
-            if (password_verify($this->getPost("password"), $user['password'])) {
+            if (password_verify($this->getPost("password"), $user['password']) === TRUE ) {
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
                 $this->setSession([
@@ -193,7 +183,7 @@ class AuthController extends MainController
         $email = $this->getPost("email");
         $userFound = ModelFactory::getModel("User")->listData($email,"email");
 
-        if ($userFound) {
+        if ($userFound === TRUE) {
             return $userFound[0];
         }
 
@@ -234,7 +224,7 @@ class AuthController extends MainController
         $password = $this->getPost("password");
         $secondPassword = $this->getPost("password_check");
 
-        if ($password != $secondPassword){
+        if ($password !== $secondPassword){
             return false;
         }
         return true;

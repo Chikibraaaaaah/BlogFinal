@@ -40,17 +40,11 @@ class ArticleController extends MainController
     {
 
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
-        $relatedComments = (ModelFactory::getModel("Comment")->listData($article["id"], "articleId")) ?? [];
+        $relatedComments = (ModelFactory::getModel("Comment"))->listData($article["id"], "articleId") ?? [];
         $alerts = ($this->getAlert(true)) ?? [];
         $user = ($this->getSession()["user"]) ?? [];
 
-        return $this->twig->render("articles/articleSingle.twig", [
-            "user"      => $user,
-            "article"   => $article,
-            "comments"  => $relatedComments,
-            "alerts"    => $alerts,
-            "method"    => "GET"
-        ]);
+        return $this->twig->render("articles/articleSingle.twig", ["user" => $user, "article" => $article, "comments" => $relatedComments, "alerts" => $alerts, "method" => "GET"]);
 
     }
 
@@ -106,11 +100,7 @@ class ArticleController extends MainController
         ];
 
         ModelFactory::getModel("Article")->createData($article);
-        $this->setSession([
-            "alert"     => "success",
-            "message"   => "Votre article a été créé"
-         ]);
-
+        $this->setSession(["alert" => "success", "message"   => "Votre article a été créé"]);
         $home = $this->redirect("home");
         header("Location: $home");
 
@@ -211,35 +201,35 @@ class ArticleController extends MainController
     { 
 
         try {
-        // Undefined | Multiple Files | $this->getFiles() Corruption Attack!
-        // If this request falls under any of them, treat it invalid!
-        if (!isset($this->getFiles()['img']['error']) || is_array($this->getFiles()['img']['error'])) {
-            throw new RuntimeException('Invalid parameters.');
-        }
+            // Undefined | Multiple Files | $this->getFiles() Corruption Attack!
+            // If this request falls under any of them, treat it invalid!
+            if (!isset($this->getFiles()['img']['error']) === TRUE || is_array($this->getFiles()['img']['error']) === TRUE) {
+                throw new RuntimeException('Invalid parameters.');
+            }
 
-        $this->checkFileError();
+            $this->checkFileError();
 
-        // You should also check filesize here!
-        if ($this->getFiles()['img']['size'] > 1000000) {
-            throw new RuntimeException('Taille maiximale 1MB.');
-        }
+            // You should also check filesize here!
+            if ($this->getFiles()['img']['size'] > 1000000) {
+                throw new RuntimeException('Taille maiximale 1MB.');
+            }
 
-        $ext = $this->checkFileMime();
+            $ext = $this->checkFileMime();
 
-        $fileDestination = sprintf(
-            './img/%s.%s',
-            sha1_file($this->getFiles()['img']['tmp_name']), 
-            $ext
-       );
+            $fileDestination = sprintf(
+                './img/%s.%s',
+                sha1_file($this->getFiles()['img']['tmp_name']), 
+                $ext
+            );
 
-        // You should name it uniquely.
-        // On this example, obtain safe unique name from its binary data.
-        if (!move_uploaded_file($this->getFiles()['img']['tmp_name'], $fileDestination)) {
-            throw new RuntimeException('Il y a eu un problème lors du déplacement du fichier.');
-        }
+            // You should name it uniquely.
+            // On this example, obtain safe unique name from its binary data.
+            if (!move_uploaded_file($this->getFiles()['img']['tmp_name'], $fileDestination)) {
+                throw new RuntimeException('Il y a eu un problème lors du déplacement du fichier.');
+            }
 
-        // echo 'Votre photo a été importée avec succès.';
-        return $fileDestination;
+            // echo 'Votre photo a été importée avec succès.';
+            return $fileDestination;
 
         } catch (RuntimeException $e) {
             echo $e->getMessage();

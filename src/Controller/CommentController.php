@@ -20,8 +20,6 @@ class CommentController extends MainController
      * @throws Some_Exception_Class Description of the exception that could be thrown.
      * @return mixed The comment data retrieved from the database.
      */
-
-
     public  function defaultMethod()
     {
 
@@ -56,12 +54,7 @@ class CommentController extends MainController
         ];
 
         ModelFactory::getModel("Comment")->createData($newComment);
-
-        $this->setSession([
-            "alert"     => "success",
-            "message"   => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
-        ]);
-
+        $this->setSession(["alert" => "success", "message" => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"]);
         $articleId = urlencode($this->articleId);
         $article = $this->redirect("article_renderArticle", ["id" => (int) $articleId]);
         header("Location: " . $article);
@@ -82,7 +75,7 @@ class CommentController extends MainController
 
         $existingComment = ModelFactory::getModel("Comment")->listData($this->getCommentById(),"id")[0];
 
-        if($this->checkInputs()) {
+        if($this->checkInputs() === TRUE) {
 
             $updatedComment = array_merge($existingComment, $this->getPost()["content"]);
             $updatedComment["content"] = PDO::quote($updatedComment["content"]);
@@ -90,9 +83,7 @@ class CommentController extends MainController
 
             ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);
 
-            $this->redirect("article_renderArticle", [
-                "id"=> $updatedComment["articleId"]
-            ]);
+            $this->redirect("article_renderArticle", ["id" => $updatedComment["articleId"]]);
 
         }
 
@@ -130,13 +121,7 @@ class CommentController extends MainController
         $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"], "id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
 
-        return $this->twig->render("articles/article.twig", [
-            "article"           => $article,
-            "myCommentaire"     => $commentaire,
-            "relatedComments"   => $relatedComments,
-            "user"              => $this->getSession()["user"],
-            "method"            => "PUT"
-        ]);
+        return $this->twig->render("articles/article.twig", ["article" => $article, "myCommentaire" => $commentaire, "relatedComments" => $relatedComments, "user" => $this->getSession()["user"], "method" => "PUT"]);
     }
 
 
@@ -151,10 +136,7 @@ class CommentController extends MainController
     public  function confirmDeleteCommentMethod()
     {
 
-        $this->setSession([
-            "alert"            => "danger",
-            "message"          => "Êtes-vous certain de vouloir supprimer ce commentaire ?"
-        ]);
+        $this->setSession(["alert" => "danger", "message" => "Êtes-vous certain de vouloir supprimer ce commentaire ?"]);
 
         return $this->twig->render("alert.twig", [
             "alert"                => "danger",
@@ -181,9 +163,7 @@ class CommentController extends MainController
 
         ModelFactory::getModel("Comment")->deleteData($id);
 
-        return $this->redirect("article_getArticle", [
-            "id" => (int)$articleId
-        ]);
+        return $this->redirect("article_getArticle", ["id" => (int)$articleId]);
 
     }
 
