@@ -47,10 +47,10 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            "authorId"   => (int)$this->auteurId,
-            "articleId"  => (int)$this->articleId,
-            "content"    => $this->content,
-            "createdAt"  => date("Y-m-d H:i:s")
+            "authorId" => (int)$this->auteurId,
+            "articleId" => (int)$this->articleId,
+            "content" => $this->content,
+            "createdAt" => date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Comment")->createData($newComment);

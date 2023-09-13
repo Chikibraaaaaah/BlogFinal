@@ -24,7 +24,7 @@ class AuthController extends MainController
 
         $message = $this->getSession() ?? "";
 
-        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message"   => $message, "method"    => "login"]);
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
 
     }
 
@@ -41,11 +41,7 @@ class AuthController extends MainController
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
-        return $this->twig->render("auth/auth.twig", [
-            "alert"     => "danger",
-            "message"   => $message,
-            "method"    => "signup"
-        ]);
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "signup"]);
 
     }
 
@@ -62,11 +58,7 @@ class AuthController extends MainController
 
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
-        return $this->twig->render("auth/auth.twig", [
-            "alert"     => "danger",
-            "message"   => $message,
-            "method"    => "login"
-        ]);
+        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
 
     }
 

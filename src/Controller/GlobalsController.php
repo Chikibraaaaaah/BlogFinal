@@ -156,7 +156,7 @@ abstract class GlobalsController
 
         foreach ($inputs as $input => $value) {
             if (empty($value) === TRUE) {
-                $this->setSession(["alert"=>"danger","message"=>"Veuillez remplir le champ". $input]);
+                $this->setSession(["alert" => "danger","message" => "Veuillez remplir le champ".$input]);
                 return false;
             }
         }
