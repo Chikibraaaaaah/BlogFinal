@@ -25,8 +25,7 @@ class ModelFactory
     public static function getModel(string $table)
     {
 
-        if (array_key_exists($table, self::$models)) {
-
+        if (array_key_exists($table, self::$models) === TRUE) {
             return self::$models[$table];
         }
 

@@ -33,7 +33,7 @@ abstract class MainModel
         $model          = explode("\\", get_class($this));
         $this->table    = ucfirst(str_replace("Model","", array_pop($model)));
 
-    }
+    } // End of the constructor
 
 
     /**
