@@ -64,12 +64,7 @@ class ArticleController extends MainController
         $article = ModelFactory::getModel("Article")->readData($id, "id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
     
-        return $this->twig->render("articles/articleSingle.twig", [
-            "user"      => $this->getSession()["user"],
-            "article"   => $article,
-            "method"    => "PUT",
-            "comments"  => $relatedComments
-        ]);
+        return $this->twig->render("articles/articleSingle.twig", ["user" => $this->getSession()["user"], "article" => $article, "method" => "PUT", "comments" => $relatedComments]);
 
     }
 
@@ -91,13 +86,7 @@ class ArticleController extends MainController
     { 
 
         $destination = $this->uploadFile();
-        $article = [
-            "title"     => addslashes($this->getPost("title")),
-            "content"   => addslashes($this->getPost("content")),
-            "imgUrl"    => $destination,
-            "imgAlt"    => addslashes($this->getPost("content")),
-            "createdAt" => date("Y-m-d H:i:s")
-        ];
+        $article = ["title" => addslashes($this->getPost("title")), "content" => addslashes($this->getPost("content")), "imgUrl" => $destination, "imgAlt" => addslashes($this->getPost("content")), "createdAt" => date("Y-m-d H:i:s")];
 
         ModelFactory::getModel("Article")->createData($article);
         $this->setSession(["alert" => "success", "message"   => "Votre article a été créé"]);

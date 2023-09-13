@@ -134,35 +134,23 @@ class AuthController extends MainController
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
             if (!$user === TRUE) {
-                $this->setSession([
-                    "alert"     => "danger",
-                    "message"   => "Email non reconnu.",
-                ]);
+                $this->setSession(["alert" => "danger", "message" => "Email non reconnu."]);
                 $this->redirect("auth_register");
             }
 
             if (password_verify($this->getPost("password"), $user['password']) === TRUE ) {
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
-                $this->setSession([
-                    "alert"     => "success",
-                    "message"   => "Connexion réussie."
-                ]);
+                $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);
                 $home = $this->redirect("home");
                 header("Location: $home");
             }
 
-            $this->setSession([
-                "alert"     => "danger",
-                "message"   => "Mot de passe invalide."
-            ]);
+            $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide."]);
             $this->redirect("auth_register");
         }
 
-        $this->setSession([
-            "alert"     => "danger",
-            "message"   => "Veuillez remplir tous les champs."
-        ]);
+        $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
         return $this->redirect("auth");
 
