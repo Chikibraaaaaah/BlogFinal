@@ -84,10 +84,10 @@ class AuthController extends MainController
                 if ($mpChek === TRUE) {
                     $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
                     $newUser = [
-                        "userName"  => $this->getPost("userName"),
-                        "email"     => $this->getPost("email"),
-                        "password"  => $hashedPassword,
-                        "createdAt" => date("Y-m-d H:i:s")
+                        "userName"   => $this->getPost("userName"),
+                        "email"      => $this->getPost("email"),
+                        "password"   => $hashedPassword,
+                        "createdAt"  => date("Y-m-d H:i:s")
                     ];
                     ModelFactory::getModel("User")->createData($newUser);
                     $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
@@ -240,5 +240,6 @@ class AuthController extends MainController
         header("Location: ".$home);
 
     }
+
 
 }

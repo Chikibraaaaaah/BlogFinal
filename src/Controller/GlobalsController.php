@@ -62,7 +62,7 @@ abstract class GlobalsController
      * Assign all Globals to Properties
      * With some Checking for Files & Session
      */
-    public function __construct()
+    public  function __construct()
     {
 
         $this->env      = filter_input_array(INPUT_ENV) ?? [];
@@ -77,7 +77,7 @@ abstract class GlobalsController
             $this->file = $this->files["file"];
         }
 
-        if (array_key_exists("alert", $_SESSION) === false ){
+        if (array_key_exists("alert", $_SESSION) === false ) {
             $_SESSION["alert"] = [];
         }
 
@@ -90,24 +90,24 @@ abstract class GlobalsController
 
     }
 
-    // ******************** SETTERS ******************** \\
+    // SETTERS
     /**
      * Set User Session or User Alert
      * @param array $user
      * @param bool $alert
      */
-    protected function setSession(array $user, bool $session = false)
+    protected  function setSession(array $user, bool $session = false)
     {
 
         if ($session === false) {
 
             $_SESSION["alert"] = $user;
 
-        } elseif ($session === true) {
+        } else if ($session === true){
 
             if (isset($user["pass"])) {
                 unset($user["pass"]);
-            } elseif (isset($user["password"])) {
+            } else if (isset($user["password"])) {
                 unset($user["password"]);
             }
 
@@ -123,15 +123,15 @@ abstract class GlobalsController
      * @param bool $alert
      * @return bool
      */
-    protected function checkUser(bool $alert = false)
+    protected  function checkUser(bool $alert = FALSE)
     {
 
         if($alert) {
-            return empty($this->alert) === false;
+            return empty($this->alert) === FALSE;
         }
 
         if(array_key_exists("user", $this->session)) {
-            if(!empty($this->user)) {
+            if(!empty($this->user) === FALSE) {
                 return true;
             }
         }
@@ -141,7 +141,7 @@ abstract class GlobalsController
     }
 
 
-    protected function checkInputs()
+    protected  function checkInputs()
     {
 
         $inputs = $this->getPost();
@@ -164,7 +164,7 @@ abstract class GlobalsController
      * @param bool $type
      * @return string|void
      */
-    protected function getAlert(bool $type = false)
+    protected  function getAlert(bool $type = false)
     {
 
         if (isset($this->alert)) {
@@ -184,7 +184,7 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getEnv(string $var = null)
+    protected  function getEnv(string $var = null)
     {
 
         if ($var === null) {
@@ -201,7 +201,7 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getFiles(string $var = null)
+    protected  function getFiles(string $var = null)
     {
 
         if ($var === null) {
@@ -222,7 +222,7 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getGet(string $var = null)
+    protected  function getGet(string $var = null)
     {
 
         if ($var === null) {
@@ -239,7 +239,7 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getPost(string $var = null)
+    protected  function getPost(string $var = null)
     {
 
         if($var === null) {
@@ -256,7 +256,7 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getRequest(string $var = null)
+    protected  function getRequest(string $var = null)
     {
 
         if($var === null) {
@@ -272,7 +272,7 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getServer(string $var = null)
+    protected  function getServer(string $var = null)
     {
 
         if ($var === null) {
@@ -289,7 +289,7 @@ abstract class GlobalsController
      * @param null|string $var
      * @return array|string
      */
-    protected function getSession(string $var = null)
+    protected  function getSession(string $var = null)
     {
 
         if ($var === null) {
@@ -313,7 +313,7 @@ abstract class GlobalsController
      * Destroy $name Cookie or Current Session
      * @param string $name
      */
-    protected function destroyGlobal(/*string $name = null*/)
+    protected  function destroyGlobal(/*string $name = null*/)
     {
         $_SESSION["user"] = [];
         session_destroy();

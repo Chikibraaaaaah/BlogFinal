@@ -52,7 +52,11 @@ class HomeController extends MainController
     
     }
 
-
+    /**
+     * Retrieves a list of articles.
+     *
+     * @return array The list of articles.
+     */
     public function getArticles()
     {
 
