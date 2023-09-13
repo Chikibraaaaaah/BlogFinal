@@ -34,7 +34,7 @@ class ModelFactory
 
         return self::$models[$table];
 
-    }
+    } // End getModel()!
 
 
 }

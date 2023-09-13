@@ -26,7 +26,7 @@ class AuthController extends MainController
 
         return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
 
-    }
+    } // End defaultMethod()!
 
 
     /**

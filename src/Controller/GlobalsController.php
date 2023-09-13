@@ -90,7 +90,7 @@ abstract class GlobalsController
             $this->user = $this->session["user"];
         }
 
-    }
+    } // END OF CONSTRUCTOR
 
 
     // SETTERS

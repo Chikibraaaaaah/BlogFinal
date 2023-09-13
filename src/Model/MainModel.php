@@ -56,7 +56,7 @@ abstract class MainModel
 
         return $this->database->getAllData($query);
 
-    }
+    } // End of the listData()!
 
 
     /**
@@ -73,7 +73,7 @@ abstract class MainModel
 
         $this->database->setData($query);
 
-    }
+    } // End of the createData()!
 
 
     /**
@@ -93,7 +93,7 @@ abstract class MainModel
 
         return $this->database->getData($query, [$value]);
 
-    }
+    } // End of the readData()!
 
 
     /**
@@ -121,7 +121,7 @@ abstract class MainModel
 
         $this->database->setData($query, [$value]);
 
-    }
+    } // End of the updateData()!
 
 
     /**
@@ -140,7 +140,7 @@ abstract class MainModel
 
         $this->database->setData($query, [$value]);
 
-    }
+    } // End of the deleteData()!
 
 
 }

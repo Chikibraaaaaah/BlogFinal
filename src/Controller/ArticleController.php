@@ -24,7 +24,7 @@ class ArticleController extends MainController
 
         $this->redirect("article_renderArticle", ["id" => $id]);
 
-    } // End defaultMethod!
+    } // End defaultMethod()!
 
 
     // Render functions!

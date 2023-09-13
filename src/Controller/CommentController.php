@@ -28,7 +28,7 @@ class CommentController extends MainController
 
         return $comment;
 
-    } // End defaultMethod!
+    } // End defaultMethod()!
 
 
     /**

@@ -39,7 +39,7 @@ class PdoFactory
 
         return self::$pdo;
 
-    }
+    } // End getPDO()!
 
 
 }

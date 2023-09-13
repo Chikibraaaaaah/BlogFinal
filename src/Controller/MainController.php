@@ -29,7 +29,7 @@ abstract class MainController extends GlobalsController
         parent::__construct();
         $this->twig = new Environment(new FilesystemLoader("../src/View"), ["cache" => false]);
 
-    } // End __construct
+    } // End __construct()
 
 
     /**
@@ -48,7 +48,7 @@ abstract class MainController extends GlobalsController
 
         return $redirectUrl;
 
-    }
+    } // End redirect()
 
 
     // Public function redirect(string $page, array $params = [])
