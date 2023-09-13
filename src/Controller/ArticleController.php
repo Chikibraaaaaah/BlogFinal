@@ -10,7 +10,6 @@ class ArticleController extends MainController
 {
     /**
      * A description of the entire PHP function.
-     *
      * @param datatype $paramname description
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
@@ -18,10 +17,11 @@ class ArticleController extends MainController
     public  function defaultMethod()
     { 
 
-    }
+
+    } // End defaultMethod!
 
 
-    // Render functions
+    // Render functions!
     /**
      * Render the article method.
      *
@@ -31,16 +31,16 @@ class ArticleController extends MainController
     {
 
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
-        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId") ?? [];
-        $alerts = $this->getAlert(true) ?? [];
-        $user = $this->getSession()["user"] ?? [];
+        $relatedComments = (ModelFactory::getModel("Comment")->listData($article["id"], "articleId")) ?? [];
+        $alerts = ($this->getAlert(true)) ?? [];
+        $user = ($this->getSession()["user"]) ?? [];
 
         return $this->twig->render("articles/articleSingle.twig", [
-            "user"      => $user,
-            "article"   => $article,
-            "comments"  => $relatedComments,
-            "alerts"    => $alerts,
-            "method"    => "GET"
+            "user"                    => $user,
+            "article"                 => $article,
+            "comments"                => $relatedComments,
+            "alerts"                  => $alerts,
+            "method"                  => "GET"
         ]);
 
     }
@@ -59,16 +59,16 @@ class ArticleController extends MainController
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
     
         return $this->twig->render("articles/articleSingle.twig", [
-            "user"     => $this->getSession()["user"],
-            "article"  => $article,
-            "method"   => "PUT",
-            "comments" => $relatedComments
+            "user"                    => $this->getSession()["user"],
+            "article"                 => $article,
+            "method"                  => "PUT",
+            "comments"                => $relatedComments
         ]);
 
     }
 
 
-    // CRUD functions
+    // CRUD functions!
     /**
      * Create an article method.
      *
@@ -84,17 +84,17 @@ class ArticleController extends MainController
 
         $destination = $this->uploadFile();
         $article = [
-           "title"      => addslashes($this->getPost("title")),
-           "content"    => addslashes($this->getPost("content")),
-           "imgUrl"     => $destination,
-           "imgAlt"     => addslashes($this->getPost("content")),
-           "createdAt"  => date("Y-m-d H:i:s")
+            "title"                    => addslashes($this->getPost("title")),
+            "content"                  => addslashes($this->getPost("content")),
+            "imgUrl"                   => $destination,
+            "imgAlt"                   => addslashes($this->getPost("content")),
+            "createdAt"                => date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Article")->createData($article);
         $this->setSession([
-            "alert"     => "success",
-            "message"   => "Votre article a été créé"
+            "alert"                    => "success",
+            "message"                  => "Votre article a été créé"
          ]);
 
         $home = $this->redirect("home");
@@ -130,27 +130,27 @@ class ArticleController extends MainController
      * the database using the Article model, and returns the rendered article.
      * @return mixed The rendered article.
      */
-    public  function updateArticleMethod() 
+    public  function updateArticleMethod()
     {
 
-        $existingArticle = $this->getArticleById();     
+        $existingArticle = $this->getArticleById();
 
-        if ($this->checkInputs()) {
+        if ($this->checkInputs() === TRUE) {
 
             $updatedArticle = array_merge($existingArticle, $this->getPost());
 
-            if(count($this->getFiles()) > 0) {
-                if($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
+            if (count($this->getFiles()) > 0) {
+                if ($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
                     $this->deleteFile();
                     $destination = $this->uploadFile();
                     $updatedArticle["imgUrl"] = $destination;
                 }
             }
 
-            $updatedArticle["imgAlt"] = addslashes($this->getPost("content"));
-            $updatedArticle["title"] = addslashes($updatedArticle["title"]);
-            $updatedArticle["content"] = addslashes($updatedArticle["content"]);
-            $updatedArticle["updatedAt"] = date("Y-m-d H:i:s");
+            $updatedArticle["imgAlt"]       = addslashes($this->getPost("content"));
+            $updatedArticle["title"]        = addslashes($updatedArticle["title"]);
+            $updatedArticle["content"]      = addslashes($updatedArticle["content"]);
+            $updatedArticle["updatedAt"]    = date("Y-m-d H:i:s");
 
             ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
 
@@ -178,7 +178,7 @@ class ArticleController extends MainController
     }
 
 
-    // Fichiers
+    // Fichiers!
     /**
      * Uploads a file.
      *
@@ -189,38 +189,40 @@ class ArticleController extends MainController
     { 
 
         try {
-        // Undefined | Multiple Files | $this->getFiles() Corruption Attack
-        // If this request falls under any of them, treat it invalid.
+        // Undefined | Multiple Files | $this->getFiles() Corruption Attack!
+        // If this request falls under any of them, treat it invalid!
         if (!isset($this->getFiles()['img']['error']) || is_array($this->getFiles()['img']['error'])) {
             throw new RuntimeException('Invalid parameters.');
         }
 
-        // Check $this->getFiles()['img']['error'] value.
-        switch ($this->getFiles()['img']['error']) {
-            case UPLOAD_ERR_OK:
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                throw new RuntimeException('Aucun fichier transmis.');
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
-            default:
-                throw new RuntimeException('Erreur non identifiée.');
-        }
+        // Check $this->getFiles()['img']['error'] value!
+        // switch ($this->getFiles()['img']['error']) {
+        //     case UPLOAD_ERR_OK:
+        //         break;
+        //     case UPLOAD_ERR_NO_FILE:
+        //         throw new RuntimeException('Aucun fichier transmis.');
+        //     case UPLOAD_ERR_INI_SIZE:
+        //     case UPLOAD_ERR_FORM_SIZE:
+        //         throw new RuntimeException('Taille maximale atteinte. Max : 1MB.');
+        //     default:
+        //         throw new RuntimeException('Erreur non identifiée.');
+        // }
 
-        // You should also check filesize here.
+        $this->checkFileError();
+
+        // You should also check filesize here!
         if ($this->getFiles()['img']['size'] > 1000000) {
             throw new RuntimeException('Taille maiximale 1MB.');
         }
 
-        // Check MIME Type by yourself.
+        // Check MIME Type by yourself!
         $fileMimeType = mime_content_type($this->getFiles()['img']['tmp_name']);
-        $validMimeTypes = array(
+        $validMimeTypes = [
             'jpg'   => 'image/jpg',
             'jpeg'  => 'image/jpeg',
             'png'   => 'image/png',
-            'gif'   => 'image/gif',
-       );
+            'gif'   => 'image/gif'
+        ];
 
         $ext = array_search($fileMimeType, $validMimeTypes, true);
 
