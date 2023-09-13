@@ -10,8 +10,7 @@ define("DB_USER","root");
 define("DB_PASS","root");
 
 // Define database options!
-define("DB_OPTIONS", array(
+define("DB_OPTIONS", [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    )                     
-);
+]);

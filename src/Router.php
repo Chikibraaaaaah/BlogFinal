@@ -13,19 +13,19 @@ class Router
      * Default path to all controllers
      */
 
-    const DEFAULT_PATH ="App\Controller\\";
+    const DEFAULT_PATH = "App\Controller\\";
 
     /**
      * Default controller
      */
 
-    const DEFAULT_CONTROLLER ="HomeController";
+    const DEFAULT_CONTROLLER = "HomeController";
 
     /**
      * Default method
      */
 
-    const DEFAULT_METHOD ="defaultMethod";
+    const DEFAULT_METHOD = "defaultMethod";
 
     /**
      * Requested Controller
@@ -45,41 +45,46 @@ class Router
      * Router constructor
      * Parses the URL, sets the Controller & his Method
      */
-    public function __construct()
+    public  function __construct()
     {
+
         $this->parseUrl();
         $this->setController();
         $this->setMethod();
+
     }
 
 
     /**
      * Parses the URL to get the Controller & his Method
      */
-    public function parseUrl()
+    public  function parseUrl()
     {
-        $access = filter_input(INPUT_GET,"access");
+
+        $access = filter_input(INPUT_GET, "access");
 
         if (!isset($access)) {
-            $access ="home";
+            $access = "home";
         }
 
         $access             = explode("_", $access);
         $this->controller   = $access[0];
-        $this->method       = count($access) === 1 ?"default": $access[1];
+        $this->method       = count($access) === 1 ? "default" : $access[1];
+
     }
 
 
     /**
      * Sets the requested Controller
      */
-    public function setController()
+    public  function setController()
     {
-        $this->controller = ucfirst(strtolower($this->controller)) ."Controller";
-        $this->controller = self::DEFAULT_PATH . $this->controller;
+
+        $this->controller = ucfirst(strtolower($this->controller))."Controller";
+        $this->controller = self::DEFAULT_PATH.$this->controller;
 
         if (!class_exists($this->controller)) {
-            $this->controller = self::DEFAULT_PATH . self::DEFAULT_CONTROLLER;
+            $this->controller = self::DEFAULT_PATH.self::DEFAULT_CONTROLLER;
         }
 
     }
@@ -88,25 +93,29 @@ class Router
     /**
      * Sets the requested Method
      */
-    public function setMethod()
+    public  function setMethod()
     {
-        $this->method = strtolower($this->method) ."Method";
+
+        $this->method = strtolower($this->method)."Method";
 
         if (!method_exists($this->controller, $this->method)) {
             $this->method = self::DEFAULT_METHOD;
         }
+
     }
 
 
     /**
      * Creates the Controller object & calls the Method on it
      */
-    public function run()
+    public  function run()
     {
+
         $this->controller   = new $this->controller();
         $response           = call_user_func([$this->controller, $this->method]);
 
         echo filter_var($response);
+
     }
 
 }

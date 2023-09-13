@@ -2,7 +2,7 @@
 
 use Tracy\Debugger;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 Debugger::enable();
 
