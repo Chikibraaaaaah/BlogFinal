@@ -23,9 +23,9 @@ class AuthController extends MainController
         $message = $this->getSession() ??"";
 
         return $this->twig->render("auth/auth.twig", [
-            "alert"                    => "danger",
-            "message"                  => $message,
-            "method"                   => "login"
+            "alert"         => "danger",
+            "message"       => $message,
+            "method"        => "login"
         ]);
 
     }
@@ -61,9 +61,9 @@ class AuthController extends MainController
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
         return $this->twig->render("auth/auth.twig", [
-            "alert"     => "danger",
-            "message"   => $message,
-            "method"    => "login"
+            "alert"         => "danger",
+            "message"       => $message,
+            "method"        => "login"
         ]);
 
     }
@@ -84,10 +84,10 @@ class AuthController extends MainController
                 if ($mpChek === TRUE) {
                     $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
                     $newUser = [
-                        "userName"                 => $this->getPost("userName"),
-                        "email"                    => $this->getPost("email"),
-                        "password"                 => $hashedPassword,
-                        "createdAt"                => date("Y-m-d H:i:s")
+                        "userName"          => $this->getPost("userName"),
+                        "email"             => $this->getPost("email"),
+                        "password"          => $hashedPassword,
+                        "createdAt"         => date("Y-m-d H:i:s")
                     ];
                     ModelFactory::getModel("User")->createData($newUser);
                     $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");

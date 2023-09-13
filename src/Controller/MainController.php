@@ -25,9 +25,7 @@ abstract class MainController extends GlobalsController
     {
     
         parent::__construct();
-        $this->twig = new Environment(new FilesystemLoader("../src/View"), [
-            "cache" => false
-        ]);
+        $this->twig = new Environment(new FilesystemLoader("../src/View"), ["cache" => false]);
     
     }
 
