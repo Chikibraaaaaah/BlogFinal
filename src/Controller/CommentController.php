@@ -129,14 +129,14 @@ class CommentController extends MainController
     {
     
         $this->setSession([
-            "alert"   => "danger",
-            "message" => "Êtes-vous certain de vouloir supprimer ce commentaire ?"
+            "alert"            => "danger",
+            "message"          => "Êtes-vous certain de vouloir supprimer ce commentaire ?"
         ]);
     
         return $this->twig->render("alert.twig", [
-            "alert"       => "danger",
-            "message"     => $this->getSession()["alert"]["message"],
-            "commentaire" => ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))
+            "alert"                => "danger",
+            "message"              => $this->getSession()["alert"]["message"],
+            "commentaire"          => ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))
         ]);
     
     }

@@ -26,7 +26,7 @@ class PdoFactory
      * Retourne la connexion si elle existe ou la crée avant de la retourner
      * @return PDO|null
      */
-    public static function getPDO()
+    public  static function getPDO()
     {
 
         include_once "../config/db.php";

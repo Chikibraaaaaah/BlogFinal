@@ -21,7 +21,7 @@ abstract class MainController extends GlobalsController
      * MainController constructor
      * Creates the Template Engine & adds its Extensions
      */
-    public function __construct()
+    public  function __construct()
     {
     
         parent::__construct();
@@ -37,7 +37,7 @@ abstract class MainController extends GlobalsController
      * @param string $page
      * @param array $params
      * */ 
-    public function redirect(string $page, array $params = [])
+    public  function redirect(string $page, array $params = [])
     {
 
         $params["access"] = $page;
