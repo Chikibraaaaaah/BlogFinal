@@ -25,9 +25,9 @@ abstract class MainController extends GlobalsController
     {
 
         parent::__construct();
-        $this->twig = new Environment(new FilesystemLoader("../src/View"), array(
-            "cache"=> false
-        ));
+        $this->twig = new Environment(new FilesystemLoader("../src/View"), [
+            "cache" => false
+        ]);
 
     }
 
@@ -41,7 +41,7 @@ abstract class MainController extends GlobalsController
     {
 
         $params["access"] = $page;
-        $redirectUrl ="index.php?". htmlspecialchars(http_build_query($params));
+        $redirectUrl = "index.php?" . http_build_query($params);
 
         return $redirectUrl;
 

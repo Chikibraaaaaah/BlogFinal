@@ -17,10 +17,11 @@ class ArticleController extends MainController
      */
     public  function defaultMethod()
     { 
+
     }
 
 
-// Render functions
+    // Render functions
     /**
      * Render the article method.
      *
@@ -50,17 +51,17 @@ class ArticleController extends MainController
      *
      * @return string The rendered article single view.
      */
-    public  function modifyArticleMethod()
+    public function modifyArticleMethod()
     {
 
         $id = $this->getGet("id");
-        $article = ModelFactory::getModel("Article")->readData($id,"id");
-        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
-
+        $article = ModelFactory::getModel("Article")->readData($id, "id");
+        $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
+    
         return $this->twig->render("articles/articleSingle.twig", [
-            "user" => $this->getSession()["user"],
-            "article" => $article,
-            "method" =>"PUT",
+            "user"     => $this->getSession()["user"],
+            "article"  => $article,
+            "method"   => "PUT",
             "comments" => $relatedComments
         ]);
 
@@ -171,7 +172,8 @@ class ArticleController extends MainController
         $id = $this->getGet()["id"];
         ModelFactory::getModel("Article")->deleteData($id);
 
-        return $this->redirect("home");
+        $home = $this->redirect("home");
+        header("Location: ".$home);
 
     }
 

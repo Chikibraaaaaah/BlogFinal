@@ -19,6 +19,7 @@ class CommentController extends MainController
 
     }
 
+
     /**
      * Creates a new comment for an article.
      *
@@ -33,20 +34,22 @@ class CommentController extends MainController
         $this->articleId = $this->getGet("id");
 
         $newComment = [
-            "authorId" => intval($this->auteurId),
+            "authorId"  => intval($this->auteurId),
             "articleId" => intval($this->articleId),
-            "content" => $this->content,
+            "content"   => $this->content,
             "createdAt" => date("Y-m-d H:i:s")
         ];
 
         ModelFactory::getModel("Comment")->createData($newComment);
 
         $this->setSession([
-            "alert"=>"success",
-            "message"=>"Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
+            "alert"     => "success",
+            "message"   => "Nous nous réservons le droit à une première lecture avant de publier votre commentaire. Merci pour votre compréhension"
         ]);
 
-        return $this->redirect("article_renderArticle", ["id"=> intval($this->articleId)]);
+        $articleId = urlencode($this->articleId);
+        $article = $this->redirect("article_renderArticle", ["id" => intval($articleId)]);
+        header("Location: ".$article);
 
     }
 
@@ -107,7 +110,13 @@ class CommentController extends MainController
         $article = ModelFactory::getModel("Article")->readData($commentaire["articleId"],"id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"],"articleId");
 
-        return $this->twig->render("articles/article.twig", ["article"=> $article,"myCommentaire"=> $commentaire,"relatedComments"=> $relatedComments,"user"=> $this->getSession()["user"],"method"=>"PUT"]);
+        return $this->twig->render("articles/article.twig", [
+            "article"           => $article,
+            "myCommentaire"     => $commentaire,
+            "relatedComments"   => $relatedComments,
+            "user"              => $this->getSession()["user"],
+            "method"            => "PUT"
+        ]);
 
     }
 
@@ -122,11 +131,15 @@ class CommentController extends MainController
     {
 
         $this->setSession([
-            "alert"=>"danger",
-            "message"=>"Êtes-vous certain de vouloir supprimer ce commentaire ?"
+            "alert"     => "danger",
+            "message"   => "Êtes-vous certain de vouloir supprimer ce commentaire ?"
         ]);
 
-        return $this->twig->render("alert.twig", ["alert"=>"danger","message"=> $this->getSession()["alert"]["message"],"commentaire"=> ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))]);
+        return $this->twig->render("alert.twig", [
+            "alert"         =>"danger",
+            "message"       => $this->getSession()["alert"]["message"],
+            "commentaire"   => ModelFactory::getModel("Commentaire")->readData($this->getGet("id"))
+        ]);
 
     }
 
@@ -150,4 +163,6 @@ class CommentController extends MainController
             ]);
 
     }
+
+
 }
