@@ -23,11 +23,8 @@ class ModelFactory
      * @param string $table
      * @return mixed
      */
-
-
-    public  static function getModel(string $table)
+    public static function getModel(string $table)
     {
-
         if (array_key_exists($table, self::$models) === TRUE) {
             return self::$models[$table];
         }
@@ -36,8 +33,6 @@ class ModelFactory
         self::$models[$table]   = new $class(new PdoDb(PdoFactory::getPDO()));
 
         return self::$models[$table];
-
-    } // End getModel()!
-
+    }
 
 }

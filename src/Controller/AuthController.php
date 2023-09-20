@@ -14,65 +14,58 @@ class AuthController extends MainController
 
     /**
      * A description of the entire PHP function.
-     *
      * @return Some_Return_Value
      */
-
-
-    public  function defaultMethod()
+    public function defaultMethod()
     {
-
         $message = $this->getSession() ?? "";
 
-        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
-
-    } // End defaultMethod()!
+        return $this->twig->render("auth/auth.twig", [
+            "alert"     => "danger",
+            "message"   => $message,
+            "method"    => "login"
+        ]);
+    }
 
 
     /**
      * Create an account using the createAccountMethod.
-     *
      * @return string The rendered template for the authentication page.
      */
-
-
-    public  function createAccountMethod()
+    public function createAccountMethod()
     {
-
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
-        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "signup"]);
-
+        return $this->twig->render("auth/auth.twig", [
+            "alert"     => "danger",
+            "message"   => $message,
+            "method"    => "signup"
+        ]);
     }
 
 
     /**
      * Register a method.
-     *
      * @return string The rendered template.
      */
-
-
-    public  function registerMethod()
+    public function registerMethod()
     {
-
         $message = $this->getSession()["alert"]["message"] ?? "" ;
 
-        return $this->twig->render("auth/auth.twig", ["alert" => "danger", "message" => $message, "method" => "login"]);
-
+        return $this->twig->render("auth/auth.twig", [
+            "alert"     => "danger",
+            "message"   => $message,
+            "method"    => "login"
+        ]);
     }
 
 
     /**
      * Validates the user input, creates a new user account, and redirects to the home page.
-     *
      * @return void
      */
-
-
-    public  function signupMethod()
+    public function signupMethod()
     {
-
         if ($this->checkInputs() === TRUE) {
             $existingUser = $this->checkByEmail();
             if ($existingUser === NULL) {
@@ -95,14 +88,19 @@ class AuthController extends MainController
                     header("Location: " . $home);
                 }
 
-                $this->setSession(["alert" => "danger","message" => "Les mots de passe ne correspondent pas."]);
+                $this->setSession([
+                    "alert" => "danger",
+                    "message" => "Les mots de passe ne correspondent pas."
+                ]);
 
                 return $this->createAccountMethod();
-            }// End if!
-        }// End if!
+            }
+        }
 
-        $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
-
+        $this->setSession([
+            "alert" => "danger",
+            "message" => "Veuillez remplir tous les champs."
+        ]);
     }
 
 
@@ -116,11 +114,8 @@ class AuthController extends MainController
      * error message and redirects back to the login page.
      * @return void
      */
-
-
-    public  function loginMethod()
+    public function loginMethod()
     {
-
         if ($this->checkInputs() === TRUE) {
             $user = ModelFactory::getModel("User")->listData($this->getPost("email"),"email")[0];
 
@@ -144,62 +139,47 @@ class AuthController extends MainController
         $this->setSession(["alert" => "danger", "message" => "Veuillez remplir tous les champs."]);
 
         return $this->redirect("auth");
-
     }
 
 
     /**
      * Check user by email.
-     *
      * @throws Some_Exception_Class description of exception
      * @return mixed
      */
-
-
-    private  function checkByEmail()
+    private function checkByEmail()
     {
-
         $email = $this->getPost("email");
         $userFound = ModelFactory::getModel("User")->listData($email,"email");
 
         if ($userFound === TRUE) {
             return $userFound[0];
         }
-
     }
 
 
     /**
      * Checks the user by their username.
-     *
      * @throws Some_Exception_Class A description of the exception that can be thrown.
      * @return Some_Return_Value The value returned by the function.
      */
-
-
-    private  function checkByUserName()
+    private function checkByUserName()
     {
-
         $userName = $this->getPost("userName");
         $userFound = ModelFactory::getModel("User")->listData($userName,"userName");
 
         if ($userFound === TRUE) {
             return $userFound[0];
         }
-
     }
 
 
     /**
      * Checks if the passwords entered by the user correspond to each other.
-     *
      * @return bool Returns true if the passwords correspond, false otherwise.
      */
-
-
-    private  function checkPasswordsCorrespond()
+    private function checkPasswordsCorrespond()
     {
-
         $password = $this->getPost("password");
         $secondPassword = $this->getPost("password_check");
 
@@ -208,25 +188,18 @@ class AuthController extends MainController
         }
 
         return true;
-
     }
 
 
     /**
      * Logout the user and redirect to the home page.
-     *
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
-
-
-    public  function logoutMethod()
+    public function logoutMethod()
     {
-
-        $home = $this->redirect("home");
         $this->destroyGlobal();
-        header("Location: ".$home);
-
+        $this->redirect("home");
     }
 
 

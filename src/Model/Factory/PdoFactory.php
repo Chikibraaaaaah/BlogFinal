@@ -23,11 +23,8 @@ class PdoFactory
      * Returns the Connection if it exists or creates it before returning it
      * @return PDO|null
      */
-
-
     public  static function getPDO()
     {
-
         include_once "../config/db.php";
 
         if (self::$pdo === null) {
@@ -37,8 +34,6 @@ class PdoFactory
         }
 
         return self::$pdo;
-
-    } // End getPDO()!
-
+    }
 
 }

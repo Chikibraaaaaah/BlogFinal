@@ -24,13 +24,10 @@ class PdoDb
      */
 
 
-    public  function __construct(PDO $pdo)
+    public function __construct(PDO $pdo)
     {
-
         $this->pdo = $pdo;
-
-    } // Fin de la méthode __construct()
-
+    }
 
     /**
      * Returns a unique result from the Database
@@ -38,16 +35,12 @@ class PdoDb
      * @param array $params
      * @return mixed
      */
-
-
-    public  function getData(string $query, array $params=[])
+    public function getData(string $query, array $params=[])
     {
-
         $PDOStatement = $this->pdo->prepare($query);
         $PDOStatement->execute($params);
 
         return $PDOStatement->fetch();
-
     }
 
 
@@ -57,16 +50,12 @@ class PdoDb
      * @param array $params
      * @return array|mixed
      */
-
-
-    public  function getAllData(string $query, array $params=[])
+    public function getAllData(string $query, array $params=[])
     {
-
         $PDOStatement = $this->pdo->prepare($query);
         $PDOStatement->execute($params);
 
         return $PDOStatement->fetchAll();
-
     }
 
 
@@ -76,15 +65,11 @@ class PdoDb
      * @param array $params
      * @return bool|mixed
      */
-
-
-    public  function setData(string $query, array $params=[])
+    public function setData(string $query, array $params=[])
     {
-
         $PDOStatement = $this->pdo->prepare($query);
 
         return $PDOStatement->execute($params);
-
     }
 
 

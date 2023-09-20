@@ -22,13 +22,11 @@ abstract class MainController extends GlobalsController
      * MainController constructor
      * Creates the Template Engine & adds its Extensions
      */
-    public  function __construct()
+    public function __construct()
     {
-
         parent::__construct();
         $this->twig = new Environment(new FilesystemLoader("../src/View"), ["cache" => false]);
-
-    } // End __construct()
+    }
 
 
     /**
@@ -37,22 +35,19 @@ abstract class MainController extends GlobalsController
      * @param array $params
      * @return string $redirectUrl
      **/
-
-
-    public  function redirect(string $page, array $params=[])
+    public function redirect(string $page, array $params = [])
     {
-
         $params["access"] = $page;
-        $redirectUrl = "index.php?".http_build_query($params);
+        header("Location: index.php?".  htmlspecialchars(http_build_query($params)));
 
-        return $redirectUrl;
+        exit;
+    }
 
-    }// End redirect()
-
-    // Public function redirect(string $page, array $params = [])
+    // public  function redirect(string $page, array $params=[])
     // {
-    // $params["access"] = $page;
-    // header("Location: index.php?".  htmlspecialchars(http_build_query($params)));
-    // exit;
+    //     $params["access"] = $page;
+    //     $redirectUrl = "index.php?".http_build_query($params);
+
+    //     return $redirectUrl;
     // }
 }

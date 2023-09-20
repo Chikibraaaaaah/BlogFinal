@@ -24,14 +24,10 @@ class HomeController extends MainController
 
     /**
      * Retrieves the default articles, user, alert, and comments to render the home view.
-     *
      * @return string The rendered home view.
      */
-
-
-    public  function defaultMethod()
+    public function defaultMethod()
     {
-
         $articles = $this->getArticles();
         $user = $this->getSession("user");
         $alert = $this->getSession()["alert"];
@@ -44,26 +40,25 @@ class HomeController extends MainController
             $comments[] = $relatedComments;
         }
 
-        return  $this->twig->render("home.twig", ["articles" => $articles, "alert" => $alert, "user" => $user, "comments" => $comments[0]]);
-
-    } // End defaultMethod()!
+        return  $this->twig->render("home.twig", [
+            "articles"  => $articles,
+            "alert"     => $alert,
+            "user"      => $user,
+            "comments"  => $comments[0]
+        ]);
+    }
 
 
     /**
      * Retrieves a list of articles.
-     *
      * @return array The list of articles.
      */
-
-
     public  function getArticles()
     {
-
         $articles = ModelFactory::getModel("Article")->listData();
 
         return $articles;
-
-    } // End getArticles()!
+    }
 
 
 }
