@@ -1,6 +1,6 @@
 var divAlert = document.getElementById("alert");
 
-setTimeout( function () {
+setTimeout(function() {
     if (divAlert) {
         divAlert.style.display = "none";
     }
