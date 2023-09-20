@@ -22,8 +22,6 @@ abstract class MainController extends GlobalsController
      * MainController constructor
      * Creates the Template Engine & adds its Extensions
      */
-
-
     public  function __construct()
     {
 

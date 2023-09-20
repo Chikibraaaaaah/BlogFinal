@@ -1,0 +1,23 @@
+ignore:
+  - "**/vendor/**"
+
+patterns:
+  visibility-indentation:
+    pattern: "(public|protected|private)\s{2,}"
+    message: "Visibility keyword should be followed by a single space"
+    level: warning
+
+  function-opening-brace:
+    pattern: "function\s+\w+\s*\([^)]*\)\s*{"
+    message: "Opening brace should be on the same line as the function declaration"
+    level: warning
+
+  function-closing-brace:
+    pattern: "}\s*else"
+    message: "Closing brace should be on its own line"
+    level: warning
+
+  indentation:
+    pattern: "^\s+"
+    message: "Unexpected indentation"
+    level: warning
