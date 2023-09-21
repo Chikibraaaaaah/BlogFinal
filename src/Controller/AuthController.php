@@ -60,6 +60,23 @@ class AuthController extends MainController
     }
 
 
+    private function createUser()
+    {
+        $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
+        $newUser = [
+            "userName"  => $this->getPost("userName"),
+            "email"     => $this->getPost("email"),
+            "password"  => $hashedPassword,
+            "createdAt" => date("Y-m-d H:i:s")
+        ];
+        ModelFactory::getModel("User")->createData($newUser);
+        $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
+
+        return $userCreated;
+    }
+
+
+
     /**
      * Validates the user input, creates a new user account, and redirects to the home page.
      * @return void
@@ -71,21 +88,10 @@ class AuthController extends MainController
             if ($existingUser === NULL) {
                 $mpChek = $this->checkPasswordsCorrespond();
                 if ($mpChek === TRUE) {
-                    $hashedPassword = password_hash($this->getPost("password"), PASSWORD_DEFAULT);
-                    $newUser = [
-                        "userName"  => $this->getPost("userName"),
-                        "email"     => $this->getPost("email"),
-                        "password"  => $hashedPassword,
-                        "createdAt" => date("Y-m-d H:i:s")
-                    ];
-                    ModelFactory::getModel("User")->createData($newUser);
-                    $userCreated = ModelFactory::getModel("User")->readData($newUser["email"], "email");
+                    $user = $this->createUser();
 
-                    $this->setSession($userCreated, true);
-                    $userCreated["isLogged"] = true;
-
-                    $home = $this->redirect("home");
-                    header("Location: " . $home);
+                    $this->setSession($user, true);
+                    $this->redirect("home");
                 }
 
                 $this->setSession([

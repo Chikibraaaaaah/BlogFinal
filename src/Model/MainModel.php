@@ -98,13 +98,13 @@ abstract class MainModel
      */
     public function updateData(string $value, array $data, string $key=null)
     {
-        $set = null;
+        $setParts = [];
 
         foreach ($data as $dataKey => $dataValue) {
-            $set .= $dataKey . " = '" . $dataValue . "',";
+            $setParts[] = $dataKey . " = '" . $dataValue . "'";
         }
-
-        $set = substr_replace($set, "",  -2);
+        
+        $set = implode(", ", $setParts);
 
         if (isset($key) === TRUE) {
             $query = "UPDATE " . $this->table . " SET " . $set . " WHERE " . $key . " = ?";

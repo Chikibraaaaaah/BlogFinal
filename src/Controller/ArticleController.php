@@ -15,6 +15,7 @@ class ArticleController extends MainController
     public function defaultMethod()
     {
         $id = $this->getGet("id");
+
         $article = ModelFactory::getModel("Article")->readData($id, "id");
         $this->redirect("article_renderArticle", [
             "id" => $id
@@ -32,14 +33,14 @@ class ArticleController extends MainController
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
         $relatedComments = (ModelFactory::getModel("Comment"))->listData($article["id"], "articleId") ?? [];
         $alerts = ($this->getAlert(true)) ?? [];
-        $user = ($this->getSession("user")) ?? [];
+        $user = ($this->getSession()["user"]) ?? [];
 
         return $this->twig->render("articles/articleSingle.twig", [
-            "user"      => $user,
-            "article"   => $article,
-            "comments"  => $relatedComments,
-            "alerts"    => $alerts,
-            "method"    => "GET"
+            "user" => $user,
+            "article" => $article,
+            "comments" => $relatedComments,
+            "alerts" => $alerts,
+            "method" => "GET"
         ]);
     }
 
@@ -53,12 +54,12 @@ class ArticleController extends MainController
         $id = $this->getGet("id");
         $article = ModelFactory::getModel("Article")->readData($id, "id");
         $relatedComments = ModelFactory::getModel("Comment")->listData($article["id"], "articleId");
-    
+
         return $this->twig->render("articles/articleSingle.twig", [
-            "user"      => $this->getSession("user"),
-            "article"   => $article,
-            "method"    => "PUT",
-            "comments"  => $relatedComments
+            "user" => $this->getSession("user"),
+            "article" => $article,
+            "method" => "PUT",
+            "comments" => $relatedComments
         ]);
     }
 
@@ -94,7 +95,6 @@ class ArticleController extends MainController
 
     /**
      * Retrieves an article by its ID.
-     *
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
@@ -139,6 +139,7 @@ class ArticleController extends MainController
 
             ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
 
+
             return $this->renderArticleMethod();
         }
     }
@@ -146,13 +147,13 @@ class ArticleController extends MainController
 
     /**
      * Deletes an article.
-     *
      * @throws Some_Exception_Class If the article cannot be deleted.
      * @return void
      */
-    public function deleteArticleMethod()
+    public  function deleteArticleMethod()
     {
         $id = $this->getGet()["id"];
+
         ModelFactory::getModel("Article")->deleteData($id);
         $this->redirect("home");
     }
@@ -164,16 +165,16 @@ class ArticleController extends MainController
      * @throws RuntimeException if there are invalid parameters, file size is too large, MIME type is invalid, or there is an error moving the file.
      * @return string the file destination on success.
      */
-
-
-    public function uploadFile()
+    public  function uploadFile()
     { 
+
         try {
             // Undefined | Multiple Files | $this->getFiles() Corruption Attack!
             // If this request falls under any of them, treat it invalid!
-            if (isset($this->getFiles()['img']['error']) === TRUE || is_array($this->getFiles()['img']['error']) === TRUE) {
-                throw new RuntimeException('Invalid parameters.');
-            }
+                if (!isset($this->getFiles()['img']['error']) || is_array($this->getFiles()['img']['error'])) {
+                    throw new RuntimeException('Invalid parameters.');
+                }
+            
 
             $this->checkFileError();
 
@@ -197,10 +198,10 @@ class ArticleController extends MainController
             }
 
             // Echo 'Votre photo a été importée avec succès.';!
-            return $fileDestination;
-        } catch (RuntimeException $e) {
-            echo $e->getMessage();
-        }
+                return $fileDestination;
+            } catch (RuntimeException $e) {
+                echo $e->getMessage();
+            }
     }
 
 
@@ -210,7 +211,7 @@ class ArticleController extends MainController
      * @throws RuntimeException if the file size exceeds the maximum allowed (1MB).
      * @throws RuntimeException if an unidentified error occurs.
      */
-    private  function checkFileError()
+    private function checkFileError()
     {
         switch ($this->getFiles()['img']['error']) {
         case UPLOAD_ERR_OK:
@@ -268,11 +269,8 @@ class ArticleController extends MainController
         $ext = array_search($fileMimeType, $validMimeTypes, true);
 
         if ($ext === false) {
-            return $this->setSession([
-                "alert"     => "danger",
-                "message"   => "Format invalide."
-            ]);
-            // Throw new RuntimeException('Invalid file format.')!
+            return $this->setSession(["alert" => "danger", "message" => "Format invalide."]);
+        // Throw new RuntimeException('Invalid file format.')!
         }
 
         return $ext;
