@@ -77,37 +77,38 @@ class AuthController extends MainController
     }
 
 
-    /**
-     * Validates the user input, creates a new user account, and redirects to the home page.
-     * @return void
-     */
-    public function signupMethod()
-    {
-        if ($this->checkInputs() === TRUE) {
-            $existingUser = $this->checkByEmail();
-            if ($existingUser === NULL) {
-                $mpChek = $this->checkPasswordsCorrespond();
-                if ($mpChek === TRUE) {
-                    $user = $this->createUser();
-
-                    $this->setSession($user, true);
-                    $this->redirect("home");
-                }
-
-                $this->setSession([
-                    "alert" => "danger",
-                    "message" => "Les mots de passe ne correspondent pas."
-                ]);
-
-                return $this->createAccountMethod();
-            }
-        }
-
+/**
+ * Validates the user input, creates a new user account, and redirects to the home page.
+ * @return void
+ */
+public function signupMethod()
+{
+    if ($this->checkInputs() === FALSE) {
         $this->setSession([
             "alert" => "danger",
             "message" => "Veuillez remplir tous les champs."
         ]);
+        return;
     }
+
+    $existingUser = $this->checkByEmail();
+    if ($existingUser !== NULL) {
+        return;
+    }
+
+    $mpChek = $this->checkPasswordsCorrespond();
+    if ($mpChek === FALSE) {
+        $this->setSession([
+            "alert" => "danger",
+            "message" => "Les mots de passe ne correspondent pas."
+        ]);
+        return $this->createAccountMethod();
+    }
+
+    $user = $this->createUser();
+    $this->setSession($user, true);
+    $this->redirect("home");
+}
 
 
     /**
