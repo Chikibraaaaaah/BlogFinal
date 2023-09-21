@@ -76,13 +76,13 @@ class ArticleController extends MainController
      * @return void
      */
     public function createArticleMethod()
-    { 
+    {
         $destination = $this->uploadFile();
         $article = [
-            "title"     => addslashes($this->getPost("title")),
-            "content"   => addslashes($this->getPost("content")),
+            "title"     => $this->encodeString($this->getPost("title")),
+            "content"   => $this->encodeString($this->getPost("content")),
             "imgUrl"    => $destination,
-            "imgAlt"    => addslashes($this->getPost("content")),
+            "imgAlt"    => $this->encodeString($this->getPost("content")),
             "createdAt" => date("Y-m-d H:i:s")
         ];
 
@@ -93,6 +93,7 @@ class ArticleController extends MainController
         ]);
         $this->redirect("home");
     }
+
 
 
     /**
@@ -122,6 +123,7 @@ class ArticleController extends MainController
     public function updateArticleMethod()
     {
         $existingArticle = $this->getArticleById();
+        $destination = $existingArticle["imgUrl"];
 
         if ($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
             $destination = $this->updateFile();
@@ -130,9 +132,9 @@ class ArticleController extends MainController
         if ($this->checkInputs() === TRUE) {
             $updatedArticle = array_merge($existingArticle, $this->getPost());
             $updatedArticle["imgUrl"] = $destination;
-            $updatedArticle["imgAlt"]       = addslashes($this->getPost("content"));
-            $updatedArticle["title"]        = addslashes($updatedArticle["title"]);
-            $updatedArticle["content"]      = addslashes($updatedArticle["content"]);
+            $updatedArticle["imgAlt"]       = $this->encodeString($this->getPost("content"));
+            $updatedArticle["title"]        = $this->encodeString($updatedArticle["title"]);
+            $updatedArticle["content"]      = $this->encodeString($updatedArticle["content"]);
             $updatedArticle["updatedAt"]    = date("Y-m-d H:i:s");
 
             ModelFactory::getModel("Article")->updateData((int) $updatedArticle["id"], $updatedArticle);
@@ -194,11 +196,11 @@ class ArticleController extends MainController
                 throw new RuntimeException('Il y a eu un problème lors du déplacement du fichier.');
             }
 
-            // Echo 'Votre photo a été importée avec succès.';!
-                return $fileDestination;
-            } catch (RuntimeException $e) {
+            return $fileDestination;
+
+        } catch (RuntimeException $e) {
                 echo $e->getMessage();
-            }
+        }
     }
 
 

@@ -131,7 +131,7 @@ public function signupMethod()
                 $this->redirect("auth_register");
             }
 
-            if (password_verify($this->getPost("password"), $user['password']) === TRUE ) {
+            if (password_verify($this->getPost("password"), $user['password']) === TRUE) {
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
                 $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);

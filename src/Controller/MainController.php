@@ -43,6 +43,11 @@ abstract class MainController extends GlobalsController
         exit;
     }
 
+    public function encodeString(string $string)
+    {
+        return addslashes($string);
+    }
+
     // public  function redirect(string $page, array $params=[])
     // {
     //     $params["access"] = $page;

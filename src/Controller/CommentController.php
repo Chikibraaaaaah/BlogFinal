@@ -72,7 +72,7 @@ class CommentController extends MainController
 
         if ($this->checkInputs() === TRUE) {
             $updatedComment = array_merge($existingComment, $this->getPost()["content"]);
-            $updatedComment["content"] = addslashes($updatedComment["content"]);
+            $updatedComment["content"] = $this->encodeString($updatedComment["content"]);
             $updatedComment["updatedAt"] = date("Y-m-d H:i:s");
 
             ModelFactory::getModel("Comment")->updateData($existingComment["id"], $updatedComment);

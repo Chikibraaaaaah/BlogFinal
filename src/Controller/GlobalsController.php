@@ -104,8 +104,8 @@ abstract class GlobalsController
 
     /**
      * Set User Session or User Alert
-     * @param array $user
-     * @param bool $session
+     * @param array $user User information
+     * @param bool $session Alert information
      * @return array|void
      */
     protected  function setSession(array $user, bool $session=false)

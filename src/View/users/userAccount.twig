@@ -1,0 +1,10 @@
+{% extends "layout/layout.twig" %}
+
+{% block user %}
+<h1>Votre espace : {{ user.userName }} </h1>
+
+<figure>
+    <img src="{{ user.imgUrl }}" class="img-fluid" alt="">
+</figure>
+
+{% endblock %}

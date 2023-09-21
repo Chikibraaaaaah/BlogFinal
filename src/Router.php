@@ -43,15 +43,11 @@ class Router
      * Router constructor
      * Parses the URL, sets the Controller & his Method
      */
-
-
     public  function __construct()
     {
-
         $this->parseUrl();
         $this->setController();
         $this->setMethod();
-
     }
 
 
@@ -62,7 +58,6 @@ class Router
      */
     public function parseUrl()
     {
-
         $access = filter_input(INPUT_GET, "access");
 
         if (isset($access) === FALSE) {
@@ -77,7 +72,6 @@ class Router
         } else {
             $this->method = $access[1];
         }
-
     }
 
 
@@ -85,45 +79,39 @@ class Router
      * Sets the requested Controller
      * @return void
      */
-    public  function setController()
+    public function setController()
     {
-
         $this->controller = ucfirst(strtolower($this->controller))."Controller";
         $this->controller = self::DEFAULT_PATH.$this->controller;
 
         if (class_exists($this->controller) === FALSE) {
             $this->controller = self::DEFAULT_PATH.self::DEFAULT_CONTROLLER;
         }
-
     }
 
 
     /**
      * Sets the requested Method
      */
-    public  function setMethod()
+    public function setMethod()
     {
-
         $this->method = strtolower($this->method)."Method";
 
         if (method_exists($this->controller, $this->method) === FALSE) {
             $this->method = self::DEFAULT_METHOD;
         }
-
     }
 
 
     /**
      * Creates the Controller object & calls the Method on it
      */
-    public  function run()
+    public function run()
     {
-
         $this->controller   = new $this->controller();
         $response           = call_user_func([$this->controller, $this->method]);
 
         echo filter_var($response);
-
     }
 
 
