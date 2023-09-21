@@ -12,6 +12,7 @@ use Twig\Error\SyntaxError;
 class AuthController extends MainController
 {
 
+
     /**
      * A description of the entire PHP function.
      * @return Some_Return_Value
@@ -76,7 +77,6 @@ class AuthController extends MainController
     }
 
 
-
     /**
      * Validates the user input, creates a new user account, and redirects to the home page.
      * @return void
@@ -134,8 +134,7 @@ class AuthController extends MainController
                 $user["isLogged"] = true;
                 $this->setSession($user, true);
                 $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);
-                $home = $this->redirect("home");
-                header("Location: $home");
+                $this->redirect("home");
             }
 
             $this->setSession(["alert" => "danger", "message" => "Mot de passe invalide."]);

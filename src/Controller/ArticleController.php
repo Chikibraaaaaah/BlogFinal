@@ -8,6 +8,8 @@ use RuntimeException;
 
 class ArticleController extends MainController
 {
+
+
     /**
      * A description of the defaultMethod PHP function
      * @return $article
@@ -31,7 +33,7 @@ class ArticleController extends MainController
     public function renderArticleMethod()
     {
         $article = ModelFactory::getModel("Article")->readData($this->getGet("id"), "id");
-        $relatedComments = (ModelFactory::getModel("Comment"))->listData($article["id"], "articleId") ?? [];
+        $relatedComments = (ModelFactory::getModel("Comment")->listData($article["id"], "articleId")) ?? [];
         $alerts = ($this->getAlert(true)) ?? [];
         $user = ($this->getSession()["user"]) ?? [];
 
@@ -121,24 +123,19 @@ class ArticleController extends MainController
     {
         $existingArticle = $this->getArticleById();
 
+        if ($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
+            $destination = $this->updateFile();
+        }
+
         if ($this->checkInputs() === TRUE) {
             $updatedArticle = array_merge($existingArticle, $this->getPost());
-
-            if (count($this->getFiles()) > 0) {
-                if ($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
-                    $this->deleteFile();
-                    $destination = $this->uploadFile();
-                    $updatedArticle["imgUrl"] = $destination;
-                }
-            }
-
+            $updatedArticle["imgUrl"] = $destination;
             $updatedArticle["imgAlt"]       = addslashes($this->getPost("content"));
             $updatedArticle["title"]        = addslashes($updatedArticle["title"]);
             $updatedArticle["content"]      = addslashes($updatedArticle["content"]);
             $updatedArticle["updatedAt"]    = date("Y-m-d H:i:s");
 
-            ModelFactory::getModel("Article")->updateData(intval($updatedArticle["id"]), $updatedArticle);
-
+            ModelFactory::getModel("Article")->updateData((int) $updatedArticle["id"], $updatedArticle);
 
             return $this->renderArticleMethod();
         }
@@ -150,7 +147,7 @@ class ArticleController extends MainController
      * @throws Some_Exception_Class If the article cannot be deleted.
      * @return void
      */
-    public  function deleteArticleMethod()
+    public function deleteArticleMethod()
     {
         $id = $this->getGet()["id"];
 
@@ -165,7 +162,7 @@ class ArticleController extends MainController
      * @throws RuntimeException if there are invalid parameters, file size is too large, MIME type is invalid, or there is an error moving the file.
      * @return string the file destination on success.
      */
-    public  function uploadFile()
+    public function uploadFile()
     { 
 
         try {
@@ -228,27 +225,6 @@ class ArticleController extends MainController
 
 
     /**
-     * Deletes a file.
-     * @throws Some_Exception_Class If the file does not exist
-     * @return void
-     */
-    private function deleteFile()
-    {
-        $imgPath = $this->getArticleById()["imgUrl"];
-
-        if (file_exists($imgPath) === TRUE) {
-            unlink($imgPath);
-            return ;
-        }
-
-        return $this->setSession([
-            "alert" => "danger",
-            "message" => "Le fichier n'existe pas"
-        ]);
-    }
-
-
-    /**
      * Check the MIME Type of a file.
      * This function checks the MIME Type of a file by using the `mime_content_type` function.
      * It retrieves the file MIME Type from the uploaded image file and compares it with a list of valid MIME Types.
@@ -274,6 +250,43 @@ class ArticleController extends MainController
         }
 
         return $ext;
+    }
+
+
+    /**
+     * Deletes a file.
+     * @throws Some_Exception_Class If the file does not exist
+     * @return void
+     */
+    private function deleteFile()
+    {
+        $imgPath = $this->getArticleById()["imgUrl"];
+
+        if (file_exists($imgPath) === TRUE) {
+            unlink($imgPath);
+            return ;
+        }
+
+        return $this->setSession([
+            "alert" => "danger",
+            "message" => "Le fichier n'existe pas"
+        ]);
+    }
+
+
+    /**
+     * Updates the file.
+     * @return string|null The destination of the uploaded file, or null if the file size is invalid.
+     */
+    private function updateFile()
+    {
+        if ($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
+            $this->deleteFile();
+            $destination = $this->uploadFile();
+
+            return $destination;
+        }
+
     }
 
 
