@@ -10,13 +10,15 @@
 
         <img src="../public/img/bg.jpeg"alt="gossBo">
 
+        {% block createArticle %}{% endblock %}
+
         {% block gallerie %}
 
         {% include"alerts/alert.twig"%}
 
         {% if user.role > 0  %}
         
-            {% include"articles/articleCreate.twig"%}
+            <a href="index.php?access=article_addArticle"><button>Ajouter un article</button></a> 
         
         {% endif %}
     

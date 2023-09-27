@@ -1,11 +1,17 @@
-{% block createArticle %}
+{% extends "layout/layout.twig" %}
 
-    <h2>Créer une nouvelle publication</h2>
+{% block title %}Nouvel article{% endblock %}
+
+{% block content %}
+
+    {% block createArticle %}
+
+    <h2>Créer un nouvel article</h2>
 
     <form action="index.php?access=article_createArticle"enctype="multipart/form-data"method="POST">
 
         <div class="mb-3">
-            <label for="title"class="form-label">Titre de votre publication</label>
+            <label for="title"class="form-label">Titre de votre article</label>
             <input type="text"name="title"class="form-control form-control-lg"id="title"required>
         </div>
 
@@ -22,4 +28,7 @@
         <button class="btn btn-primary">Publier</button>
     </form>
 
+    {% endblock %}
+
 {% endblock %}
+

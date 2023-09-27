@@ -1,10 +1,68 @@
 {% extends "layout/layout.twig" %}
 
 {% block user %}
-<h1>Votre espace : {{ user.userName }} </h1>
+    <h1>Votre espace : {{ user.userName }} </h1>
 
-<figure>
-    <img src="{{ user.imgUrl }}" class="img-fluid" alt="">
-</figure>
+    <figure>
+        <img src="{{ user.imgUrl }}" class="img-fluid" alt="{{ user.userName }}">
+    </figure>
+
+    <div class="bg-white border rounded-5">
+    
+    <section class="w-100 px-4 py-5" style="background-color: #9de2ff; border-radius: .5rem .5rem 0 0;">
+      <div class="row d-flex justify-content-center">
+        <div class="col col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-4">
+              <div class="d-flex text-black">
+                <div class="flex-shrink-0">
+                  <img src="{{ user.imgUrl }}" alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
+                  {# <a href="index.php?access=user_updatePicture">
+                    <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 d-block">Modifier ma photo</button>
+                </a> #}
+
+                <label for="img" class="btn btn-outline-primary me-1 flex-grow-1 d-block">Votre photo</label>
+                <input type="file" id="img" name="img" class="d-none">
+                
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h5 class="mb-1">{{ user.userName }}</h5>
+                  <p class="mb-2 pb-1" style="color: #2b2a2a;">Dernière connexion : {{ user.lastConnexion }}</p>
+                  <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                    <div>
+                      <p class="small text-muted mb-1">Commentaires</p>
+                      <p class="mb-0">{{ comments | length }}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Articles commentés</p>
+                      <p class="mb-0">{{ articlesCommented | length }}</p>
+                    </div>
+                  </div>
+
+
+
+                  {% if user.id %}{% endif %}
+                  
+
+
+                  <div class="d-flex pt-1">
+                    <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">Modifier</button>
+                    <button type="button" class="btn btn-primary flex-grow-1">Supprimer mon compte</button>
+                  </div>
+
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+  </div>
+  
+    
 
 {% endblock %}

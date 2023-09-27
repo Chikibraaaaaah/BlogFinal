@@ -132,7 +132,8 @@ public function signupMethod()
             }
 
             if (password_verify($this->getPost("password"), $user['password']) === TRUE) {
-                $user["isLogged"] = true;
+                $user["lastConnexion"] = date("Y-m-d H:i:s");
+                ModelFactory::getModel("User")->updateData($user["id"], $user);
                 $this->setSession($user, true);
                 $this->setSession(["alert" => "success", "message" => "Connexion réussie."]);
                 $this->redirect("home");
