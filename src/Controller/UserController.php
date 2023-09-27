@@ -9,23 +9,28 @@ use RuntimeException;
 class UserController extends MainController 
 {
 
-    public function defaultMethod()
-    {
-        $user = $this->getUserById();
-        $comments = ModelFactory::getModel("Comment")->listData($user["id"], "authorId");
-        $articlesCommented = [];
+public function defaultMethod()
+{
+    $user = $this->getUserById();
+    $comments = ModelFactory::getModel("Comment")->listData($user["id"], "authorId");
+    $articleIdsCommented = [];
 
-        foreach ($comments as $comment) {
-            $articles = ModelFactory::getModel("Article")->readData($comment["articleId"], "id");
-            $articlesCommented[] = $articles;
+    foreach ($comments as $comment) {
+        $articleId = $comment["articleId"];
+
+        if (!in_array($articleId, $articleIdsCommented)) {
+            $articleIdsCommented[] = $articleId;
         }
-
-        return $this->twig->render("users/userAccount.twig", [
-            "user" => $user,
-            "articlesCommented" => $articlesCommented,
-            "comments" => $comments
-        ]);
     }
+
+    $numArticlesCommented = count($articleIdsCommented);
+
+    return $this->twig->render("users/userAccount.twig", [
+        "user" => $user,
+        "numArticlesCommented" => $numArticlesCommented,
+        "comments" => $comments
+    ]);
+}
 
     public function getUserById()
     {
@@ -58,10 +63,12 @@ class UserController extends MainController
     public function updatePictureMethod()
     {
 
+        echo "yo";
+
         $user = $this->getUserById();
-        $newPic = $this->getFiles("imgUrl");
+        $destination = $this->uploadFile();
 
-
+        var_dump($user);    
     }
 
 

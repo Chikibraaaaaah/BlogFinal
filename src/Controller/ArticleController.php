@@ -166,7 +166,4 @@ class ArticleController extends MainController
     }
 
 
-   
-
-
 }

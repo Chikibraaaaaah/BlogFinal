@@ -21,8 +21,15 @@
                     <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 d-block">Modifier ma photo</button>
                 </a> #}
 
-                <label for="img" class="btn btn-outline-primary me-1 flex-grow-1 d-block">Votre photo</label>
-                <input type="file" id="img" name="img" class="d-none">
+                <form action="index.php?access=user_updatePicture" enctype="multipart/form-data" method="post">
+
+                  <label for="img" class="btn btn-outline-primary me-1 flex-grow-1 d-block">Ajouter une nouvelle photo</label>
+                  <input type="file" id="img" name="img" class="d-none" >
+
+                  <button type="button" class="btn btn-primary flex-grow-1 d-block" >Photo</button>
+
+                </form>
+
                 
                 </div>
                 <div class="flex-grow-1 ms-3">
@@ -35,7 +42,7 @@
                     </div>
                     <div class="px-3">
                       <p class="small text-muted mb-1">Articles commentés</p>
-                      <p class="mb-0">{{ articlesCommented | length }}</p>
+                      <p class="mb-0">{{ numArticlesCommented | length }}</p>
                     </div>
                   </div>
 
