@@ -3,10 +3,6 @@
 {% block user %}
     <h1>Votre espace : {{ user.userName }} </h1>
 
-    <figure>
-        <img src="{{ user.imgUrl }}" class="img-fluid" alt="{{ user.userName }}">
-    </figure>
-
     <div class="bg-white border rounded-5">
     
     <section class="w-100 px-4 py-5" style="background-color: #9de2ff; border-radius: .5rem .5rem 0 0;">
@@ -21,15 +17,16 @@
                     <button type="button" class="btn btn-outline-primary me-1 flex-grow-1 d-block">Modifier ma photo</button>
                 </a> #}
 
-                <form action="index.php?access=user_updatePicture" enctype="multipart/form-data" method="post">
+            <form action="index.php?access=user_updateUserInfos&id={{ user.id }}" enctype="multipart/form-data" method="post">
+                
+                    <div class="mb-3">
+                        <label for="img" class="form-label" >Photo de profil</label>
+                        <input type="file" class="form-control" id="img" name="img">
+                    </div>
 
-                  <label for="img" class="btn btn-outline-primary me-1 flex-grow-1 d-block">Ajouter une nouvelle photo</label>
-                  <input type="file" id="img" name="img" class="d-none" >
-
-                  <button type="button" class="btn btn-primary flex-grow-1 d-block" >Photo</button>
+                    <button class="btn btn-primary">Télécharger</button>
 
                 </form>
-
                 
                 </div>
                 <div class="flex-grow-1 ms-3">
