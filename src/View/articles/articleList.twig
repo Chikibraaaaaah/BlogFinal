@@ -15,8 +15,6 @@
 
         <a href="index.php?access=article_renderArticle&id={{article.id}}">Ajout un commentaire</a>
 
-        <p> {{ user.role}} </p>
-
         {% if user.role > 0 %}
 
             {% include "articles/articleButton.twig"%}

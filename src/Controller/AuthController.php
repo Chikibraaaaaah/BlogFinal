@@ -8,6 +8,8 @@ use App\Model\Factory\PdoFactory;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class AuthController extends MainController
 {
@@ -67,6 +69,7 @@ class AuthController extends MainController
         $newUser = [
             "userName"  => $this->getPost("userName"),
             "email"     => $this->getPost("email"),
+            "imgUrl"    => "https://bootdey.com/img/Content/avatar/avatar7.png",
             "password"  => $hashedPassword,
             "createdAt" => date("Y-m-d H:i:s")
         ];
@@ -162,6 +165,8 @@ public function signupMethod()
         if ($userFound === TRUE) {
             return $userFound[0];
         }
+
+        return FALSE;
     }
 
 
@@ -207,6 +212,54 @@ public function signupMethod()
     {
         $this->destroyGlobal();
         $this->redirect("home");
+    }
+
+    public function sendPasswordMethod()
+    {
+
+        $email = $this->getPost("email");
+     
+        $user = ModelFactory::getModel("User")->listData($email,"email")[0];
+
+        if ($user) {
+
+         /* Create a new PHPMailer object. Passing TRUE to the constructor enables exceptions. */
+            $mail = new PHPMailer(TRUE);
+            /* Open the try/catch block. */
+            try {
+            /* Set the mail sender. */
+            $mail->setFrom('tristanriedinger@gmail.com', 'Tristan Riedinger');
+            /* Add a recipient. */
+            $mail->addAddress('alexisbateaux@gmail.com', 'Bidon');
+            /* Set the subject. */
+            $mail->Subject = 'Yesai';
+            /* Set the mail message body. */
+            $mail->Body = 'Coeur de mon mail';
+            /* Finally send the mail. */
+            $mail->send();
+
+            $this->setSession(["alert" => "success", "message" => "Email envoye."]);
+            $this->redirect("auth_register");
+            }
+            catch (Exception $e)
+            {
+            /* PHPMailer exception. */
+            echo $e->errorMessage();
+            }
+            catch (\Exception $e)
+            {
+            /* PHP exception (note the backslash to select the global namespace Exception class). */
+            echo $e->getMessage();
+            }
+        }
+
+        
+    }
+
+
+    public function getForgetPasswordPageMethod()
+    {
+        return $this->twig->render("auth/sendPassword.twig");
     }
 
 

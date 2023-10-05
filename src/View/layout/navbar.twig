@@ -1,37 +1,38 @@
 {% block nav %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 
-  <div class="container-fluid">
-
-    <a class="navbar-brand"href="#">Blog Tristan Riedinger</a>
+  <div class="container-fluid justify-content-space-between">
 
     <button class="navbar-toggler"type="button"data-bs-toggle="collapse"data-bs-target="#nav_content"aria-controls="nav_content"aria-expanded="false"aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse"id="nav_content">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto me-auto">
 
           <li class="nav-item">
                 <a accesskey="h"title="Home"class="nav-link active"href="index.php?access=home">Accueil</a>
             </li>
         
             <li class="nav-item">
-                <a class="nav-link"href="index.php?access=presentation">Qui suis-je ?</a>
+                <a class="nav-link"href="index.php?access=user_getAbout">Qui suis-je ?</a>
             </li>
+
+          
 
             {% if user %}
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="index.php?access=user_getUser&id={{ user.id }}" role="button" aria-haspopup="true" aria-expanded="false"> {{ user.userName }} </a>
-                    <div class="dropdown-menu">
-                    <a class="dropdown-item"href="#fds">Mes Notifications</a>
-                    <a class="dropdown-item"href="#sdf">Activité</a>
+                <li class="nav-item">
+                    <a class="nav-link"href="index.php?access=user_getUser&id={{user.id}}"accesskey="x"title="logout">
+                        {{ user.userName }} 
+                    </a>
                 </li>
+
+            
 
             <li class="nav-item">
                 <a class="nav-link"href="index.php?access=auth_logout"accesskey="x"title="logout">
-                     <i class="fa-duotone fa-right-to-bracket"></i>Se Déconnecter</i>
+                     Se Déconnecter<i class="fa-duotone fa-right-to-bracket"></i>
                 </a>
             </li>
 
@@ -42,13 +43,18 @@
                 </li>
         
             {% endif %}
+
+                <li class="nav-item">
+              <a class="nav-link"href="index.php?access=user_getContact">Contact</a>
+            </li>
+
+         
     
 
       </ul>
-      {# <form class="d-flex"role="search">
-        <input class="form-control me-2"type="search"placeholder="Chercher"aria-label="Chercher">
-        <button class="btn btn-outline-success"type="submit">Chercher</button>
-      </form> #}
+  
     </div>
   </div>
-</nav>{% endblock %}
+</nav>
+
+{% endblock %}

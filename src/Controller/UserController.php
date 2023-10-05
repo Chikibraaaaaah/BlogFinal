@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Model\Factory\ModelFactory;
 use Twig\Error\LoaderError;
 use RuntimeException;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 class UserController extends MainController 
 {
@@ -27,6 +30,8 @@ public function defaultMethod()
                 $articleIdsCommented[] = $articleId;
             }
         }
+
+   
 
         $numArticlesCommented = count($articleIdsCommented);
 
@@ -76,6 +81,7 @@ public function defaultMethod()
         $user = $this->getSession("user");
         $destination = $user["imgUrl"];
 
+
         if ($this->getFiles()["img"]["size"] > 0 && $this->getFiles()["img"]["size"] < 1000000) {
             $destination = $this->updateFile();
         }
@@ -86,7 +92,7 @@ public function defaultMethod()
 
             ModelFactory::getModel("User")->updateData((int) $updatedUser["id"], $updatedUser);
 
-            return $this->redirect("user_getUser", ["id" => (int) $updatedUser["id"]]);
+            $this->redirect("user_getUser", ["id" => (int) $updatedUser["id"]]);
         }
     }
 
@@ -173,6 +179,25 @@ public function defaultMethod()
         }
 
     }
+
+    public function getContactMethod()
+    {
+
+        $user = $this->getSession("user");
+
+        return $this->twig->render("form/form.twig", ["user" => $user]);
+    }
+
+    public function getAboutMethod()
+    {
+
+        $user = $this->getSession("user");
+
+        return $this->twig->render("users/userAbout.twig", ["user" => $user]);
+
+    }
+    
+
 
 
 

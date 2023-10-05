@@ -29,7 +29,7 @@ class HomeController extends MainController
     public function defaultMethod()
     {
         $articles = $this->getArticles();
-        $user = $this->getSession("user");
+        $user = $this->getSession("user") ?? [];
         $alert = $this->getSession()["alert"];
         $comments = [];
 
@@ -44,7 +44,7 @@ class HomeController extends MainController
             "articles"  => $articles,
             "alert"     => $alert,
             "user"      => $user,
-            "comments"  => $comments[0]
+            "comments"  => $comments
         ]);
     }
 

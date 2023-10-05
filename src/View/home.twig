@@ -4,13 +4,15 @@
 
 {% block content %}
 
-    <main>
+    <main class="container">
 
-        <h1>Bienvenue sur mon blog</h1>
+        <h1 class="text-center">Bienvenue sur mon blog</h1>
 
-        <img src="../public/img/bg.jpeg"alt="gossBo">
 
-        {% block createArticle %}{% endblock %}
+
+
+
+ 
 
         {% block gallerie %}
 
@@ -18,7 +20,7 @@
 
         {% if user.role > 0  %}
         
-            <a href="index.php?access=article_addArticle"><button>Ajouter un article</button></a> 
+            <a href="index.php?access=article_addArticle"><button class="btn btn-primary ">Ajouter un article</button></a> 
         
         {% endif %}
     

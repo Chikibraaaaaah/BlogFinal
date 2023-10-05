@@ -90,7 +90,7 @@ class ArticleController extends MainController
             "title"     => $this->encodeString($this->getPost("title")),
             "content"   => $this->encodeString($this->getPost("content")),
             "imgUrl"    => $destination,
-            "imgAlt"    => $this->encodeString($this->getPost("content")),
+            "imgAlt"    => $this->encodeString($this->getPost("alt")),
             "createdAt" => date("Y-m-d H:i:s")
         ];
 
@@ -147,7 +147,9 @@ class ArticleController extends MainController
 
             ModelFactory::getModel("Article")->updateData((int) $updatedArticle["id"], $updatedArticle);
 
-            return $this->renderArticleMethod();
+            $this->redirect("article_renderArticle", [
+                "id" => (int) $updatedArticle["id"]
+            ]);
         }
     }
 
