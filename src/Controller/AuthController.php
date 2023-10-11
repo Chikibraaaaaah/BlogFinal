@@ -10,6 +10,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 class AuthController extends MainController
 {
@@ -217,41 +218,49 @@ public function signupMethod()
     public function sendPasswordMethod()
     {
 
-        $email = $this->getPost("email");
+        // $email = $this->getPost("email");
      
-        $user = ModelFactory::getModel("User")->listData($email,"email")[0];
+        // $user = ModelFactory::getModel("User")->listData($email,"email")[0];
 
-        if ($user) {
+        // if ($user) {
 
-         /* Create a new PHPMailer object. Passing TRUE to the constructor enables exceptions. */
-            $mail = new PHPMailer(TRUE);
-            /* Open the try/catch block. */
-            try {
-            /* Set the mail sender. */
-            $mail->setFrom('tristanriedinger@gmail.com', 'Tristan Riedinger');
-            /* Add a recipient. */
-            $mail->addAddress('alexisbateaux@gmail.com', 'Bidon');
-            /* Set the subject. */
-            $mail->Subject = 'Yesai';
-            /* Set the mail message body. */
-            $mail->Body = 'Coeur de mon mail';
-            /* Finally send the mail. */
-            $mail->send();
+        //  /* Create a new PHPMailer object. Passing TRUE to the constructor enables exceptions. */
+        //     $mail = new PHPMailer(TRUE);
+        //     /* Open the try/catch block. */
+        //     try {
+        //     /* Set the mail sender. */
+        //     $mail->setFrom('tristanriedinger@gmail.com', 'Tristan Riedinger');
+        //     /* Add a recipient. */
+        //     $mail->addAddress('alexisbateaux@gmail.com', 'Bidon');
+        //     /* Set the subject. */
+        //     $mail->Subject = 'Yesai';
+        //     /* Set the mail message body. */
+        //     $mail->Body = 'Coeur de mon mail';
+        //     /* Finally send the mail. */
+        //    $mail->send();
+        //     // echo "<pre>";
+        //     // var_dump($test);
+        //     // echo "</pre>";
+        //     // die();
+            
+        //     // echo "<pre>";
+        //     // var_dump($mail);die();
+        //     // echo "</pre>";
 
-            $this->setSession(["alert" => "success", "message" => "Email envoye."]);
-            $this->redirect("auth_register");
-            }
-            catch (Exception $e)
-            {
-            /* PHPMailer exception. */
-            echo $e->errorMessage();
-            }
-            catch (\Exception $e)
-            {
-            /* PHP exception (note the backslash to select the global namespace Exception class). */
-            echo $e->getMessage();
-            }
-        }
+        //     $this->setSession(["alert" => "success", "message" => "Email envoye."]);
+        //     $this->redirect("auth_register");
+        //     }
+        //     catch (Exception $e)
+        //     {
+        //     /* PHPMailer exception. */
+        //     echo $e->errorMessage();
+        //     }
+        //     catch (\Exception $e)
+        //     {
+        //     /* PHP exception (note the backslash to select the global namespace Exception class). */
+        //     echo $e->getMessage();
+        //     }
+        // }
 
         
     }
